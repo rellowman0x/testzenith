@@ -1026,40 +1026,40 @@ _____                                                                    _____
             display: flex;
             background: transparent;
             padding: 0;
-            margin-bottom: 20px;
-            box-shadow: none;
+            margin-bottom: 16px;
             position: relative;
-            border: none;
-            height: 56px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(var(--border-color-rgb), 0.06);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(var(--border-color-rgb), 0.15);
             overflow: hidden;
-            border-radius: 30px;
-            background: rgba(var(--border-color-rgb), 0.08);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(var(--border-color-rgb), 0.2);
-            box-shadow: 0 8px 32px rgba(var(--border-color-rgb), 0.1);
+            box-shadow: 0 2px 10px rgba(var(--border-color-rgb), 0.08);
         }
-        
+
         .tab {
             flex: 1;
             text-align: center;
-            padding: 0 12px;
+            padding: 0 8px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             z-index: 2;
             color: var(--text-color);
-            font-weight: 700;
-            font-size: 15px;
+            font-weight: 600;
+            font-size: 14px;
             border: none;
             background: transparent;
             height: 100%;
             overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 0;
+            flex-grow: 1;
         }
         .tab::before {
             content: '';
@@ -1068,17 +1068,16 @@ _____                                                                    _____
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(var(--border-color-rgb), 0.15), rgba(var(--border-color-rgb), 0.05));
-            border-radius: 30px;
+            background: rgba(var(--border-color-rgb), 0.08);
+            border-radius: 12px;
             opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.2s ease;
             z-index: -1;
-            transform: scale(0.95);
         }
         .tab.active {
-            color: white !important;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
+            color: var(--border-color) !important;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(var(--border-color-rgb), 0.2);
         }
         
         .tab.active::after,
@@ -1130,14 +1129,11 @@ _____                                                                    _____
             bottom: 0;
             left: 0;
             width: calc(100% / 4);
-            height: 100%;
-            background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black));
-            border-radius: 30px;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1;
-            box-shadow: 
-                0 4px 20px rgba(var(--border-color-rgb), 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            height: 3px;
+            background: linear-gradient(90deg, var(--border-color), transparent);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 2px 6px rgba(var(--border-color-rgb), 0.4);
         }
 
         .tab.active:nth-child(1) ~ .tabs::after { transform: translateX(0); }
@@ -1152,7 +1148,6 @@ _____                                                                    _____
         }
         .tab:hover::before {
             opacity: 1;
-            transform: scale(1);
         }
         .content {
             display: none;
@@ -1385,27 +1380,28 @@ _____                                                                    _____
 
         .show-icons .tab {
             position: relative;
-            padding-top: 28px;
-            padding-bottom: 8px;
+            padding-top: 22px;
+            padding-bottom: 4px;
+            font-size: 12px;
         }
 
         .show-icons .tab::before {
             position: absolute;
-            top: 8px;
+            top: 6px;
             left: 50%;
             transform: translateX(-50%);
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-color);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             z-index: 1;
         }
 
         .show-icons .tab.active::before {
-            color: white;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
-            transform: translateX(-50%) scale(1.1);
+            color: var(--border-color);
+            transform: translateX(-50%) translateY(-1px);
+            text-shadow: 0 2px 4px rgba(var(--border-color-rgb), 0.2);
         }
 
         .show-icons .tab[onclick*="home"]::before { content: "\f015"; }
@@ -1416,23 +1412,22 @@ _____                                                                    _____
         .show-icons .tab::before {
             z-index: 1;
         }
-        @media (max-width: 480px) {
+        @media (max-width: 375px) {
             .tabs {
-                height: 52px;
-                border-radius: 28px;
-                margin-bottom: 15px;
+                height: 44px;
+                border-radius: 10px;
+                margin-bottom: 12px;
             }
             .tab {
                 font-size: 13px;
-                padding: 0 8px;
+                padding: 0 6px;
             }
             .show-icons .tab {
-                padding-top: 26px;
-                padding-bottom: 6px;
+                padding-top: 20px;
             }
             .show-icons .tab::before {
-                top: 6px;
-                font-size: 16px;
+                top: 5px;
+                font-size: 14px;
             }
         }
         @keyframes subtlePulse {
