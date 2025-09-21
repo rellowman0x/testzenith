@@ -1017,22 +1017,36 @@ _____                                                                    _____
         }
 
         .container {
-            max-width: 100%;
-            padding: 15px;
-            overflow: hidden;
+            padding-top: 70px;
+            padding-bottom: 70px; 
+            box-sizing: border-box;
         }
-        
+        .container.tabs-at-bottom {
+            padding-top: 20px;
+            padding-bottom: 70px;
+        }
+
+        .container.tabs-at-top {
+            padding-top: 70px;
+            padding-bottom: 20px;
+        }
         .tabs {
-            display: flex;
-            background: #fff;
-            border-radius: 20px;
-            padding: 5px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(0, 0, 0, 0.1);
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: calc(100% - 30px);
+            max-width: 100%;
+            box-sizing: border-box;
         }
-        
+        .tabs.position-top {
+            top: 15px;
+            bottom: auto;
+        }
+        .tabs.position-bottom {
+            bottom: 15px;
+            top: auto;
+        }
         .tab {
             flex: 1;
             text-align: center;
@@ -4672,13 +4686,19 @@ _____                                                                    _____
         async function setTabsPosition(position) {
             document.getElementById('tabs-top-btn').classList.toggle('active', position === 'top');
             document.getElementById('tabs-bottom-btn').classList.toggle('active', position === 'bottom');
+
             const tabsContainer = document.querySelector('.tabs');
+            const container = document.querySelector('.container');
+            tabsContainer.classList.remove('position-top', 'position-bottom');
+            container.classList.remove('tabs-at-top', 'tabs-at-bottom');
             if (position === 'bottom') {
-                document.body.style.display = 'flex';
-                document.body.style.flexDirection = 'column-reverse';
+                tabsContainer.classList.add('position-bottom');
+                container.classList.add('tabs-at-bottom');
+                container.classList.remove('tabs-at-top');
             } else {
-                document.body.style.display = 'block';
-                document.body.style.flexDirection = 'column';
+                tabsContainer.classList.add('position-top');
+                container.classList.add('tabs-at-top');
+                container.classList.remove('tabs-at-bottom');
             }
             if (currentUserId && supabase) {
                 try {
