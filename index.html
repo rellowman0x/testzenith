@@ -8,7 +8,7 @@
 
 
 
- _____                                                                    _____ 
+_____                                                                    _____ 
 ( ___ )                                                                  ( ___ )
  |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
  |   |  ▄███████▄     ▄████████ ███▄▄▄▄    ▄█      ███        ▄█    █▄    |   | 
@@ -60,7 +60,6 @@
     <style>
         :root {
             --border-color-rgb: 51, 51, 51;
-            --loading-indicator-color: var(--border-color);
         }
 
         body.light-theme {
@@ -953,7 +952,6 @@
             --button-text-color: #fff;
             --button-hover-color: #a8a8a8;
             --button-hover-text-color: #fff;
-            --loading-indicator-color: var(--border-color);
         }
 
         .beta-badge {
@@ -1364,10 +1362,12 @@
         .show-icons .tab::before {
             z-index: 1;
         }
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+
+        @keyframes textGlow {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
         }
+
         .status-user {
             background-color: #007bff !important;
             color: white !important;
@@ -2079,6 +2079,228 @@
             color: var(--button-hover-text-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .loading-grid {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+            linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            opacity: 0.6;
+            animation: grid-drift 30s linear infinite;
+        }
+
+        body.dark-theme .loading-grid,
+        body.dark-purple-theme .loading-grid {
+            background: 
+            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        }
+
+        @keyframes grid-drift {
+            0% { transform: translateZ(-100px) rotateZ(0deg); }
+            100% { transform: translateZ(-100px) rotateZ(360deg); }
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            background: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .loading-z {
+            font-size: 8rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--border-color);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: translateZ(0);
+            animation: emergeZ 1.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards, floatSubtle 3s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes floatSubtle {
+            0%, 100% { transform: translateZ(0) translateY(0); }
+            50% { transform: translateZ(0) translateY(-10px); }
+        }
+        body.dark-theme .loading-z,
+        body.dark-purple-theme .loading-z {
+            text-shadow: 0 0 15px var(--border-color);
+        }
+
+        @keyframes emergeZ {
+            0% {
+            opacity: 0;
+            transform: scale(0.7) rotate(-10deg);
+            }
+            70% {
+            opacity: 1;
+            transform: scale(1.1) rotate(5deg);
+            }
+            100% {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+            }
+        }
+
+        .loading-signature {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            opacity: 0;
+            color: var(--border-color);
+            text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.7);
+            animation: fadeUp 0.8s 1.5s forwards, glowPulse 2s 1.5s infinite;
+        }
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.7); }
+            50% { text-shadow: 0 0 25px rgba(var(--border-color-rgb), 0.9); }
+            100% { text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.7); }
+        }
+        @keyframes fadeUp {
+            to {
+            opacity: 0.8;
+            transform: translateY(-5px);
+            }
+        }
+
+        .loading-percentage {
+            position: absolute;
+            bottom: 80px;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--border-color);
+            animation: textGlow 1.5s infinite alternate;
+            text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.5);
+            z-index: 10;
+            font-family: 'Arial Black', sans-serif;
+        }
+        .loading-bar-container {
+            position: absolute;
+            bottom: 50px;
+            width: 200px;
+            height: 8px;
+            background: rgba(var(--border-color-rgb), 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.6);
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .loading-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressPulse 1.5s infinite;
+        }
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+            box-shadow: 0 0 10px var(--border-color);
+            opacity: 0.1;
+            animation: float var(--duration, 6s) ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.5s);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                opacity: 0.1;
+            }
+            25% {
+                transform: translate(calc(-50% + 50px), calc(-50% - 30px)) rotate(90deg) scale(1.2);
+                opacity: 0.15;
+            }
+            50% {
+                transform: translate(calc(-50% + 0px), calc(-50% + 50px)) rotate(180deg) scale(0.8);
+                opacity: 0.1;
+            }
+            75% {
+                transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(270deg) scale(1.1);
+                opacity: 0.12;
+            }
+        }
+        .loading-wave.secondary-wave {
+            width: 320px;
+            height: 320px;
+            opacity: 0.3;
+            animation: ripple 3s ease-out 1s infinite;
+            z-index: -1;
+        }
+        .particle:nth-child(1) { --duration: 8s; }
+        .particle:nth-child(2) { --duration: 12s; }
+        .particle:nth-child(3) { --duration: 7s; }
+        .particle:nth-child(4) { --duration: 10s; }
+        .particle:nth-child(5) { --duration: 9s; }
+        .particle:nth-child(6) { --duration: 11s; }
+        .particle:nth-child(7) { --duration: 8.5s; }
+        .particle:nth-child(8) { --duration: 9.5s; }
+        @keyframes progressPulse {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .loading-wave {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 2px solid var(--border-color);
+            animation: ripple 2s cubic-bezier(0.2, 1, 0.3, 1) 0.6s forwards;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: -1;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-theme .loading-wave,
+        body.dark-purple-theme .loading-wave {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+        }
+
+        @keyframes ripple {
+            0% {
+            transform: scale(0);
+            opacity: 0;
+            }
+            30% {
+            opacity: 0.4;
+            }
+            100% {
+            transform: scale(1);
+            opacity: 0.6;
+            }
         }
 
         .logs-stats-card {
@@ -2826,232 +3048,27 @@
             background: var(--background-color) !important;
             border-top: 2px solid rgba(var(--border-color-rgb), 0.1) !important;
         }
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--background-color);
-            overflow: hidden;
-            transition: opacity 0.5s ease;
-        }
-        .loading-container {
-            position: relative;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-        }
-        .loading-logo-container {
-            margin-bottom: 20px;
-            perspective: 1000px;
-        }
-
-        .loading-logo-wrapper {
-            display: inline-block;
-            transform-style: preserve-3d;
-            animation: floatLogo 3s ease-in-out infinite;
-        }
-
-        .loading-logo-text {
-            font-size: 6rem;
-            font-weight: 900;
-            letter-spacing: 8px;
-            background: linear-gradient(135deg, var(--border-color), transparent);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.3);
-            animation: logoPulse 3s ease-in-out infinite, logoReveal 1s ease-out forwards;
-            opacity: 0;
-        }
-
-        .loading-signature-container {
-            margin-bottom: 40px;
-        }
-
-        .loading-signature-text {
-            font-size: 1.8rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            color: var(--text-color);
-            opacity: 0;
-            text-shadow: 0 0 5px rgba(var(--border-color-rgb), 0.3);
-            animation: signatureReveal 1s ease-out 0.5s forwards, signatureGlow 3s ease-in-out 1.5s infinite;
-        }
-
-        .loading-circular-progress {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 30px auto;
-        }
-
-        .progress-ring {
-            transform: rotate(-90deg);
-        }
-
-        .progress-ring-bg {
-            fill: none;
-            stroke: rgba(var(--border-color-rgb), 0.1);
-            stroke-width: 8;
-            transition: stroke 0.3s;
-        }
-
-        .progress-ring-fill {
-            fill: none;
-            stroke: var(--border-color);
-            stroke-width: 8;
-            stroke-linecap: round;
-            stroke-dasharray: 326.726;
-            stroke-dashoffset: 326.726;
-            transition: stroke-dashoffset 0.3s ease;
-            filter: drop-shadow(0 0 10px var(--border-color));
-        }
-
-        .loading-percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-color);
-            text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3);
-            animation: textGlow 2s infinite alternate;
-            z-index: 2;
-        }
-
-        .loading-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--border-color);
-            opacity: 0;
-            filter: blur(1px);
-            box-shadow: 0 0 15px var(--border-color), 0 0 30px rgba(var(--border-color-rgb), 0.5);
-            animation: particleFloat 4s ease-in-out infinite;
-        }
-
-        .p1 { top: 20%; left: 10%; animation-delay: 0s; }
-        .p2 { top: 30%; left: 80%; animation-delay: 0.5s; }
-        .p3 { top: 60%; left: 20%; animation-delay: 1s; }
-        .p4 { top: 70%; left: 70%; animation-delay: 1.5s; }
-        .p5 { top: 40%; left: 40%; animation-delay: 2s; }
-        .p6 { top: 50%; left: 60%; animation-delay: 2.5s; }
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0px) rotateX(0deg); }
-            50% { transform: translateY(-15px) rotateX(5deg); }
-        }
-        @keyframes logoReveal {
-            0% { opacity: 0; transform: scale(0.8) rotateX(-20deg); }
-            100% { opacity: 1; transform: scale(1) rotateX(0deg); }
-        }
-        @keyframes logoPulse {
-            0%, 100% { text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.3); }
-            50% { text-shadow: 0 0 40px rgba(var(--border-color-rgb), 0.7), 0 0 60px rgba(var(--border-color-rgb), 0.5); }
-        }
-        @keyframes signatureReveal {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 0.8; transform: translateY(0); }
-        }
-        @keyframes signatureGlow {
-            0%, 100% { text-shadow: 0 0 5px rgba(var(--border-color-rgb), 0.3); }
-            50% { text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.6); }
-        }
-        @keyframes particleFloat {
-            0%, 100% { 
-                transform: translate(0, 0) scale(1);
-                opacity: 0.3;
-            }
-            50% { 
-                transform: translate(var(--tx, 0px), var(--ty, -20px)) scale(1.2);
-                opacity: 0.8;
-            }
-        }
-        @keyframes textGlow {
-            0%, 100% { text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3); }
-            50% { text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.6); }
-        }
-        @media (max-width: 768px) {
-            .loading-logo-text {
-                font-size: 4rem;
-            }
-            .loading-signature-text {
-                font-size: 1.4rem;
-            }
-            .loading-percentage {
-                font-size: 1.2rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .loading-logo-text {
-                font-size: 3rem;
-            }
-            .loading-signature-text {
-                font-size: 1.2rem;
-            }
-            .loading-percentage {
-                font-size: 1rem;
-            }
-            .loading-circular-progress {
-                width: 80px;
-                height: 80px;
-                margin: 20px auto;
-            }
-            .progress-ring {
-                width: 80px;
-                height: 80px;
-            }
-            .progress-ring-bg,
-            .progress-ring-fill {
-                stroke-width: 6;
-                r: 34;
-            }
-        }
     </style>
 </head>
 <body>
     <div id="loading-screen">
-        <div class="loading-container">
-            <div class="loading-logo-container">
-                <div class="loading-logo-wrapper">
-                    <div class="loading-logo-text">#zh</div>
-                </div>
-            </div>
-            <div class="loading-signature-container">
-                <div class="loading-signature-text">#rellowman</div>
-            </div>
-            <div class="loading-progress-container">
-                <div class="loading-progress-bar">
-                    <div class="loading-progress-fill"></div>
-                </div>
-                <div class="loading-percentage">0%</div>
-            </div>
-            <div class="loading-particles">
-                <div class="particle p1"></div>
-                <div class="particle p2"></div>
-                <div class="particle p3"></div>
-                <div class="particle p4"></div>
-                <div class="particle p5"></div>
-                <div class="particle p6"></div>
-            </div>
+        <div class="loading-grid"></div>
+        <div class="loading-wave"></div>
+        <div class="loading-wave secondary-wave"></div>
+        <div class="loading-z">#zt</div>
+        <div class="loading-signature">#rellowman</div>
+        <div class="loading-percentage">0%</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
         </div>
+        <div class="particle" style="--i:1;"></div>
+        <div class="particle" style="--i:2;"></div>
+        <div class="particle" style="--i:3;"></div>
+        <div class="particle" style="--i:4;"></div>
+        <div class="particle" style="--i:5;"></div>
+        <div class="particle" style="--i:6;"></div>
+        <div class="particle" style="--i:7;"></div>
+        <div class="particle" style="--i:8;"></div>
     </div>
     <div id="welcome-screen">
         <span id="welcome-text"></span>
@@ -3066,8 +3083,8 @@
         <div id="home" class="content active">
             <div class="app-info">
                 <h2>Информация о приложении</h2>
-                <div><strong>Версия приложения:</strong><span class="beta-badge">dev-version</span></div>
-                <div><strong>Версия бота:</strong> 0.8.4.4</div>
+                <div><strong>Версия приложения:</strong> V69 <span class="beta-badge">BETA</span></div>
+                <div><strong>Версия бота:</strong> 0.8.4.3</div>
                 <div><strong>Разработчик:</strong> @rellowman <span class="swiftx-tag">#zenith</span></div>
             </div>
             <h2>Профиль пользователя</h2>
@@ -5031,15 +5048,15 @@
             }
             const elapsedTime = Date.now() - startTime;
             const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+
             setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.transition = 'opacity 0.5s ease';
+                
                 setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    loadingScreen.style.transition = 'opacity 0.5s ease';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        showWelcomeScreen();
-                    }, 500);
-                }, 1200);
+                loadingScreen.style.display = 'none';
+                showWelcomeScreen();
+                }, 500);
             }, remainingTime);
         }
 
@@ -5758,18 +5775,38 @@
             }
         }
         function applyLoadingTheme(theme) {
-            console.log('Loading theme applied:', theme);
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingTitle = document.getElementById('loading-title'); 
+            const loadingStatus = document.querySelector('#loading-status span'); 
+            const loadingSpinner = document.getElementById('loading-spinner'); 
+            const particles = document.querySelectorAll('.particle');
+            const loadingBar = document.querySelector('.loading-bar');
+            const loadingPercentage = document.querySelector('.loading-percentage');
+            if (loadingScreen) {
+                loadingScreen.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
+            }
+
+            if (loadingPercentage) {
+                loadingPercentage.style.color = getComputedStyle(document.body).getPropertyValue('--border-color');
+                loadingPercentage.style.textShadow = `0 0 10px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.5)`;
+            }
+
+            if (loadingBar) {
+                loadingBar.style.background = getComputedStyle(document.body).getPropertyValue('--border-color');
+                loadingBar.style.boxShadow = `0 0 15px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.6)`;
+            }
+
+            particles.forEach(particle => {
+                particle.style.background = getComputedStyle(document.body).getPropertyValue('--border-color');
+                particle.style.boxShadow = `0 0 10px ${getComputedStyle(document.body).getPropertyValue('--border-color')}`;
+            });
         }
         function updateLoadingProgress(percentage) {
-            const fill = document.querySelector('.progress-ring-fill');
+            const progressBar = document.querySelector('.loading-bar');
             const percentageText = document.querySelector('.loading-percentage');
-            
-            if (fill) {
-                const circumference = 326.726;
-                const offset = circumference - (percentage / 100 * circumference);
-                fill.style.strokeDashoffset = offset;
+            if (progressBar) {
+                progressBar.style.width = `${percentage}%`;
             }
-            
             if (percentageText) {
                 percentageText.textContent = `${percentage}%`;
             }
@@ -5890,14 +5927,6 @@
                     e.stopPropagation();
                 }
             });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingScreen = document.getElementById('loading-screen');
-            if (loadingScreen) {
-                setTimeout(() => {
-                    loadingScreen.style.opacity = '1';
-                }, 100);
-            }
         });
         document.addEventListener('DOMContentLoaded', initializeApp);</script>
 </body>
