@@ -2924,6 +2924,7 @@
             animation: logoEmerge 1.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards, logoPulse 4s ease-in-out infinite;
             opacity: 0;
         }
+
         @keyframes logoEmerge {
             0% {
                 opacity: 0;
@@ -2977,11 +2978,48 @@
             margin: 40px auto 0;
             transform: translateZ(20px);
         }
+        .loading-bar-container {
+            position: relative;
+            width: 300px;
+            height: 12px;
+            background: rgba(var(--border-color-rgb), 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+            margin: 40px auto 20px;
+            border: 1px solid rgba(var(--border-color-rgb), 0.2);
+        }
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--border-color);
+            border-radius: 20px;
+            /* УБРАЛИ ТЕНЬ! */
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Пульсирующий градиент на 100% */
+        .loading-bar.full {
+            animation: finalPulse 2s ease-in-out infinite;
+            background: linear-gradient(90deg, var(--border-color), transparent, var(--border-color));
+            background-size: 200% 100%;
+            animation: finalPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes finalPulse {
+            0% {
+                background-position: 100% 0;
+            }
+            100% {
+                background-position: 0% 0;
+            }
+        }
+
+        /* Цифровой процент */
         .loading-percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             font-size: 28px;
             font-weight: 800;
             color: var(--text-color);
@@ -3106,25 +3144,13 @@
 </head>
 <body>
     <div id="loading-screen">
-        <div class="loading-depth"></div>
         <div class="loading-center">
             <div class="loading-logo">#zh</div>
             <div class="loading-signature">#rellowman</div>
-            <div class="loading-indicator-container">
-                <div class="loading-indicator-bg"></div>
-                <div class="loading-indicator"></div>
-                <div class="loading-percentage">0%</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
             </div>
-            <div class="loading-wave"></div>
-            <div class="loading-wave secondary-wave"></div>
-            <div class="particle" style="--i:1; --tx: 80px; --ty: -40px;"></div>
-            <div class="particle" style="--i:2; --tx: 60px; --ty: 70px;"></div>
-            <div class="particle" style="--i:3; --tx: -50px; --ty: 80px;"></div>
-            <div class="particle" style="--i:4; --tx: -90px; --ty: -30px;"></div>
-            <div class="particle" style="--i:5; --tx: 30px; --ty: -90px;"></div>
-            <div class="particle" style="--i:6; --tx: -70px; --ty: 20px;"></div>
-            <div class="particle" style="--i:7; --tx: 100px; --ty: 50px;"></div>
-            <div class="particle" style="--i:8; --tx: -40px; --ty: -100px;"></div>
+            <div class="loading-percentage">0%</div>
         </div>
     </div>
     <div id="welcome-screen">
