@@ -3021,56 +3021,32 @@ _____                                                                    _____
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
         }
-        .tab-position-selector {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
         .tab-position-btn {
-            flex: 1;
-            padding: 8px 12px;
+            padding: 6px 12px;
             border: 2px solid var(--border-color);
-            background: rgba(var(--border-color-rgb), 0.05);
+            background: rgba(var(--border-color-rgb), 0.1);
             color: var(--text-color);
-            border-radius: 8px;
+            border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab-position-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .tab-position-btn:hover::before {
-            left: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .tab-position-btn:hover {
-            background: rgba(var(--border-color-rgb), 0.15);
+            background: rgba(var(--border-color-rgb), 0.2);
             transform: translateY(-1px);
         }
 
         .tab-position-btn.active {
             background: var(--border-color);
             color: var(--button-text-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(var(--border-color-rgb), 0.2);
+            box-shadow: 0 4px 10px rgba(var(--border-color-rgb), 0.2);
         }
 
-        .tab-position-btn.active::before {
-            opacity: 0;
+        .tab-position-btn:active {
+            transform: translateY(0) scale(0.97);
         }
     </style>
 </head>
@@ -3313,7 +3289,6 @@ _____                                                                    _____
                     <span>В разработке</span>
                 </div>
             </div>
-            
             <div class="switch-container">
                 <span>Анимация тегов<span class="beta-badge">BETA</span></span>
                 <label class="switch">
@@ -3337,10 +3312,9 @@ _____                                                                    _____
             </div>
             <div class="switch-container">
                 <span>Размещение вкладок</span>
-                <div class="tab-position-selector" style="display: flex; gap: 5px; margin-top: 10px;">
-                    <button class="tab-position-btn active" data-position="top">Верх</button>
-                    <button class="tab-position-btn" data-position="bottom">Низ</button>
-                    <button class="tab-position-btn" data-position="side">Бок</button>
+                <div style="display: flex; gap: 5px; margin-left: auto;">
+                    <button id="tabs-top-btn" class="tab-position-btn active" onclick="setTabsPosition('top')">Верх</button>
+                    <button id="tabs-bottom-btn" class="tab-position-btn" onclick="setTabsPosition('bottom')">Низ</button>
                 </div>
             </div>
             <div class="switch-container feature-disabled" id="logging-toggle-container">
@@ -3572,53 +3546,6 @@ _____                                                                    _____
         let selectedUserId = null;
         let editingUserId = null;
         let adminPinVerified = false;
-        const style = document.createElement('style');
-        style.textContent = `
-            .container {
-                display: flex;
-                flex-direction: column;
-                position: relative;
-            }
-            .container.tabs-bottom {
-                flex-direction: column-reverse;
-            }
-            .container.tabs-side {
-                flex-direction: row;
-            }
-            .container.tabs-side .tabs {
-                flex-direction: column;
-                height: 100vh;
-                width: 80px;
-                border-radius: 0;
-            }
-            .container.tabs-side .content {
-                flex: 1;
-            }
-            .container.tabs-side .tab {
-                height: auto;
-                padding: 15px 5px;
-                writing-mode: vertical-rl;
-                text-orientation: mixed;
-                font-size: 14px;
-            }
-            @media (max-width: 768px) {
-                .container.tabs-side {
-                    flex-direction: column;
-                }
-                .container.tabs-side .tabs {
-                    flex-direction: row;
-                    height: auto;
-                    width: 100%;
-                }
-                .container.tabs-side .tab {
-                    writing-mode: horizontal-tb;
-                    text-orientation: mixed;
-                    font-size: 15px;
-                    padding: 0 10px;
-                }
-            }
-        `;
-        document.head.appendChild(style);
         let userFilters = {
             role: '',
             id: '',
@@ -4742,6 +4669,37 @@ _____                                                                    _____
                 averageGrade.textContent = `Средняя оценка: ${average.toFixed(2)}`;
             }
         }
+        async function setTabsPosition(position) {
+            document.getElementById('tabs-top-btn').classList.toggle('active', position === 'top');
+            document.getElementById('tabs-bottom-btn').classList.toggle('active', position === 'bottom');
+            const tabsContainer = document.querySelector('.tabs');
+            if (position === 'bottom') {
+                document.body.style.display = 'flex';
+                document.body.style.flexDirection = 'column-reverse';
+            } else {
+                document.body.style.display = 'block';
+                document.body.style.flexDirection = 'column';
+            }
+            if (currentUserId && supabase) {
+                try {
+                    await supabase
+                        .from('users')
+                        .update({
+                            tabs_position: position,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', currentUserId);
+                    await logAction('settings_change', {
+                        setting: 'tabs_position',
+                        value: position,
+                        section: 'appearance'
+                    });
+                } catch (error) {
+                    console.error('Ошибка сохранения позиции вкладок:', error);
+                    showCustomAlert('Ошибка сохранения настройки', 'error');
+                }
+            }
+        }
         async function checkUserStatus(userId) {
             try {
                 const { data, error } = await supabase
@@ -5132,45 +5090,7 @@ _____                                                                    _____
                 }, 1200);
             }, remainingTime);
         }
-        function switchTabPosition(position) {
-            const container = document.querySelector('.container');
-            const tabs = document.querySelector('.tabs');
-            const content = document.querySelectorAll('.content');
-            document.querySelectorAll('.tab-position-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`.tab-position-btn[data-position="${position}"]`).classList.add('active');
-            container.classList.remove('tabs-top', 'tabs-bottom', 'tabs-side');
-            if (position === 'bottom') {
-                container.classList.add('tabs-bottom');
-            } else if (position === 'side') {
-                container.classList.add('tabs-side');
-            } else {
-                container.classList.add('tabs-top');
-            }
-            if (currentUserId && supabase) {
-                supabase
-                    .from('users')
-                    .update({
-                        tab_position: position,
-                        updated_at: new Date().toISOString()
-                    })
-                    .eq('id', currentUserId)
-                    .then(({ error }) => {
-                        if (error) {
-                            console.error('Ошибка сохранения позиции вкладок:', error);
-                            showCustomAlert('Ошибка сохранения настройки', 'error');
-                        } else {
-                            showCustomAlert(`Вкладки перемещены ${position === 'top' ? 'вверх' : position === 'bottom' ? 'вниз' : 'вбок'}`, 'success');
-                            logAction('settings_change', {
-                                setting: 'tab_position',
-                                value: position,
-                                section: 'layout'
-                            });
-                        }
-                    });
-            }
-        }
+
         async function applyTheme(theme, isUserAction = true) {
             document.body.className = theme + '-theme';
             document.querySelectorAll('.theme-option').forEach(option => {
@@ -6022,7 +5942,7 @@ _____                                                                    _____
             try {
                 const { data, error } = await supabase
                     .from('users')
-                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled')
+                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabpos')
                     .eq('id', currentUserId)
                     .single();
                 if (error) throw error;
@@ -6037,7 +5957,10 @@ _____                                                                    _____
                 } else {
                     document.body.classList.remove('hide-tags');
                 }
-
+                const tabsPosition = data.tabs_position || 'top';
+                document.getElementById('tabs-top-btn').classList.toggle('active', tabsPosition === 'top');
+                document.getElementById('tabs-bottom-btn').classList.toggle('active', tabsPosition === 'bottom');
+                setTabsPosition(tabsPosition);
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
@@ -6078,23 +6001,6 @@ _____                                                                    _____
             }
             showErrorButton();
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.tab-position-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const position = this.getAttribute('data-position');
-                    switchTabPosition(position);
-                });});
-            if (currentUserId && supabase) {
-                supabase
-                    .from('users')
-                    .select('tab_position')
-                    .eq('id', currentUserId)
-                    .single()
-                    .then(({ data, error }) => {
-                        if (!error && data && data.tab_position) {
-                            switchTabPosition(data.tab_position);
-                        }
-                    });}});
         document.querySelectorAll('.feature-disabled, .education-feature').forEach(el => {
             el.addEventListener('click', function(e) {
                 if (e.target.closest('.disabled-overlay') || this.classList.contains('feature-disabled')) {
