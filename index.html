@@ -3061,18 +3061,22 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            border: 4px solid rgba(var(--border-color-rgb), 0.1);
-            border-radius: 50%;
+            background: transparent;
+            -webkit-mask-image: radial-gradient(circle, transparent 45%, black 46%, black 54%, transparent 55%);
+            mask-image: radial-gradient(circle, transparent 45%, black 46%, black 54%, transparent 55%);
+            background-color: rgba(var(--border-color-rgb), 0.1);
         }
         .loading-indicator {
             position: absolute;
             width: 100%;
             height: 100%;
-            border: 4px solid transparent;
-            border-radius: 50%;
+            background: transparent;
             box-sizing: border-box;
             transform: rotate(-90deg);
             clip-path: inset(0 0 0 0);
+            -webkit-mask-image: radial-gradient(circle, transparent 45%, black 46%, black 54%, transparent 55%);
+            mask-image: radial-gradient(circle, transparent 45%, black 46%, black 54%, transparent 55%);
+            will-change: transform;
         }
         .loading-indicator::before {
             content: '';
@@ -3081,14 +3085,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border: 4px solid transparent;
-            border-top-color: var(--border-color);
-            border-right-color: color-mix(in srgb, var(--border-color) 70%, transparent);
-            border-bottom-color: color-mix(in srgb, var(--border-color) 30%, transparent);
-            border-left-color: color-mix(in srgb, var(--border-color) 50%, transparent);
+            background: conic-gradient(
+                from 0deg,
+                var(--border-color) 0%,
+                color-mix(in srgb, var(--border-color) 70%, transparent) 25%,
+                color-mix(in srgb, var(--border-color) 30%, transparent) 50%,
+                color-mix(in srgb, var(--border-color) 50%, transparent) 75%,
+                var(--border-color) 100%
+            );
             animation: indicatorRotate 2s linear infinite;
             box-sizing: border-box;
+            will-change: transform;
         }
 
         @keyframes indicatorRotate {
@@ -3133,8 +3140,8 @@
         <div id="home" class="content active">
             <div class="app-info">
                 <h2>Информация о приложении</h2>
-                <div><strong>Версия приложения:</strong> V69 <span class="beta-badge">BETA</span></div>
-                <div><strong>Версия бота:</strong> 0.8.4.3</div>
+                <div><strong>Версия приложения:</strong><span class="beta-badge">dev-version</span></div>
+                <div><strong>Версия бота:</strong> 0.8.4.4</div>
                 <div><strong>Разработчик:</strong> @rellowman <span class="swiftx-tag">#zenith</span></div>
             </div>
             <h2>Профиль пользователя</h2>
