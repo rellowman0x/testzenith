@@ -4929,7 +4929,7 @@ _____                                                                    _____
         }
         
         async function initializeApp() {
-            const loadingScreen = document.getElementById('loading-screen');
+            const loadingScreen = document.getElementById('zenith-loader');
             const welcomeScreen = document.getElementById('welcome-screen');
             const container = document.querySelector('.container');
             const startTime = Date.now();
@@ -5741,7 +5741,7 @@ _____                                                                    _____
             }
         }
         function applyLoadingTheme(theme) {
-            const loadingScreen = document.getElementById('loading-screen');
+            const loadingScreen = document.getElementById('zenith-loader');
             const particles = document.querySelectorAll('.particle');
             const waves = document.querySelectorAll('.loading-wave');
             const indicator = document.querySelector('.loading-indicator');
@@ -5816,9 +5816,8 @@ _____                                                                    _____
             percentElement.textContent = `${percentage}%`;
 
             if (percentage === 100) {
-                // Пауза на 1 секунду при 100%
                 setTimeout(() => {
-                    percentElement.style.color = '#28a745'; // Зелёный цвет при завершении
+                    percentElement.style.color = '#28a745';
                     percentElement.style.textShadow = '0 0 20px rgba(40, 167, 69, 0.8)';
                 }, 100);
             }
@@ -5831,8 +5830,6 @@ _____                                                                    _____
             const firstName = user?.first_name || 'Пользователь';
             const borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
             const textColor = getComputedStyle(document.body).getPropertyValue('--text-color');
-
-            // Сначала показываем welcome screen
             welcomeScreen.style.display = 'flex';
             welcomeScreen.style.opacity = '0';
             welcomeText.innerHTML = `Привет, <span style="color: ${borderColor};">${firstName}</span>`;
@@ -5841,20 +5838,16 @@ _____                                                                    _____
             setTimeout(() => {
                 welcomeScreen.style.opacity = '1';
             }, 10);
-
-            // Потом скрываем loader с паузой на 100%
             setTimeout(() => {
                 loader.classList.add('hidden');
-            }, 3200); // 3.2 секунды — чтобы 100% висело ~1 сек
-
-            // Потом скрываем welcome
+            }, 3200);
             setTimeout(() => {
                 welcomeScreen.style.opacity = '0';
                 setTimeout(() => {
                     welcomeScreen.style.display = 'none';
                     container.style.display = 'block';
                 }, 500);
-            }, 4200); // 4.2 секунды — после начала анимации loader
+            }, 4200);
         }
         async function logAction(action, details = {}) {
             if (!document.getElementById('logging-toggle').checked) {
