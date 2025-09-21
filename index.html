@@ -1025,37 +1025,39 @@ _____                                                                    _____
         .tabs {
             position: relative;
             height: 60px;
-            background: transparent;
-            margin-bottom: 25px;
-            border-radius: 30px;
-            overflow: hidden;
+            background: rgba(var(--border-color-rgb), 0.08);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 1px solid rgba(var(--border-color-rgb), 0.25);
             box-shadow: 
                 0 8px 32px rgba(var(--border-color-rgb), 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(var(--border-color-rgb), 0.3);
+            overflow: hidden;
             padding: 5px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
         .tabs::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            bottom: 0;
             background: linear-gradient(135deg, 
-                rgba(var(--border-color-rgb), 0.05), 
-                rgba(var(--border-color-rgb), 0.02));
+                rgba(var(--border-color-rgb), 0.03), 
+                rgba(var(--border-color-rgb), 0.08));
             z-index: 1;
             border-radius: 30px;
+            pointer-events: none;
         }
+
         .tab {
             position: relative;
-            z-index: 3;
             flex: 1;
             height: 50px;
             display: flex;
@@ -1067,14 +1069,11 @@ _____                                                                    _____
             color: var(--text-color);
             text-shadow: 0 1px 2px rgba(0,0,0,0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 3;
             border-radius: 25px;
             overflow: hidden;
-            user-select: none;
         }
-        .tab:hover::before {
-            opacity: 1;
-            transform: scale(1);
-        }
+
         .tab::before {
             content: '';
             position: absolute;
@@ -1084,60 +1083,47 @@ _____                                                                    _____
             height: 100%;
             background: linear-gradient(135deg, 
                 rgba(var(--border-color-rgb), 0.1), 
-                rgba(var(--border-color-rgb), 0.03));
+                rgba(var(--border-color-rgb), 0.02));
             border-radius: 25px;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: scale(0.95);
             z-index: -1;
         }
-        @keyframes tabGlow {
-            0%, 100% {
-                box-shadow: 
-                    0 4px 20px rgba(var(--border-color-rgb  ), 0.4),
-                    0 0 0 0px rgba(var(--border-color-rgb), 0.7);
-            }
-            50% {
-                box-shadow: 
-                    0 4px 30px rgba(var(--border-color-rgb), 0.6),
-                    0 0 0 8px rgba(var(--border-color-rgb), 0.3);
-            }
+        
+        .tab:hover::before {
+            opacity: 1;
+            transform: scale(1.05);
         }
-        .tab.active:nth-child(1) ~ .tabs::after { transform: translateX(0) scale(1); }
-        .tab.active:nth-child(2) ~ .tabs::after { transform: translateX(100%) scale(1); }
-        .tab.active:nth-child(3) ~ .tabs::after { transform: translateX(200%) scale(1); }
-        .tab.active:nth-child(4) ~ .tabs::after { transform: translateX(300%) scale(1); }
         .tabs::after {
             content: '';
             position: absolute;
-            bottom: 5px;
+            top: 5px;
             left: 5px;
-            width: calc((100% - 20px) / 4);
-            height: 40px;
-            background: radial-gradient(circle at 30% 50%, 
-                var(--border-color), 
-                color-mix(in srgb, var(--border-color) 80%, transparent));
-            border-radius: 25px;
-            box-shadow: 
-                0 4px 20px rgba(var(--border-color-rgb), 0.4),
-                inset 0 1px 0 rgba(255,255,255,0.2),
-                inset 0 -1px 0 rgba(0,0,0,0.2);
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 2;
-            transform: scale(0.98);
-        }
-        .tab.active {
-            color: white !important;
-            text-shadow: 
-                0 2px 4px rgba(0,0,0,0.3),
-                0 0 15px var(--border-color);
-        }
-        .tab.active::before {
-            opacity: 0.4 !important;
+            width: calc((100% - 30px) / 4);
+            height: 50px;
             background: linear-gradient(135deg, 
                 var(--border-color), 
                 color-mix(in srgb, var(--border-color) 70%, black));
-            animation: tabGlow 3s ease-in-out infinite;
+            border-radius: 25px;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
+            box-shadow: 
+                0 4px 25px rgba(var(--border-color-rgb), 0.4),
+                0 0 0 2px rgba(255, 255, 255, 0.1) inset;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .tab.active:nth-child(1) ~ .tabs::after { transform: translateX(0); }
+        .tab.active:nth-child(2) ~ .tabs::after { transform: translateX(calc(100% + 7.5px)); }
+        .tab.active:nth-child(3) ~ .tabs::after { transform: translateX(calc(200% + 15px)); }
+        .tab.active:nth-child(4) ~ .tabs::after { transform: translateX(calc(300% + 22.5px)); }
+        .tab.active {
+            color: #ffffff !important;
+            text-shadow: 
+                0 2px 4px rgba(0,0,0,0.3),
+                0 0 15px rgba(var(--border-color-rgb), 0.5);
+        }
+        .tab:active {
+            transform: scale(0.97);
         }
         .tab.active::after,
         .tab::after {
@@ -1412,25 +1398,47 @@ _____                                                                    _____
         }
 
         .show-icons .tab {
-            flex-direction: column;
-            justify-content: center;
-            gap: 5px;
-            font-size: 12px;
+            position: relative;
+            padding-top: 25px;
         }
 
         .show-icons .tab::before {
-            content: '';
-            position: absolute;
-            top: 10px;
+            top: 12px;
             font-size: 18px;
-            font-family: "Font Awesome 5 Free";
+        }
+        @media (max-width: 480px) {
+            .tabs {
+                height: 50px;
+                border-radius: 25px;
+            }
+            .tab {
+                font-size: 13px;
+                height: 40px;
+            }
+            .tabs::after {
+                height: 40px;
+            }
+        }
+        .show-icons .tab[onclick*="home"]::before { 
+            content: "\f015"; 
+            font-family: "Font Awesome 5 Free"; 
             font-weight: 900;
         }
-
-        .show-icons .tab[onclick*="home"]::before { content: "\f015"; }
-        .show-icons .tab[onclick*="education"]::before { content: "\f19d"; }
-        .show-icons .tab[onclick*="settings"]::before { content: "\f013"; }
-        .show-icons .tab[onclick*="admin"]::before { content: "\f18e"; }
+        .show-icons .tab[onclick*="education"]::before { 
+            content: "\f19d"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
+        .show-icons .tab[onclick*="settings"]::before { 
+            content: "\f013"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
+        .show-icons .tab[onclick*="admin"]::before { 
+            content: "\f18e"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
 
         .show-icons .tab::before {
             z-index: 1;
@@ -1446,46 +1454,7 @@ _____                                                                    _____
                 text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.6);
             }
         }
-        body.dark-theme .tab,
-        body.dark-purple-theme .tab,
-        body.dark-green-theme .tab,
-        body.dark-red-theme .tab,
-        body.dark-blue-theme .tab,
-        body.dark-pink-theme .tab,
-        body.dark-orange-theme .tab {
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-        .tab:active {
-            transform: scale(0.97);
-        }
 
-        @media (max-width: 480px) {
-            .tabs {
-                height: 50px;
-                border-radius: 25px;
-                margin-bottom: 20px;
-            }
-            .tab {
-                font-size: 13px;
-                height: 40px;
-            }
-            .tabs::after {
-                height: 30px;
-            }
-            .show-icons .tab {
-                font-size: 11px;
-            }
-            .show-icons .tab::before {
-                top: 8px;
-                font-size: 16px;
-            }
-        }
-        body.dark-theme .tab.active,
-        body.dark-purple-theme .tab.active {
-            text-shadow: 
-                0 2px 5px rgba(0,0,0,0.4),
-                0 0 20px var(--border-color);
-        }
         .status-user {
             background-color: #007bff !important;
             color: white !important;
