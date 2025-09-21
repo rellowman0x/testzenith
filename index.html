@@ -5796,8 +5796,10 @@ _____                                                                    _____
 
             if (percentage === 100) {
                 setTimeout(() => {
-                    percentElement.style.color = '#28a745';
-                    percentElement.style.textShadow = '0 0 20px rgba(40, 167, 69, 0.8)';
+                    const themeColor = getComputedStyle(document.body).getPropertyValue('--border-color');
+                    const themeColorRgb = getComputedStyle(document.body).getPropertyValue('--border-color-rgb');
+                    percentElement.style.color = themeColor;
+                    percentElement.style.textShadow = `0 0 20px rgba(${themeColorRgb}, 0.8)`;
                 }, 100);
             }
         }
