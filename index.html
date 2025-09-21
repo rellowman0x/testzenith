@@ -1364,18 +1364,50 @@
         .show-icons .tab::before {
             z-index: 1;
         }
-
-        @keyframes textGlow {
-            0%, 100% { 
-                opacity: 0.7; 
-                text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3);
+        @media (max-width: 768px) {
+            .loading-logo-text {
+                font-size: 4rem;
             }
-            50% { 
-                opacity: 1; 
-                text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.6);
+            .loading-signature-text {
+                font-size: 1.4rem;
+            }
+            .loading-percentage {
+                font-size: 1.2rem;
             }
         }
 
+        @media (max-width: 480px) {
+            .loading-logo-text {
+                font-size: 3rem;
+            }
+            .loading-signature-text {
+                font-size: 1.2rem;
+            }
+            .loading-percentage {
+                font-size: 1rem;
+            }
+            .loading-progress-container {
+                margin: 20px auto 0;
+            }
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3); }
+            50% { text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.6); }
+        }
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translate(var(--tx, 0px), var(--ty, -20px)) scale(1.2);
+                opacity: 0.8;
+            }
+        }
         .status-user {
             background-color: #007bff !important;
             color: white !important;
@@ -2841,13 +2873,86 @@
             width: 100%;
             height: 100%;
             z-index: 9999;
-            background: var(--background-color);
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            background: var(--background-color);
+            overflow: hidden;
+            transition: opacity 0.5s ease;
+        }
+        .loading-logo-container {
+            margin-bottom: 20px;
             perspective: 1000px;
-            font-family: 'Arial Black', sans-serif;
+        }
+        .loading-signature-container {
+            margin-bottom: 40px;
+        }
+        .loading-progress-container {
+            position: relative;
+            width: 100%;
+            margin: 30px auto 0;
+        }
+        .loading-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(var(--border-color-rgb), 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        .loading-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, transparent));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 15px var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-progress-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+        .loading-signature-text {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--text-color);
+            opacity: 0;
+            text-shadow: 0 0 5px rgba(var(--border-color-rgb), 0.3);
+            animation: signatureReveal 1s ease-out 0.5s forwards, signatureGlow 3s ease-in-out 1.5s infinite;
+        }
+        .loading-logo-text {
+            font-size: 6rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, var(--border-color), transparent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.3);
+            animation: logoPulse 3s ease-in-out infinite, logoReveal 1s ease-out forwards;
+            opacity: 0;
+        }
+        .loading-logo-wrapper {
+            display: inline-block;
+            transform-style: preserve-3d;
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+        .loading-container {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
         }
         .loading-depth {
             position: absolute;
@@ -2939,9 +3044,24 @@
             }
         }
 
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-15px) rotateX(5deg); }
+        }
+
+        @keyframes logoReveal {
+            0% { opacity: 0; transform: scale(0.8) rotateX(-20deg); }
+            100% { opacity: 1; transform: scale(1) rotateX(0deg); }
+        }
+
         @keyframes logoPulse {
             0%, 100% { text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.3); }
             50% { text-shadow: 0 0 40px rgba(var(--border-color-rgb), 0.7), 0 0 60px rgba(var(--border-color-rgb), 0.5); }
+        }
+
+        @keyframes signatureReveal {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 0.8; transform: translateY(0); }
         }
         .loading-signature {
             position: relative;
@@ -2963,12 +3083,8 @@
         }
 
         @keyframes signatureGlow {
-            0%, 100% { 
-                text-shadow: 0 0 5px rgba(var(--border-color-rgb), 0.3);
-            }
-            50% { 
-                text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.6);
-            }
+            0%, 100% { text-shadow: 0 0 5px rgba(var(--border-color-rgb), 0.3); }
+            50% { text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.6); }
         }
         .loading-ring-container {
             position: relative;
@@ -2978,31 +3094,31 @@
             transform: translateZ(20px);
         }
         .loading-percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 28px;
+            margin-top: 10px;
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--text-color);
             text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3);
-            font-family: 'Courier New', monospace;
             animation: textGlow 2s infinite alternate;
+        }
+        .loading-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
         .particle {
             position: absolute;
-            top: 50%;
-            left: 50%;
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background: var(--border-color);
+            opacity: 0;
             filter: blur(1px);
             box-shadow: 0 0 15px var(--border-color), 0 0 30px rgba(var(--border-color-rgb), 0.5);
-            opacity: 0;
-            transform: translate(-50%, -50%);
-            animation: particleBurst var(--duration, 2s) ease-out forwards;
-            animation-delay: calc(var(--i) * 0.1s);
+            animation: particleFloat 4s ease-in-out infinite;
         }
 
         @keyframes particleBurst {
@@ -3074,6 +3190,12 @@
             transform: rotate(-90deg);
             clip-path: inset(0 0 0 0);
         }
+        .p1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .p2 { top: 30%; left: 80%; animation-delay: 0.5s; }
+        .p3 { top: 60%; left: 20%; animation-delay: 1s; }
+        .p4 { top: 70%; left: 70%; animation-delay: 1.5s; }
+        .p5 { top: 40%; left: 40%; animation-delay: 2s; }
+        .p6 { top: 50%; left: 60%; animation-delay: 2.5s; }
         .loading-indicator::before {
             content: '';
             position: absolute;
@@ -3099,25 +3221,29 @@
 </head>
 <body>
     <div id="loading-screen">
-        <div class="loading-depth"></div>
-        <div class="loading-center">
-            <div class="loading-logo">#zh</div>
-            <div class="loading-signature">#rellowman</div>
-            <div class="loading-indicator-container">
-                <div class="loading-indicator-bg"></div>
-                <div class="loading-indicator"></div>
+        <div class="loading-container">
+            <div class="loading-logo-container">
+                <div class="loading-logo-wrapper">
+                    <div class="loading-logo-text">#zh</div>
+                </div>
+            </div>
+            <div class="loading-signature-container">
+                <div class="loading-signature-text">#rellowman</div>
+            </div>
+            <div class="loading-progress-container">
+                <div class="loading-progress-bar">
+                    <div class="loading-progress-fill"></div>
+                </div>
                 <div class="loading-percentage">0%</div>
             </div>
-            <div class="loading-wave"></div>
-            <div class="loading-wave secondary-wave"></div>
-            <div class="particle" style="--i:1; --tx: 80px; --ty: -40px;"></div>
-            <div class="particle" style="--i:2; --tx: 60px; --ty: 70px;"></div>
-            <div class="particle" style="--i:3; --tx: -50px; --ty: 80px;"></div>
-            <div class="particle" style="--i:4; --tx: -90px; --ty: -30px;"></div>
-            <div class="particle" style="--i:5; --tx: 30px; --ty: -90px;"></div>
-            <div class="particle" style="--i:6; --tx: -70px; --ty: 20px;"></div>
-            <div class="particle" style="--i:7; --tx: 100px; --ty: 50px;"></div>
-            <div class="particle" style="--i:8; --tx: -40px; --ty: -100px;"></div>
+            <div class="loading-particles">
+                <div class="particle p1"></div>
+                <div class="particle p2"></div>
+                <div class="particle p3"></div>
+                <div class="particle p4"></div>
+                <div class="particle p5"></div>
+                <div class="particle p6"></div>
+            </div>
         </div>
     </div>
     <div id="welcome-screen">
@@ -5825,55 +5951,16 @@
             }
         }
         function applyLoadingTheme(theme) {
-            const loadingScreen = document.getElementById('loading-screen');
-            const particles = document.querySelectorAll('.particle');
-            const waves = document.querySelectorAll('.loading-wave');
-            const indicator = document.querySelector('.loading-indicator');
-            const indicatorBg = document.querySelector('.loading-indicator-bg');
-            const percentage = document.querySelector('.loading-percentage');
-            const signature = document.querySelector('.loading-signature');
-
-            if (loadingScreen) {
-                loadingScreen.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
-            }
-
-            if (percentage) {
-                percentage.style.color = getComputedStyle(document.body).getPropertyValue('--text-color');
-                percentage.style.textShadow = `0 0 10px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.3)`;
-            }
-
-            if (signature) {
-                signature.style.color = getComputedStyle(document.body).getPropertyValue('--text-color');
-                signature.style.textShadow = `0 0 5px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.3)`;
-            }
-
-            if (indicator) {
-                indicator.style.setProperty('--border-color', getComputedStyle(document.body).getPropertyValue('--border-color'));
-            }
-
-            if (indicatorBg) {
-                indicatorBg.style.borderColor = `rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.1)`;
-            }
-
-            particles.forEach(particle => {
-                const borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
-                const borderColorRgb = getComputedStyle(document.body).getPropertyValue('--border-color-rgb');
-                particle.style.background = borderColor;
-                particle.style.filter = 'blur(1px)';
-                particle.style.boxShadow = `0 0 15px ${borderColor}, 0 0 30px rgba(${borderColorRgb}, 0.5)`;
-            });
-
-            waves.forEach(wave => {
-                wave.style.borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
-                wave.style.boxShadow = 'none';
-            });
+            console.log('Loading theme applied:', theme);
         }
         function updateLoadingProgress(percentage) {
-            const progressBar = document.querySelector('.loading-bar');
+            const fill = document.querySelector('.loading-progress-fill');
             const percentageText = document.querySelector('.loading-percentage');
-            if (progressBar) {
-                progressBar.style.width = `${percentage}%`;
+            
+            if (fill) {
+                fill.style.width = `${percentage}%`;
             }
+            
             if (percentageText) {
                 percentageText.textContent = `${percentage}%`;
             }
@@ -5994,6 +6081,14 @@
                     e.stopPropagation();
                 }
             });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '1';
+                }, 100);
+            }
         });
         document.addEventListener('DOMContentLoaded', initializeApp);</script>
 </body>
