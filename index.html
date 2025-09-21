@@ -5942,7 +5942,7 @@ _____                                                                    _____
             try {
                 const { data, error } = await supabase
                     .from('users')
-                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabpos')
+                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabs_position')
                     .eq('id', currentUserId)
                     .single();
                 if (error) throw error;
