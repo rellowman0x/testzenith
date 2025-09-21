@@ -1024,60 +1024,33 @@ _____                                                                    _____
         
         .tabs {
             display: flex;
-            background: transparent;
-            padding: 0;
-            margin-bottom: 16px;
-            position: relative;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(var(--border-color-rgb), 0.06);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(var(--border-color-rgb), 0.15);
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(var(--border-color-rgb), 0.08);
+            background: #fff;
+            border-radius: 20px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0, 0, 0, 0.1);
         }
-
+        
         .tab {
             flex: 1;
             text-align: center;
-            padding: 0 8px;
+            padding: 12px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: transparent;
+            border: 2px solid transparent;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 2;
-            color: var(--text-color);
-            font-weight: 600;
-            font-size: 14px;
-            border: none;
-            background: transparent;
-            height: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            max-width: 0;
-            flex-grow: 1;
         }
-        .tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(var(--border-color-rgb), 0.08);
-            border-radius: 12px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            z-index: -1;
-        }
+        
         .tab.active {
-            color: var(--border-color) !important;
-            font-weight: 700;
-            text-shadow: 0 1px 2px rgba(var(--border-color-rgb), 0.2);
+            color: inherit;
+            background: transparent;
         }
         
         .tab.active::after,
@@ -1112,43 +1085,17 @@ _____                                                                    _____
         }
         
         .tab.active::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 30px;
-            border: 2px solid var(--border-color);
-            animation: borderPulse 3s ease-in-out infinite, subtlePulse 2s ease-in-out infinite;
-            z-index: -1;
+            opacity: 1;
+            animation: var(--border-animation);
         }
-        .tabs::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: calc(100% / 4);
-            height: 3px;
-            background: linear-gradient(90deg, var(--border-color), transparent);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 3px 3px 0 0;
-            box-shadow: 0 2px 6px rgba(var(--border-color-rgb), 0.4);
-        }
-
-        .tab.active:nth-child(1) ~ .tabs::after { transform: translateX(0); }
-        .tab.active:nth-child(2) ~ .tabs::after { transform: translateX(100%); }
-        .tab.active:nth-child(3) ~ .tabs::after { transform: translateX(200%); }
-        .tab.active:nth-child(4) ~ .tabs::after { transform: translateX(300%); }
+        
         @keyframes borderPulse {
             0%, 100% { border-color: var(--border-color); }
             25% { border-color: color-mix(in srgb, var(--border-color) 80%, white); }
             50% { border-color: color-mix(in srgb, var(--border-color) 60%, white); }
             75% { border-color: color-mix(in srgb, var(--border-color) 80%, white); }
         }
-        .tab:hover::before {
-            opacity: 1;
-        }
+        
         .content {
             display: none;
             background: #fff;
@@ -1380,64 +1327,44 @@ _____                                                                    _____
 
         .show-icons .tab {
             position: relative;
-            padding-top: 22px;
-            padding-bottom: 4px;
-            font-size: 12px;
+            padding-top: 25px;
         }
 
         .show-icons .tab::before {
             position: absolute;
-            top: 6px;
+            top: 8px;
             left: 50%;
             transform: translateX(-50%);
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
             font-size: 16px;
-            color: var(--text-color);
-            transition: all 0.2s ease;
-            z-index: 1;
         }
 
-        .show-icons .tab.active::before {
-            color: var(--border-color);
-            transform: translateX(-50%) translateY(-1px);
-            text-shadow: 0 2px 4px rgba(var(--border-color-rgb), 0.2);
+        .show-icons .tab[onclick*="home"]::before { 
+            content: "\f015"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
         }
-
-        .show-icons .tab[onclick*="home"]::before { content: "\f015"; }
-        .show-icons .tab[onclick*="education"]::before { content: "\f19d"; }
-        .show-icons .tab[onclick*="settings"]::before { content: "\f013"; }
-        .show-icons .tab[onclick*="admin"]::before { content: "\f18e"; }
+        .show-icons .tab[onclick*="education"]::before { 
+            content: "\f19d"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
+        .show-icons .tab[onclick*="settings"]::before { 
+            content: "\f013"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
+        .show-icons .tab[onclick*="admin"]::before { 
+            content: "\f18e"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
 
         .show-icons .tab::before {
             z-index: 1;
         }
-        @media (max-width: 375px) {
-            .tabs {
-                height: 44px;
-                border-radius: 10px;
-                margin-bottom: 12px;
-            }
-            .tab {
-                font-size: 13px;
-                padding: 0 6px;
-            }
-            .show-icons .tab {
-                padding-top: 20px;
-            }
-            .show-icons .tab::before {
-                top: 5px;
-                font-size: 14px;
-            }
-        }
-        @keyframes subtlePulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(var(--border-color-rgb), 0.4);
-            }
-            50% {
-                box-shadow: 0 0 0 6px rgba(var(--border-color-rgb), 0);
-            }
-        }
+
         @keyframes textGlow {
             0%, 100% { 
                 opacity: 0.7; 
