@@ -60,6 +60,7 @@ _____                                                                    _____
     <style>
         :root {
             --border-color-rgb: 51, 51, 51;
+            --loading-indicator-color: var(--border-color);
         }
 
         body.light-theme {
@@ -952,6 +953,7 @@ _____                                                                    _____
             --button-text-color: #fff;
             --button-hover-color: #a8a8a8;
             --button-hover-text-color: #fff;
+            --loading-indicator-color: var(--border-color);
         }
 
         .beta-badge {
@@ -1364,8 +1366,14 @@ _____                                                                    _____
         }
 
         @keyframes textGlow {
-            from { opacity: 0.7; }
-            to { opacity: 1; }
+            0%, 100% { 
+                opacity: 0.7; 
+                text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3);
+            }
+            50% { 
+                opacity: 1; 
+                text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.6);
+            }
         }
 
         .status-user {
@@ -2079,228 +2087,6 @@ _____                                                                    _____
             color: var(--button-hover-text-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .loading-grid {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-            linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -2;
-            opacity: 0.6;
-            animation: grid-drift 30s linear infinite;
-        }
-
-        body.dark-theme .loading-grid,
-        body.dark-purple-theme .loading-grid {
-            background: 
-            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-        }
-
-        @keyframes grid-drift {
-            0% { transform: translateZ(-100px) rotateZ(0deg); }
-            100% { transform: translateZ(-100px) rotateZ(360deg); }
-        }
-
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            background: var(--background-color);
-            color: var(--text-color);
-            font-family: 'Arial Black', sans-serif;
-        }
-
-        .loading-z {
-            font-size: 8rem;
-            font-weight: 900;
-            letter-spacing: 4px;
-            color: var(--border-color);
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            transform: translateZ(0);
-            animation: emergeZ 1.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards, floatSubtle 3s ease-in-out infinite;
-            opacity: 0;
-        }
-        @keyframes floatSubtle {
-            0%, 100% { transform: translateZ(0) translateY(0); }
-            50% { transform: translateZ(0) translateY(-10px); }
-        }
-        body.dark-theme .loading-z,
-        body.dark-purple-theme .loading-z {
-            text-shadow: 0 0 15px var(--border-color);
-        }
-
-        @keyframes emergeZ {
-            0% {
-            opacity: 0;
-            transform: scale(0.7) rotate(-10deg);
-            }
-            70% {
-            opacity: 1;
-            transform: scale(1.1) rotate(5deg);
-            }
-            100% {
-            opacity: 1;
-            transform: scale(1) rotate(0);
-            }
-        }
-
-        .loading-signature {
-            font-size: 1.8rem;
-            margin-top: 20px;
-            opacity: 0;
-            color: var(--border-color);
-            text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.7);
-            animation: fadeUp 0.8s 1.5s forwards, glowPulse 2s 1.5s infinite;
-        }
-        @keyframes glowPulse {
-            0% { text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.7); }
-            50% { text-shadow: 0 0 25px rgba(var(--border-color-rgb), 0.9); }
-            100% { text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.7); }
-        }
-        @keyframes fadeUp {
-            to {
-            opacity: 0.8;
-            transform: translateY(-5px);
-            }
-        }
-
-        .loading-percentage {
-            position: absolute;
-            bottom: 80px;
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--border-color);
-            animation: textGlow 1.5s infinite alternate;
-            text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.5);
-            z-index: 10;
-            font-family: 'Arial Black', sans-serif;
-        }
-        .loading-bar-container {
-            position: absolute;
-            bottom: 50px;
-            width: 200px;
-            height: 8px;
-            background: rgba(var(--border-color-rgb), 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-        .loading-bar {
-            height: 100%;
-            width: 0%;
-            background: var(--border-color);
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.6);
-            transition: width 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .loading-bar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: progressPulse 1.5s infinite;
-        }
-        .particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--border-color);
-            box-shadow: 0 0 10px var(--border-color);
-            opacity: 0.1;
-            animation: float var(--duration, 6s) ease-in-out infinite;
-            animation-delay: calc(var(--i) * 0.5s);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        @keyframes float {
-            0%, 100% {
-                transform: translate(-50%, -50%) rotate(0deg) scale(1);
-                opacity: 0.1;
-            }
-            25% {
-                transform: translate(calc(-50% + 50px), calc(-50% - 30px)) rotate(90deg) scale(1.2);
-                opacity: 0.15;
-            }
-            50% {
-                transform: translate(calc(-50% + 0px), calc(-50% + 50px)) rotate(180deg) scale(0.8);
-                opacity: 0.1;
-            }
-            75% {
-                transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(270deg) scale(1.1);
-                opacity: 0.12;
-            }
-        }
-        .loading-wave.secondary-wave {
-            width: 320px;
-            height: 320px;
-            opacity: 0.3;
-            animation: ripple 3s ease-out 1s infinite;
-            z-index: -1;
-        }
-        .particle:nth-child(1) { --duration: 8s; }
-        .particle:nth-child(2) { --duration: 12s; }
-        .particle:nth-child(3) { --duration: 7s; }
-        .particle:nth-child(4) { --duration: 10s; }
-        .particle:nth-child(5) { --duration: 9s; }
-        .particle:nth-child(6) { --duration: 11s; }
-        .particle:nth-child(7) { --duration: 8.5s; }
-        .particle:nth-child(8) { --duration: 9.5s; }
-        @keyframes progressPulse {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .loading-wave {
-            position: absolute;
-            width: 280px;
-            height: 280px;
-            border: 2px solid var(--border-color);
-            animation: ripple 2s cubic-bezier(0.2, 1, 0.3, 1) 0.6s forwards;
-            border-radius: 50%;
-            opacity: 0;
-            z-index: -1;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        body.dark-theme .loading-wave,
-        body.dark-purple-theme .loading-wave {
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
-        }
-
-        @keyframes ripple {
-            0% {
-            transform: scale(0);
-            opacity: 0;
-            }
-            30% {
-            opacity: 0.4;
-            }
-            100% {
-            transform: scale(1);
-            opacity: 0.6;
-            }
         }
 
         .logs-stats-card {
@@ -3048,27 +2834,291 @@ _____                                                                    _____
             background: var(--background-color) !important;
             border-top: 2px solid rgba(var(--border-color-rgb), 0.1) !important;
         }
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: var(--background-color);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            font-family: 'Arial Black', sans-serif;
+        }
+        .loading-depth {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .loading-depth::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent 40%, rgba(var(--border-color-rgb), 0.03) 41%, transparent 42%),
+                        radial-gradient(circle, transparent 40%, rgba(var(--border-color-rgb), 0.03) 41%, transparent 42%),
+                        radial-gradient(circle, transparent 40%, rgba(var(--border-color-rgb), 0.03) 41%, transparent 42%),
+                        radial-gradient(circle, transparent 40%, rgba(var(--border-color-rgb), 0.03) 41%, transparent 42%),
+                        radial-gradient(circle, transparent 40%, rgba(var(--border-color-rgb), 0.03) 41%, transparent 42%),
+                        radial-gradient(circle, transparent 40%, rgba(var(--border-color-rgb), 0.03) 41%, transparent 42%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px, 50px 50px, 75px 75px, 100px 100px, 125px 125px;
+            animation: starsFloat 120s linear infinite;
+            transform: translateZ(-100px);
+            opacity: 0.7;
+        }
+        .loading-depth::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent 45%, rgba(var(--border-color-rgb), 0.08) 46%, transparent 47%),
+                        radial-gradient(circle, transparent 45%, rgba(var(--border-color-rgb), 0.08) 46%, transparent 47%),
+                        radial-gradient(circle, transparent 45%, rgba(var(--border-color-rgb), 0.08) 46%, transparent 47%),
+                        radial-gradient(circle, transparent 45%, rgba(var(--border-color-rgb), 0.08) 46%, transparent 47%),
+                        radial-gradient(circle, transparent 45%, rgba(var(--border-color-rgb), 0.08) 46%, transparent 47%),
+                        radial-gradient(circle, transparent 45%, rgba(var(--border-color-rgb), 0.08) 46%, transparent 47%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px, 30px 30px, 45px 45px, 60px 60px, 75px 75px;
+            animation: starsFloat 80s linear infinite;
+            transform: translateZ(-50px);
+            opacity: 0.9;
+        }
+        @keyframes starsFloat {
+            0% { transform: translateZ(-100px) rotateZ(0deg); }
+            100% { transform: translateZ(-100px) rotateZ(360deg); }
+        }
+        .loading-center {
+            position: relative;
+            text-align: center;
+            transform-style: preserve-3d;
+            animation: floatCenter 6s ease-in-out infinite;
+        }
+
+        @keyframes floatCenter {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(2deg); }
+        }
+        .loading-logo {
+            position: relative;
+            font-size: 8rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: transparent;
+            text-shadow: none;
+            background: linear-gradient(135deg, var(--border-color), transparent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            transform: translateZ(50px);
+            animation: logoEmerge 1.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards, logoPulse 4s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes logoEmerge {
+            0% {
+                opacity: 0;
+                transform: translateZ(50px) scale(0.5) rotateX(-30deg);
+            }
+            70% {
+                opacity: 1;
+                transform: translateZ(50px) scale(1.1) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateZ(50px) scale(1) rotateX(0deg);
+            }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(var(--border-color-rgb), 0.3); }
+            50% { text-shadow: 0 0 40px rgba(var(--border-color-rgb), 0.7), 0 0 60px rgba(var(--border-color-rgb), 0.5); }
+        }
+        .loading-signature {
+            position: relative;
+            display: block;
+            margin-top: -10px;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--text-color);
+            opacity: 0;
+            transform: translateZ(30px);
+            animation: signatureFade 0.8s 1.8s forwards, signatureGlow 3s 2s infinite;
+        }
+        @keyframes signatureFade {
+            to {
+                opacity: 0.6;
+                transform: translateZ(30px) translateY(0);
+            }
+        }
+
+        @keyframes signatureGlow {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(var(--border-color-rgb), 0.3);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.6);
+            }
+        }
+        .loading-ring-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 40px auto 0;
+            transform: translateZ(20px);
+        }
+        .loading-percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3);
+            font-family: 'Courier New', monospace;
+            animation: textGlow 2s infinite alternate;
+        }
+        .particle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border-color);
+            filter: blur(1px);
+            box-shadow: 0 0 15px var(--border-color), 0 0 30px rgba(var(--border-color-rgb), 0.5);
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            animation: particleBurst var(--duration, 2s) ease-out forwards;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+
+        @keyframes particleBurst {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(0);
+                filter: blur(0px);
+                box-shadow: none;
+            }
+        }
+        .loading-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0px;
+            height: 0px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            animation: waveExpand 2s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+
+        .loading-wave.secondary-wave {
+            animation: waveExpand 3s cubic-bezier(0.2, 1, 0.3, 1) 1s forwards;
+            opacity: 0.3;
+        }
+
+        @keyframes waveExpand {
+            0% {
+                width: 0px;
+                height: 0px;
+                opacity: 0.5;
+            }
+            100% {
+                width: 400px;
+                height: 400px;
+                opacity: 0;
+            }
+        }
+        .loading-indicator-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 40px auto 0;
+            transform: translateZ(20px);
+        }
+        .loading-indicator-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(var(--border-color-rgb), 0.1);
+            border-radius: 50%;
+        }
+        .loading-indicator {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-radius: 50%;
+            box-sizing: border-box;
+            transform: rotate(-90deg);
+            clip-path: inset(0 0 0 0);
+        }
+        .loading-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--border-color);
+            border-right-color: color-mix(in srgb, var(--border-color) 70%, transparent);
+            border-bottom-color: color-mix(in srgb, var(--border-color) 30%, transparent);
+            border-left-color: color-mix(in srgb, var(--border-color) 50%, transparent);
+            animation: indicatorRotate 2s linear infinite;
+            box-sizing: border-box;
+        }
+
+        @keyframes indicatorRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div id="loading-screen">
-        <div class="loading-grid"></div>
-        <div class="loading-wave"></div>
-        <div class="loading-wave secondary-wave"></div>
-        <div class="loading-z">#zt</div>
-        <div class="loading-signature">#rellowman</div>
-        <div class="loading-percentage">0%</div>
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
+        <div class="loading-depth"></div>
+        <div class="loading-center">
+            <div class="loading-logo">#zh</div>
+            <div class="loading-signature">#rellowman</div>
+            <div class="loading-indicator-container">
+                <div class="loading-indicator-bg"></div>
+                <div class="loading-indicator"></div>
+                <div class="loading-percentage">0%</div>
+            </div>
+            <div class="loading-wave"></div>
+            <div class="loading-wave secondary-wave"></div>
+            <div class="particle" style="--i:1; --tx: 80px; --ty: -40px;"></div>
+            <div class="particle" style="--i:2; --tx: 60px; --ty: 70px;"></div>
+            <div class="particle" style="--i:3; --tx: -50px; --ty: 80px;"></div>
+            <div class="particle" style="--i:4; --tx: -90px; --ty: -30px;"></div>
+            <div class="particle" style="--i:5; --tx: 30px; --ty: -90px;"></div>
+            <div class="particle" style="--i:6; --tx: -70px; --ty: 20px;"></div>
+            <div class="particle" style="--i:7; --tx: 100px; --ty: 50px;"></div>
+            <div class="particle" style="--i:8; --tx: -40px; --ty: -100px;"></div>
         </div>
-        <div class="particle" style="--i:1;"></div>
-        <div class="particle" style="--i:2;"></div>
-        <div class="particle" style="--i:3;"></div>
-        <div class="particle" style="--i:4;"></div>
-        <div class="particle" style="--i:5;"></div>
-        <div class="particle" style="--i:6;"></div>
-        <div class="particle" style="--i:7;"></div>
-        <div class="particle" style="--i:8;"></div>
     </div>
     <div id="welcome-screen">
         <span id="welcome-text"></span>
@@ -5048,15 +5098,15 @@ _____                                                                    _____
             }
             const elapsedTime = Date.now() - startTime;
             const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
-
             setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                loadingScreen.style.transition = 'opacity 0.5s ease';
-                
                 setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                showWelcomeScreen();
-                }, 500);
+                    loadingScreen.style.opacity = '0';
+                    loadingScreen.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        showWelcomeScreen();
+                    }, 500);
+                }, 1200);
             }, remainingTime);
         }
 
@@ -5776,29 +5826,46 @@ _____                                                                    _____
         }
         function applyLoadingTheme(theme) {
             const loadingScreen = document.getElementById('loading-screen');
-            const loadingTitle = document.getElementById('loading-title'); 
-            const loadingStatus = document.querySelector('#loading-status span'); 
-            const loadingSpinner = document.getElementById('loading-spinner'); 
             const particles = document.querySelectorAll('.particle');
-            const loadingBar = document.querySelector('.loading-bar');
-            const loadingPercentage = document.querySelector('.loading-percentage');
+            const waves = document.querySelectorAll('.loading-wave');
+            const indicator = document.querySelector('.loading-indicator');
+            const indicatorBg = document.querySelector('.loading-indicator-bg');
+            const percentage = document.querySelector('.loading-percentage');
+            const signature = document.querySelector('.loading-signature');
+
             if (loadingScreen) {
                 loadingScreen.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
             }
 
-            if (loadingPercentage) {
-                loadingPercentage.style.color = getComputedStyle(document.body).getPropertyValue('--border-color');
-                loadingPercentage.style.textShadow = `0 0 10px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.5)`;
+            if (percentage) {
+                percentage.style.color = getComputedStyle(document.body).getPropertyValue('--text-color');
+                percentage.style.textShadow = `0 0 10px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.3)`;
             }
 
-            if (loadingBar) {
-                loadingBar.style.background = getComputedStyle(document.body).getPropertyValue('--border-color');
-                loadingBar.style.boxShadow = `0 0 15px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.6)`;
+            if (signature) {
+                signature.style.color = getComputedStyle(document.body).getPropertyValue('--text-color');
+                signature.style.textShadow = `0 0 5px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.3)`;
+            }
+
+            if (indicator) {
+                indicator.style.setProperty('--border-color', getComputedStyle(document.body).getPropertyValue('--border-color'));
+            }
+
+            if (indicatorBg) {
+                indicatorBg.style.borderColor = `rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.1)`;
             }
 
             particles.forEach(particle => {
-                particle.style.background = getComputedStyle(document.body).getPropertyValue('--border-color');
-                particle.style.boxShadow = `0 0 10px ${getComputedStyle(document.body).getPropertyValue('--border-color')}`;
+                const borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
+                const borderColorRgb = getComputedStyle(document.body).getPropertyValue('--border-color-rgb');
+                particle.style.background = borderColor;
+                particle.style.filter = 'blur(1px)';
+                particle.style.boxShadow = `0 0 15px ${borderColor}, 0 0 30px rgba(${borderColorRgb}, 0.5)`;
+            });
+
+            waves.forEach(wave => {
+                wave.style.borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
+                wave.style.boxShadow = 'none';
             });
         }
         function updateLoadingProgress(percentage) {
