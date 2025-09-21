@@ -5823,8 +5823,9 @@ _____                                                                    _____
             }
         }
         function showWelcomeScreen() {
-            const loader = document.getElementById('zenith-loader');
+            const loader = document.getElementById('loading-screen');
             const welcomeScreen = document.getElementById('welcome-screen');
+            const welcomeText = document.getElementById('welcome-text'); // ✅ Теперь объявлено здесь
             const container = document.querySelector('.container');
             const user = tg.initDataUnsafe?.user;
             const firstName = user?.first_name || 'Пользователь';
@@ -5832,14 +5833,19 @@ _____                                                                    _____
             const textColor = getComputedStyle(document.body).getPropertyValue('--text-color');
             welcomeScreen.style.display = 'flex';
             welcomeScreen.style.opacity = '0';
-            welcomeText.innerHTML = `Привет, <span style="color: ${borderColor};">${firstName}</span>`;
-            welcomeText.style.color = textColor;
+            if (welcomeText) {
+                welcomeText.innerHTML = `Привет, <span style="color: ${borderColor};">${firstName}</span>`;
+                welcomeText.style.color = textColor;
+            }
 
             setTimeout(() => {
                 welcomeScreen.style.opacity = '1';
             }, 10);
             setTimeout(() => {
-                loader.classList.add('hidden');
+                if (loader) loader.style.opacity = '0';
+                setTimeout(() => {
+                    if (loader) loader.style.display = 'none';
+                }, 500);
             }, 3200);
             setTimeout(() => {
                 welcomeScreen.style.opacity = '0';
@@ -5847,7 +5853,7 @@ _____                                                                    _____
                     welcomeScreen.style.display = 'none';
                     container.style.display = 'block';
                 }, 500);
-            }, 4200);
+            }, 4200); 
         }
         async function logAction(action, details = {}) {
             if (!document.getElementById('logging-toggle').checked) {
