@@ -1024,59 +1024,33 @@ _____                                                                    _____
         
         .tabs {
             display: flex;
-            background: transparent;
-            padding: 0;
-            margin-bottom: 25px;
-            position: relative;
-            height: 65px;
-            border-radius: 35px;
-            background: rgba(var(--border-color-rgb), 0.08);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(var(--border-color-rgb), 0.2);
-            box-shadow: 0 8px 32px rgba(var(--border-color-rgb), 0.1);
-            overflow: hidden;
+            background: #fff;
+            border-radius: 20px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0, 0, 0, 0.1);
         }
-
+        
         .tab {
             flex: 1;
             text-align: center;
-            padding: 0 12px;
+            padding: 12px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: transparent;
+            border: 2px solid transparent;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            z-index: 2;
-            color: var(--text-color);
-            font-weight: 700;
-            font-size: 16px;
-            height: 100%;
-            overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        .tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(var(--border-color-rgb), 0.15), rgba(var(--border-color-rgb), 0.05));
-            border-radius: 35px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        .tab:hover::before {
-            opacity: 1;
-        }
+        
         .tab.active {
-            color: white !important;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            color: inherit;
+            background: transparent;
         }
         
         .tab.active::after,
@@ -1091,13 +1065,7 @@ _____                                                                    _____
             border: 2px solid var(--border-color);
             animation: var(--border-animation);
         }
-        .tab:hover {
-            transform: translateY(-3px);
-            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .tab:active {
-            transform: translateY(1px);
-        }
+        
         .tab::after {
             content: '';
             position: absolute;
@@ -1110,26 +1078,8 @@ _____                                                                    _____
             animation: var(--border-animation);
             opacity: 0;
         }
-        .tabs::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: calc(100% / 4);
-            height: 100%;
-            background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black));
-            border-radius: 35px;
-            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1;
-            box-shadow: 
-                0 4px 20px rgba(var(--border-color-rgb), 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.2);
-        }
-
-        .tab.active:nth-child(1) ~ .tabs::after { transform: translateX(0); }
-        .tab.active:nth-child(2) ~ .tabs::after { transform: translateX(100%); }
-        .tab.active:nth-child(3) ~ .tabs::after { transform: translateX(200%); }
-        .tab.active:nth-child(4) ~ .tabs::after { transform: translateX(300%); }
+        
+        
         .tab:hover::after {
             opacity: 0.5;
         }
@@ -1377,32 +1327,39 @@ _____                                                                    _____
 
         .show-icons .tab {
             position: relative;
-            padding-top: 35px;
-            font-size: 14px;
+            padding-top: 25px;
         }
 
         .show-icons .tab::before {
             position: absolute;
-            top: 12px;
+            top: 8px;
             left: 50%;
             transform: translateX(-50%);
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
-            font-size: 20px;
-            color: var(--text-color);
-            transition: all 0.3s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 16px;
         }
 
-        .show-icons .tab.active::before {
-            color: white;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        .show-icons .tab[onclick*="home"]::before { 
+            content: "\f015"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
         }
-
-        .show-icons .tab[onclick*="home"]::before { content: "\f015"; }
-        .show-icons .tab[onclick*="education"]::before { content: "\f19d"; }
-        .show-icons .tab[onclick*="settings"]::before { content: "\f013"; }
-        .show-icons .tab[onclick*="admin"]::before { content: "\f18e"; }
+        .show-icons .tab[onclick*="education"]::before { 
+            content: "\f19d"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
+        .show-icons .tab[onclick*="settings"]::before { 
+            content: "\f013"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
+        .show-icons .tab[onclick*="admin"]::before { 
+            content: "\f18e"; 
+            font-family: "Font Awesome 5 Free"; 
+            font-weight: 900;
+        }
 
         .show-icons .tab::before {
             z-index: 1;
@@ -3002,21 +2959,14 @@ _____                                                                    _____
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2.2rem;
-            font-weight: 900;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-color);
             font-family: 'Courier New', monospace;
-            color: var(--border-color);
-            text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.4);
-            animation: textGlow 2s infinite alternate, pulseScale 1.5s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3);
+            animation: textGlow 2s infinite alternate;
         }
-        @keyframes pulseScale {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-        }
+
         .loader-particles {
             position: absolute;
             top: 0;
@@ -5792,46 +5742,27 @@ _____                                                                    _____
         }
         function applyLoadingTheme(theme) {
             const loadingScreen = document.getElementById('zenith-loader');
-            const particles = document.querySelectorAll('.particle');
-            const waves = document.querySelectorAll('.loading-wave');
-            const indicator = document.querySelector('.loading-indicator');
-            const indicatorBg = document.querySelector('.loading-indicator-bg');
-            const percentage = document.querySelector('.loading-percentage');
-            const signature = document.querySelector('.loading-signature');
-
+            const particles = document.querySelectorAll('.loader-particle');
+            const percentage = document.getElementById('loader-percent');
+            const signature = document.querySelector('.loader-signature');
             if (loadingScreen) {
                 loadingScreen.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
             }
-
             if (percentage) {
-                percentage.style.color = getComputedStyle(document.body).getPropertyValue('--text-color');
-                percentage.style.textShadow = `0 0 10px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.3)`;
+                const themeColor = getComputedStyle(document.body).getPropertyValue('--border-color');
+                percentage.style.color = themeColor;
+                percentage.style.textShadow = `0 0 20px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.7)`;
             }
-
             if (signature) {
                 signature.style.color = getComputedStyle(document.body).getPropertyValue('--text-color');
                 signature.style.textShadow = `0 0 5px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.3)`;
             }
-
-            if (indicator) {
-                indicator.style.setProperty('--border-color', getComputedStyle(document.body).getPropertyValue('--border-color'));
-            }
-
-            if (indicatorBg) {
-                indicatorBg.style.borderColor = `rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.1)`;
-            }
-
             particles.forEach(particle => {
                 const borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
                 const borderColorRgb = getComputedStyle(document.body).getPropertyValue('--border-color-rgb');
                 particle.style.background = borderColor;
                 particle.style.filter = 'blur(1px)';
                 particle.style.boxShadow = `0 0 15px ${borderColor}, 0 0 30px rgba(${borderColorRgb}, 0.5)`;
-            });
-
-            waves.forEach(wave => {
-                wave.style.borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
-                wave.style.boxShadow = 'none';
             });
         }
         function initLoaderParticles() {
