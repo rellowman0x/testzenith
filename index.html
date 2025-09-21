@@ -1017,54 +1017,66 @@ _____                                                                    _____
         }
 
         .container {
-            padding-top: 70px;
-            padding-bottom: 70px; 
-            box-sizing: border-box;
+            max-width: 100%;
+            padding: 15px;
+            overflow: hidden;
         }
-        .container.tabs-at-bottom {
-            padding-top: 20px;
-            padding-bottom: 70px;
+        
+        .tabs {
+            display: flex;
+            background: transparent;
+            padding: 0;
+            margin-bottom: 25px;
+            position: relative;
+            height: 65px;
+            border-radius: 35px;
+            background: rgba(var(--border-color-rgb), 0.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(var(--border-color-rgb), 0.2);
+            box-shadow: 0 8px 32px rgba(var(--border-color-rgb), 0.1);
+            overflow: hidden;
         }
 
-        .container.tabs-at-top {
-            padding-top: 70px;
-            padding-bottom: 20px;
-        }
-        .tabs {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            width: calc(100% - 30px);
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-        .tabs.position-top {
-            top: 15px;
-            bottom: auto;
-        }
-        .tabs.position-bottom {
-            bottom: 15px;
-            top: auto;
-        }
         .tab {
             flex: 1;
             text-align: center;
-            padding: 12px 0;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            background: transparent;
-            border: 2px solid transparent;
+            padding: 0 12px;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            z-index: 2;
+            color: var(--text-color);
+            font-weight: 700;
+            font-size: 16px;
+            height: 100%;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
+        .tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(var(--border-color-rgb), 0.15), rgba(var(--border-color-rgb), 0.05));
+            border-radius: 35px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .tab:hover::before {
+            opacity: 1;
+        }
         .tab.active {
-            color: inherit;
-            background: transparent;
+            color: white !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .tab.active::after,
@@ -1079,7 +1091,13 @@ _____                                                                    _____
             border: 2px solid var(--border-color);
             animation: var(--border-animation);
         }
-        
+        .tab:hover {
+            transform: translateY(-3px);
+            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .tab:active {
+            transform: translateY(1px);
+        }
         .tab::after {
             content: '';
             position: absolute;
@@ -1092,8 +1110,26 @@ _____                                                                    _____
             animation: var(--border-animation);
             opacity: 0;
         }
-        
-        
+        .tabs::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: calc(100% / 4);
+            height: 100%;
+            background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black));
+            border-radius: 35px;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1;
+            box-shadow: 
+                0 4px 20px rgba(var(--border-color-rgb), 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+
+        .tab.active:nth-child(1) ~ .tabs::after { transform: translateX(0); }
+        .tab.active:nth-child(2) ~ .tabs::after { transform: translateX(100%); }
+        .tab.active:nth-child(3) ~ .tabs::after { transform: translateX(200%); }
+        .tab.active:nth-child(4) ~ .tabs::after { transform: translateX(300%); }
         .tab:hover::after {
             opacity: 0.5;
         }
@@ -1341,39 +1377,32 @@ _____                                                                    _____
 
         .show-icons .tab {
             position: relative;
-            padding-top: 25px;
+            padding-top: 35px;
+            font-size: 14px;
         }
 
         .show-icons .tab::before {
             position: absolute;
-            top: 8px;
+            top: 12px;
             left: 50%;
             transform: translateX(-50%);
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
-            font-size: 16px;
+            font-size: 20px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .show-icons .tab[onclick*="home"]::before { 
-            content: "\f015"; 
-            font-family: "Font Awesome 5 Free"; 
-            font-weight: 900;
+        .show-icons .tab.active::before {
+            color: white;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
-        .show-icons .tab[onclick*="education"]::before { 
-            content: "\f19d"; 
-            font-family: "Font Awesome 5 Free"; 
-            font-weight: 900;
-        }
-        .show-icons .tab[onclick*="settings"]::before { 
-            content: "\f013"; 
-            font-family: "Font Awesome 5 Free"; 
-            font-weight: 900;
-        }
-        .show-icons .tab[onclick*="admin"]::before { 
-            content: "\f18e"; 
-            font-family: "Font Awesome 5 Free"; 
-            font-weight: 900;
-        }
+
+        .show-icons .tab[onclick*="home"]::before { content: "\f015"; }
+        .show-icons .tab[onclick*="education"]::before { content: "\f19d"; }
+        .show-icons .tab[onclick*="settings"]::before { content: "\f013"; }
+        .show-icons .tab[onclick*="admin"]::before { content: "\f18e"; }
 
         .show-icons .tab::before {
             z-index: 1;
@@ -2973,14 +3002,21 @@ _____                                                                    _____
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--text-color);
+            font-size: 2.2rem;
+            font-weight: 900;
             font-family: 'Courier New', monospace;
-            text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.3);
-            animation: textGlow 2s infinite alternate;
+            color: var(--border-color);
+            text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.4);
+            animation: textGlow 2s infinite alternate, pulseScale 1.5s ease-in-out infinite;
         }
-
+        @keyframes pulseScale {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
         .loader-particles {
             position: absolute;
             top: 0;
@@ -3034,33 +3070,6 @@ _____                                                                    _____
         @keyframes starsFlow {
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
-        }
-        .tab-position-btn {
-            padding: 6px 12px;
-            border: 2px solid var(--border-color);
-            background: rgba(var(--border-color-rgb), 0.1);
-            color: var(--text-color);
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .tab-position-btn:hover {
-            background: rgba(var(--border-color-rgb), 0.2);
-            transform: translateY(-1px);
-        }
-
-        .tab-position-btn.active {
-            background: var(--border-color);
-            color: var(--button-text-color);
-            box-shadow: 0 4px 10px rgba(var(--border-color-rgb), 0.2);
-        }
-
-        .tab-position-btn:active {
-            transform: translateY(0) scale(0.97);
         }
     </style>
 </head>
@@ -3323,13 +3332,6 @@ _____                                                                    _____
                     <input type="checkbox" id="icons-toggle" checked onchange="toggleIcons()">
                     <span class="slider"></span>
                 </label>
-            </div>
-            <div class="switch-container">
-                <span>Размещение вкладок</span>
-                <div style="display: flex; gap: 5px; margin-left: auto;">
-                    <button id="tabs-top-btn" class="tab-position-btn active" onclick="setTabsPosition('top')">Верх</button>
-                    <button id="tabs-bottom-btn" class="tab-position-btn" onclick="setTabsPosition('bottom')">Низ</button>
-                </div>
             </div>
             <div class="switch-container feature-disabled" id="logging-toggle-container">
                 <span>Логирование<span class="beta-badge">BETA</span></span>
@@ -4683,43 +4685,6 @@ _____                                                                    _____
                 averageGrade.textContent = `Средняя оценка: ${average.toFixed(2)}`;
             }
         }
-        async function setTabsPosition(position) {
-            document.getElementById('tabs-top-btn').classList.toggle('active', position === 'top');
-            document.getElementById('tabs-bottom-btn').classList.toggle('active', position === 'bottom');
-
-            const tabsContainer = document.querySelector('.tabs');
-            const container = document.querySelector('.container');
-            tabsContainer.classList.remove('position-top', 'position-bottom');
-            container.classList.remove('tabs-at-top', 'tabs-at-bottom');
-            if (position === 'bottom') {
-                tabsContainer.classList.add('position-bottom');
-                container.classList.add('tabs-at-bottom');
-                container.classList.remove('tabs-at-top');
-            } else {
-                tabsContainer.classList.add('position-top');
-                container.classList.add('tabs-at-top');
-                container.classList.remove('tabs-at-bottom');
-            }
-            if (currentUserId && supabase) {
-                try {
-                    await supabase
-                        .from('users')
-                        .update({
-                            tabs_position: position,
-                            updated_at: new Date().toISOString()
-                        })
-                        .eq('id', currentUserId);
-                    await logAction('settings_change', {
-                        setting: 'tabs_position',
-                        value: position,
-                        section: 'appearance'
-                    });
-                } catch (error) {
-                    console.error('Ошибка сохранения позиции вкладок:', error);
-                    showCustomAlert('Ошибка сохранения настройки', 'error');
-                }
-            }
-        }
         async function checkUserStatus(userId) {
             try {
                 const { data, error } = await supabase
@@ -5962,7 +5927,7 @@ _____                                                                    _____
             try {
                 const { data, error } = await supabase
                     .from('users')
-                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabs_position')
+                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled')
                     .eq('id', currentUserId)
                     .single();
                 if (error) throw error;
@@ -5977,10 +5942,7 @@ _____                                                                    _____
                 } else {
                     document.body.classList.remove('hide-tags');
                 }
-                const tabsPosition = data.tabs_position || 'top';
-                document.getElementById('tabs-top-btn').classList.toggle('active', tabsPosition === 'top');
-                document.getElementById('tabs-bottom-btn').classList.toggle('active', tabsPosition === 'bottom');
-                setTabsPosition(tabsPosition);
+
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
