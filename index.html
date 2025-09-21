@@ -1023,43 +1023,40 @@ _____                                                                    _____
         }
         
         .tabs {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
+            display: flex;
+            background: transparent;
             padding: 0;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            box-shadow: none; 
+            position: relative;
+            border: none;
+            height: 50px; 
+            overflow: hidden;
+            border-radius: 25px; 
+            background: rgba(var(--border-color-rgb), 0.08);
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(var(--border-color-rgb), 0.2);
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 0 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-        }
-        .tabs::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-            border-radius: 3px;
-            opacity: 0.3;
-        }
-        .tab {
-            position: relative;
-            flex: 1;
-            text-align: center;
-            padding: 18px 5px;
-            border-radius: 0;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            z-index: 1;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            position: relative;
+            z-index: 2; 
+            color: var(--text-color);
             font-weight: 600;
             font-size: 15px;
-            letter-spacing: 0.5px;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
+            border: none;
+            background: transparent;
+            height: 100%;
+            overflow: hidden;
         }
 
         .tab::before {
@@ -1095,25 +1092,10 @@ _____                                                                    _____
         .tab:hover::before {
             opacity: 1;
         }
-        .tab:not(.active) {
-            color: var(--text-color);
-            opacity: 0.7;
-            transform: translateY(0);
-        }
-
-        .tab:not(.active):hover {
-            opacity: 1;
-            transform: translateY(-5px);
-            color: var(--border-color);
-            text-shadow: 0 0 10px rgba(var(--border-color-rgb), 0.4);
-        }
+        
         .tab.active {
-            color: var(--border-color) !important;
-            opacity: 1 !important;
-            transform: translateY(-10px) scale(1.05);
-            text-shadow: 0 0 15px rgba(var(--border-color-rgb), 0.6), 0 0 30px rgba(var(--border-color-rgb), 0.3);
-            font-weight: 800;
-            filter: brightness(1.1);
+            color: white !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         
         .tab.active::after,
@@ -1148,58 +1130,10 @@ _____                                                                    _____
         }
         
         .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%) scaleY(0.8);
-            width: 80%;
-            height: 40px;
-            background: rgba(var(--border-color-rgb), 0.1);
-            border-radius: 20px 20px 0 0;
-            filter: blur(8px);
-            z-index: -1;
-            transition: all 0.3s ease;
+            opacity: 1;
+            animation: var(--border-animation);
         }
-        .tab.active::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 15px 15px 0 0;
-            box-shadow: 
-                0 0 5px var(--border-color),
-                0 0 10px var(--border-color),
-                0 0 20px rgba(var(--border-color-rgb), 0.5),
-                0 0 40px rgba(var(--border-color-rgb), 0.3);
-            z-index: -1;
-            opacity: 0.7;
-            animation: neonPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes neonPulse {
-            0%, 100% {
-                box-shadow: 
-                    0 0 5px var(--border-color),
-                    0 0 10px var(--border-color),
-                    0 0 20px rgba(var(--border-color-rgb), 0.5),
-                    0 0 40px rgba(var(--border-color-rgb), 0.3);
-            }
-            50% {
-                box-shadow: 
-                    0 0 8px var(--border-color),
-                    0 0 15px var(--border-color),
-                    0 0 30px rgba(var(--border-color-rgb), 0.7),
-                    0 0 60px rgba(var(--border-color-rgb), 0.5);
-            }
-        }
-
-        .show-icons .tab::before {
-            top: 8px;
-            font-size: 18px;
-        }
+        
         @keyframes borderPulse {
             0%, 100% { border-color: var(--border-color); }
             25% { border-color: color-mix(in srgb, var(--border-color) 80%, white); }
