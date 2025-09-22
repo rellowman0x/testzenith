@@ -1019,20 +1019,26 @@ _____                                                                    _____
         .container {
             max-width: 100%;
             padding: 15px;
+            padding-top: 80px;
             overflow: hidden;
         }
         
         .tabs {
             display: flex;
-            background: rgba(var(--border-color-rgb), 0.03);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
+            background: var(--background-color);
+            border-radius: 20px 20px 0 0;
             padding: 5px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(var(--border-color-rgb), 0.1);
+            box-shadow: 0 2px 10px var(--shadow-color);
             transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+            border-bottom: none;
+            position: fixed;
+            top: 0;
+            left: 15px;
+            right: 15px;
+            z-index: 10;
+            max-width: calc(100% - 30px);
         }
 
         .tab {
@@ -5824,6 +5830,7 @@ _____                                                                    _____
             }
         }
         function showWelcomeScreen() {
+            const loader = document.getElementById('loading-screen');
             const welcomeScreen = document.getElementById('welcome-screen');
             const welcomeText = document.getElementById('welcome-text');
             const container = document.querySelector('.container');
@@ -5831,54 +5838,29 @@ _____                                                                    _____
             const firstName = user?.first_name || 'Пользователь';
             const borderColor = getComputedStyle(document.body).getPropertyValue('--border-color');
             const textColor = getComputedStyle(document.body).getPropertyValue('--text-color');
-            welcomeScreen.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
             welcomeScreen.style.display = 'flex';
-            const particlesContainer = document.createElement('div');
-            particlesContainer.id = 'welcome-particles';
-            particlesContainer.style.cssText = `
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: -1;
-            `;
-            welcomeScreen.appendChild(particlesContainer);
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'loader-particle';
-                const angle = (i / 15) * Math.PI * 2;
-                const distance = 50 + Math.random() * 100;
-                const startX = Math.cos(angle) * (10 + Math.random() * 20);
-                const startY = Math.sin(angle) * (10 + Math.random() * 20);
-                const endX = Math.cos(angle) * distance;
-                const endY = Math.sin(angle) * distance;
-
-                particle.style.setProperty('--start-x', `${startX}px`);
-                particle.style.setProperty('--start-y', `${startY}px`);
-                particle.style.setProperty('--end-x', `${endX}px`);
-                particle.style.setProperty('--end-y', `${endY}px`);
-                particle.style.setProperty('--duration', `${3 + Math.random() * 2}s`);
-                particle.style.opacity = '0.6';
-                particlesContainer.appendChild(particle);
+            welcomeScreen.style.opacity = '0';
+            if (welcomeText) {
+                welcomeText.innerHTML = `Привет, <span style="color: ${borderColor};">${firstName}</span>`;
+                welcomeText.style.color = textColor;
             }
-            welcomeText.innerHTML = `
-                <div style="text-align: center; padding: 40px 20px;">
-                    <div style="font-size: 3rem; font-weight: 800; margin-bottom: 10px; color: ${borderColor}; text-shadow: 0 0 10px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.5); animation: textGlow 2s infinite alternate;">#zh</div>
-                    <div style="font-size: 1.8rem; font-weight: 600; color: ${textColor};">Привет, ${firstName}!</div>
-                </div>
-            `;
-
-            welcomeScreen.classList.add('welcome-visible');
 
             setTimeout(() => {
-                welcomeScreen.classList.remove('welcome-visible');
+                welcomeScreen.style.opacity = '1';
+            }, 10);
+            setTimeout(() => {
+                if (loader) loader.style.opacity = '0';
+                setTimeout(() => {
+                    if (loader) loader.style.display = 'none';
+                }, 500);
+            }, 3200);
+            setTimeout(() => {
+                welcomeScreen.style.opacity = '0';
                 setTimeout(() => {
                     welcomeScreen.style.display = 'none';
                     container.style.display = 'block';
                 }, 500);
-            }, 2500);
+            }, 2000); 
         }
         async function logAction(action, details = {}) {
             if (!document.getElementById('logging-toggle').checked) {
