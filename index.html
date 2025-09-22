@@ -1024,76 +1024,38 @@ _____                                                                    _____
         
         .tabs {
             display: flex;
-            background: rgba(var(--border-color-rgb), 0.04);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 28px;
-            padding: 6px;
-            margin-bottom: 24px;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(var(--border-color-rgb), 0.12);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .tabs::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(var(--border-color-rgb), 0.2), transparent);
-            border-radius: 28px 28px 0 0;
+            background: rgba(var(--border-color-rgb), 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(var(--border-color-rgb), 0.1);
+            transition: all 0.3s ease;
         }
 
         .tab {
             flex: 1;
             text-align: center;
-            padding: 16px 12px;
-            border-radius: 22px;
+            padding: 14px 8px;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             font-weight: 600;
             font-size: 15px;
             color: var(--text-color);
-            opacity: 0.75;
-            z-index: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(var(--border-color-rgb), 0.08);
-            border-radius: 22px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
+            opacity: 0.7;
         }
         
-        .tab:hover::before {
-            opacity: 1;
-        }
-
         .tab.active {
             opacity: 1;
-            transform: translateY(-3px);
-            z-index: 2;
+            background: rgba(var(--border-color-rgb), 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(var(--border-color-rgb), 0.15);
         }
-        .tab.active::before {
-            opacity: 1;
-            background: rgba(var(--border-color-rgb), 0.12);
-        }
+        
         .tab.active::after,
         .tab::after {
             content: '';
@@ -1119,22 +1081,19 @@ _____                                                                    _____
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 22px;
+            border-radius: 18px;
             border: 2px solid var(--border-color);
             animation: var(--border-animation);
             opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-
+        
+        
         .tab:hover::after {
-            opacity: 0.4;
-            transform: scale(1.02);
+            opacity: 0.3;
         }
 
         .tab.active::after {
             opacity: 1;
-            transform: scale(1.03);
-            filter: drop-shadow(0 4px 8px rgba(var(--border-color-rgb), 0.2));
         }
         
         @keyframes borderPulse {
