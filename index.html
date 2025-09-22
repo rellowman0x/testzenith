@@ -5824,7 +5824,7 @@ _____                                                                    _____
             }
         }
         function showWelcomeScreen() {
-            const loader = document.getElementById('loading-screen');
+            const loader = document.getElementById('zenith-loader');
             const welcomeScreen = document.getElementById('welcome-screen');
             const welcomeText = document.getElementById('welcome-text');
             const container = document.querySelector('.container');
@@ -5834,27 +5834,42 @@ _____                                                                    _____
             const textColor = getComputedStyle(document.body).getPropertyValue('--text-color');
             welcomeScreen.style.display = 'flex';
             welcomeScreen.style.opacity = '0';
-            if (welcomeText) {
-                welcomeText.innerHTML = `Привет, <span style="color: ${borderColor};">${firstName}</span>`;
-                welcomeText.style.color = textColor;
-            }
+            welcomeScreen.classList.remove('welcome-visible');
 
+            if (welcomeText) {
+                welcomeText.innerHTML = '';
+                const fullText = `Привет, <span style="color: ${borderColor}; font-weight: 800;">${firstName}</span>`;
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < fullText.length) {
+                        welcomeText.innerHTML += fullText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 50 + Math.random() * 50);
+                    }
+                };
+                typeWriter();
+                welcomeText.style.color = textColor;
+                welcomeText.style.fontSize = '2.5rem';
+                welcomeText.style.fontWeight = '300';
+                welcomeText.style.textShadow = `0 2px 10px rgba(${getComputedStyle(document.body).getPropertyValue('--border-color-rgb')}, 0.3)`;
+            }
             setTimeout(() => {
-                welcomeScreen.style.opacity = '1';
-            }, 10);
+                welcomeScreen.classList.add('welcome-visible');
+            }, 100);
             setTimeout(() => {
-                if (loader) loader.style.opacity = '0';
-                setTimeout(() => {
-                    if (loader) loader.style.display = 'none';
-                }, 500);
-            }, 3200);
-            setTimeout(() => {
-                welcomeScreen.style.opacity = '0';
+                welcomeScreen.classList.remove('welcome-visible');
                 setTimeout(() => {
                     welcomeScreen.style.display = 'none';
                     container.style.display = 'block';
+                    container.style.opacity = '0';
+                    container.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        container.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        container.style.opacity = '1';
+                        container.style.transform = 'translateY(0)';
+                    }, 50);
                 }, 500);
-            }, 2000); 
+            }, 2500); 
         }
         async function logAction(action, details = {}) {
             if (!document.getElementById('logging-toggle').checked) {
