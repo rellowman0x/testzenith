@@ -5278,17 +5278,30 @@ _____                                                                    _____
                 let subjectsHTML = '';
                 
                 dayData.subjects.forEach(subject => {
-                    let linksHTML = '';
+                    let contentHTML = '';
                     if (subject.links && subject.links.length > 0) {
                         subject.links.forEach(link => {
-                            linksHTML += `
+                            contentHTML += `
                                 <a href="${link.url}" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 14px; margin: 5px 0; padding: 5px 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 5px; transition: all 0.3s ease;">
                                     <i class="fas fa-external-link-alt" style="margin-right: 5px;"></i> ${link.text}
                                 </a>
                             `;
                         });
-                    } else if (subject.link) {
-                        linksHTML += `
+                    }
+                    else if (subject.text) {
+                        const lines = subject.text.split('\n');
+                        lines.forEach(line => {
+                            if (line.trim()) {
+                                contentHTML += `
+                                    <div style="display: block; color: var(--text-color); font-size: 14px; margin: 5px 0; padding: 5px 10px; background: rgba(var(--border-color-rgb), 0.05); border-radius: 5px; border-left: 3px solid var(--border-color);">
+                                        ${line}
+                                    </div>
+                                `;
+                            }
+                        });
+                    }
+                    else if (subject.link) {
+                        contentHTML += `
                             <a href="${subject.link}" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 14px; margin: 5px 0; padding: 5px 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 5px; transition: all 0.3s ease;">
                                 <i class="fas fa-external-link-alt" style="margin-right: 5px;"></i> Ссылка на материалы
                             </a>
@@ -5297,7 +5310,7 @@ _____                                                                    _____
                     subjectsHTML += `
                         <div style="margin-bottom: 15px; padding: 15px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 10px; border-left: 4px solid var(--border-color);">
                             <h4 style="margin: 0 0 8px 0; color: var(--text-color);">${subject.name}</h4>
-                            ${linksHTML}
+                            ${contentHTML}
                         </div>
                     `;
                 });
