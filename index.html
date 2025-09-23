@@ -2321,7 +2321,84 @@ _____                                                                    _____
             transform-origin: left;
             transition: transform 0.5s ease;
         }
+        .tabpos-switch .slider {
+            position: relative;
+            display: inline-block;
+            width: 80px;
+            height: 34px;
+        }
 
+        .tabpos-switch .slider.round {
+            border-radius: 34px;
+            background-color: #ccc;
+            transition: .4s;
+        }
+
+        .tabpos-switch input:checked + .slider.round {
+            background-color: var(--border-color);
+        }
+
+        .tabpos-switch .slider.round:before {
+            content: "";
+            position: absolute;
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        .tabpos-switch input:checked + .slider.round:before {
+            transform: translateX(46px);
+        }
+        .tabpos-switch .slider-labels {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .tabpos-switch .label-top {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .tabpos-switch .label-bottom {
+            opacity: 0.3;
+            transform: scale(0.8);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .tabpos-switch input:checked + .slider .label-top {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+
+        .tabpos-switch input:checked + .slider .label-bottom {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .tabpos-switch .slider:hover {
+            filter: brightness(1.1);
+        }
+
+        .tabpos-switch .slider:active {
+            filter: brightness(0.9);
+        }
         .log-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
@@ -3033,50 +3110,6 @@ _____                                                                    _____
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
         }
-        #tabs-position-toggle + .slider.round {
-            border-radius: 34px;
-            background: linear-gradient(to right, #ccc 50%, #fff 50%);
-            background-size: 200% 100%;
-            background-position: right bottom;
-            transition: background-position 0.4s ease;
-        }
-        #tabs-position-toggle:checked + .slider.round {
-            background-position: left bottom;
-        }
-        #tabs-position-toggle + .slider.round:before {
-            height: 26px;
-            width: 26px;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #tabs-position-toggle:checked + .slider.round:before {
-            transform: translateX(26px);
-        }
-        #tabs-position-toggle + .slider {
-            background-color: #ccc;
-        }
-        #tabs-position-toggle:checked + .slider {
-            background-color: transparent;
-        }
-        .tabs-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            top: auto;
-            margin-bottom: 0;
-            box-shadow: 0 -2px 10px var(--shadow-color);
-            z-index: 999;
-            background: var(--background-color);
-        }
-        body .container {
-            padding-bottom: 70px;
-        }
-        .tabs-bottom + .container {
-            padding-top: 15px;
-        }
     </style>
 </head>
 <body>
@@ -3159,7 +3192,7 @@ _____                                                                    _____
             <div id="education-content" style="display: none; opacity: 0; transition: opacity 0.3s ease;"></div>
         </div>
         <div id="settings" class="content">
-            <h2>Темы <span class="beta-badge">BETA</span></h2>
+            <h2>Настройки <span class="beta-badge">BETA</span></h2>
             <div class="collapsible">
                 <div class="collapsible-header" onclick="toggleCollapsible('theme-collapsible')">
                     <span>Тематика оформления</span>
@@ -3308,13 +3341,6 @@ _____                                                                    _____
                     </div>
                 </div>
             </div>
-            <div class="switch-container">
-                <span>Позиция вкладок</span>
-                <label class="switch">
-                    <input type="checkbox" id="tabs-position-toggle" onchange="toggleTabsPosition()">
-                    <span class="slider round"></span>
-                </label>
-            </div>
             <div class="switch-container feature-disabled">
                 <span>Анимация обводки<span class="beta-badge">BETA</span></span>
                 <label class="switch">
@@ -3337,6 +3363,18 @@ _____                                                                    _____
                 <label class="switch">
                     <input type="checkbox" id="tags-toggle" checked onchange="toggleTags()">
                     <span class="slider"></span>
+                </label>
+            </div>
+            <div class="switch-container">
+                <span>Расположение вкладок</span>
+                <label class="switch tabpos-switch">
+                    <input type="checkbox" id="tabpos-toggle">
+                    <span class="slider round">
+                        <span class="slider-labels">
+                            <span class="label-top">Верх</span>
+                            <span class="label-bottom">Низ</span>
+                        </span>
+                    </span>
                 </label>
             </div>
             <div class="switch-container">
@@ -4685,7 +4723,42 @@ _____                                                                    _____
             window.grades = [];
             updateGradesDisplay();
         }
-
+        function toggleTabPosition() {
+            const isChecked = document.getElementById('tabpos-toggle').checked;
+            const tabsContainer = document.querySelector('.tabs');
+            const container = document.querySelector('.container');
+            if (isChecked) {
+                container.style.display = 'flex';
+                container.style.flexDirection = 'column-reverse';
+                tabsContainer.style.marginTop = 'auto';
+                tabsContainer.style.marginBottom = '0';
+            } else {
+                container.style.display = 'block';
+                tabsContainer.style.marginTop = '0';
+                tabsContainer.style.marginBottom = '20px';
+            }
+            if (currentUserId && supabase) {
+                supabase
+                    .from('users')
+                    .update({
+                        tabpos: isChecked ? 'bottom' : 'top',
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', currentUserId)
+                    .then(({ error }) => {
+                        if (error) {
+                            console.error('Ошибка сохранения расположения вкладок:', error);
+                            showCustomAlert('Ошибка сохранения настройки', 'error');
+                        } else {
+                            logAction('settings_change', {
+                                setting: 'tab_position',
+                                value: isChecked ? 'bottom' : 'top',
+                                section: 'appearance'
+                            });
+                        }
+                    });
+            }
+        }
         function updateGradesDisplay() {
             const gradesDisplay = document.getElementById('grades-display');
             const averageGrade = document.getElementById('average-grade');
@@ -4876,9 +4949,7 @@ _____                                                                    _____
                     .select('*')
                     .eq('id', user.id.toString())
                     .maybeSingle();
-
                 if (fetchError) throw fetchError;
-                
                 if (existingUser) {
                     const { data, error } = await supabase
                         .from('users')
@@ -4887,10 +4958,10 @@ _____                                                                    _____
                             first_name: user.first_name || null,
                             last_name: user.last_name || null,
                             last_seen: new Date().toISOString(),
-                            updated_at: new Date().toISOString()
+                            updated_at: new Date().toISOString(),
+                            tabpos: existingUser.tabpos || 'top'
                         })
                         .eq('id', user.id.toString());
-                    
                     if (error) throw error;
                     return data;
                 } else {
@@ -4901,6 +4972,7 @@ _____                                                                    _____
                             username: user.username || null,
                             first_name: user.first_name || null,
                             last_name: user.last_name || null,
+                            photo_url: user.photo_url || null,
                             last_seen: new Date().toISOString(),
                             theme: 'light',
                             animation_enabled: false,
@@ -4908,12 +4980,11 @@ _____                                                                    _____
                             tags_enabled: true,
                             status: 'user',
                             created_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString()
+                            updated_at: new Date().toISOString(),
+                            tabpos: 'top'
                         });
-                    
                     if (error) throw error;
-                    return data;
-                }
+                    return data;}
             } catch (error) {
                 console.error('Ошибка сохранения пользователя:', error);
                 return null;
@@ -5173,34 +5244,6 @@ _____                                                                    _____
                     }
                 }, 10);
             }, 300);
-        }
-        async function toggleTabsPosition() {
-            const isChecked = document.getElementById('tabs-position-toggle').checked;
-            const tabsContainer = document.querySelector('.tabs');
-            if (isChecked) {
-                tabsContainer.classList.add('tabs-bottom');
-            } else {
-                tabsContainer.classList.remove('tabs-bottom');
-            }
-            if (currentUserId && supabase) {
-                try {
-                    await supabase
-                        .from('users')
-                        .update({
-                            tabpos: isChecked ? 'bottom' : 'top',
-                            updated_at: new Date().toISOString()
-                        })
-                        .eq('id', currentUserId);
-                    await logAction('settings_change', {
-                        setting: 'tabs_position',
-                        value: isChecked ? 'bottom' : 'top',
-                        section: 'appearance'
-                    });
-                } catch (error) {
-                    console.error('Ошибка сохранения позиции вкладок:', error);
-                    showCustomAlert('Ошибка сохранения настройки', 'error');
-                }
-            }
         }
         function loadHomeworkContent() {
             const educationContent = document.getElementById('education-content');
@@ -5964,7 +6007,7 @@ _____                                                                    _____
             try {
                 const { data, error } = await supabase
                     .from('users')
-                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabpos') // Добавили tabpos
+                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabpos')
                     .eq('id', currentUserId)
                     .single();
                 if (error) throw error;
@@ -5974,14 +6017,9 @@ _____                                                                    _____
                 document.getElementById('tags-toggle').checked = data.tags_enabled !== false;
                 document.getElementById('icons-toggle').checked = data.icons_enabled !== false;
                 document.getElementById('logging-toggle').checked = data.logging_enabled !== false;
-                const isTabsAtBottom = data.tabpos === 'bottom';
-                document.getElementById('tabs-position-toggle').checked = isTabsAtBottom;
-                const tabsContainer = document.querySelector('.tabs');
-                if (isTabsAtBottom) {
-                    tabsContainer.classList.add('tabs-bottom');
-                } else {
-                    tabsContainer.classList.remove('tabs-bottom');
-                }
+                const tabposToggle = document.getElementById('tabpos-toggle');
+                tabposToggle.checked = data.tabpos === 'bottom';
+                toggleTabPosition();
                 if (!data.tags_enabled) {
                     document.body.classList.add('hide-tags');
                 } else {
@@ -5989,7 +6027,7 @@ _____                                                                    _____
                 }
                 updateIcons();
                 updateTagsAppearance();
-                updateBorderAnimation();
+                updateBorderAnimation();  
             } catch (error) {
                 console.error('Ошибка загрузки настроек:', error);
                 document.getElementById('border-animation-toggle').checked = false;
@@ -5999,8 +6037,8 @@ _____                                                                    _____
                 document.getElementById('logging-toggle').checked = true;
                 document.body.classList.remove('hide-tags');
                 document.body.classList.remove('show-icons');
-                document.getElementById('tabs-position-toggle').checked = false;
-                document.querySelector('.tabs').classList.remove('tabs-bottom');
+                document.getElementById('tabpos-toggle').checked = false;
+                toggleTabPosition();
                 removeIcons();
                 
                 if (userStatus !== 'developer') {
@@ -6028,6 +6066,12 @@ _____                                                                    _____
             }
             showErrorButton();
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabposToggle = document.getElementById('tabpos-toggle');
+            if (tabposToggle) {
+                tabposToggle.addEventListener('change', toggleTabPosition);
+            }
+        });
         document.querySelectorAll('.feature-disabled, .education-feature').forEach(el => {
             el.addEventListener('click', function(e) {
                 if (e.target.closest('.disabled-overlay') || this.classList.contains('feature-disabled')) {
