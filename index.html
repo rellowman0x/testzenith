@@ -3555,6 +3555,7 @@ _____                                                                    _____
         let selectedUserId = null;
         let editingUserId = null;
         let adminPinVerified = false;
+        let tabsPositionState = false;
         let userFilters = {
             role: '',
             id: '',
@@ -4657,9 +4658,10 @@ _____                                                                    _____
         }
         async function toggleTabsPosition() {
             const isChecked = document.getElementById('tabs-position-toggle').checked;
+            tabsPositionState = isChecked;
+            
             const tabs = document.querySelector('.tabs');
             const container = document.querySelector('.container');
-
             if (isChecked) {
                 tabs.classList.add('bottom-position');
                 container.classList.add('no-top-padding');
@@ -4682,7 +4684,6 @@ _____                                                                    _____
                             updated_at: new Date().toISOString()
                         })
                         .eq('id', currentUserId);
-
                     await logAction('settings_change', {
                         setting: 'tabs_position',
                         value: isChecked ? 'bottom' : 'top',
@@ -5024,7 +5025,12 @@ _____                                                                    _____
                     <div><strong>Статус:</strong> ${statusBadge}</div>
                 </div>
             `;
-            await applyTabsPositionSetting();
+            setTimeout(() => {
+                const toggle = document.getElementById('tabs-position-toggle');
+                if (toggle) {
+                    toggle.checked = tabsPositionState;
+                }
+            }, 0);
         }
         function updateTabBorders() {
             const tabs = document.querySelectorAll('.tab');
@@ -6021,7 +6027,14 @@ _____                                                                    _____
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
-                await applyTabsPositionSetting();
+                tabsPositionState = data.tabs_position === true;
+                if (tabsPositionState) {
+                    document.querySelector('.tabs').classList.add('bottom-position');
+                    document.querySelector('.container').classList.add('no-top-padding');
+                } else {
+                    document.querySelector('.tabs').classList.remove('bottom-position');
+                    document.querySelector('.container').classList.remove('no-top-padding');
+                }
             } catch (error) {
                 console.error('Ошибка загрузки настроек:', error);
                 document.getElementById('border-animation-toggle').checked = false;
