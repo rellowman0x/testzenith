@@ -3033,152 +3033,84 @@ _____                                                                    _____
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
         }
-
-        .switch-container {
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            border-radius: 12px;
-            background: rgba(var(--border-color-rgb), 0.05);
-            border: 1px solid rgba(var(--border-color-rgb), 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .switch-container:hover {
-            background: rgba(var(--border-color-rgb), 0.08);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(var(--border-color-rgb), 0.08);
-        }
-
         .switch {
-            position: relative;
-            display: inline-block;
-            width: 100px;
-            height: 40px;
+        position: relative;
+        display: inline-block;
+        width: 52px;
+        height: 26px;
         }
 
         .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
+        opacity: 0;
+        width: 0;
+        height: 0;
         }
 
         .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(var(--border-color-rgb), 0.15), rgba(var(--border-color-rgb), 0.05));
-            border-radius: 25px;
-            border: 1px solid rgba(var(--border-color-rgb), 0.2);
-            transition: .4s;
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
         }
 
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 32px;
-            width: 32px;
-            left: 4px;
-            bottom: 3px;
-            background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black));
-            border-radius: 50%;
-            transition: .4s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         input:checked + .slider {
-            background: linear-gradient(135deg, rgba(var(--border-color-rgb), 0.2), rgba(var(--border-color-rgb), 0.1));
+        background-color: var(--border-color);
         }
 
         input:checked + .slider:before {
-            transform: translateX(58px);
-            background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 80%, white));
+        transform: translateX(26px);
+        background-color: white;
         }
 
-        .slider.round {
-            border-radius: 30px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        .slider-labels {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 25px;
-            pointer-events: none;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-color);
-            opacity: 0.7;
-        }
-
-        input:checked ~ .slider-labels .label-top {
-            opacity: 0.4;
-        }
-
-        input:checked ~ .slider-labels .label-bottom {
-            opacity: 1;
-            color: var(--border-color);
-            text-shadow: 0 0 5px rgba(var(--border-color-rgb), 0.3);
-        }
-
-            
+        /* Стили для нижних вкладок */
         .tabs-bottom {
-            position: fixed;
-            top: auto;
-            bottom: 15px;
-            left: 15px;
-            right: 15px;
-            z-index: 1000;
-            animation: slideUp 0.4s ease-out;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
+        top: auto !important;
+        bottom: 15px;
+        animation: slideIn 0.4s ease;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
         }
 
-        @keyframes slideDown {
-            from {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(100px);
-                opacity: 0;
-            }
+        /* Контейнер с измененными отступами при нижних вкладках */
+        .container-tabs-bottom {
+        padding-top: 15px !important;
+        padding-bottom: 80px !important;
+        transform: translateY(-65px);
+        transition: transform 0.4s ease !important;
         }
-        .content-with-bottom-tabs {
-            padding-bottom: 85px !important;
-            transition: padding-bottom 0.4s ease;
-        }
-        .console-bottom-position {
-            bottom: 100px !important;
-            transition: bottom 0.4s ease;
+
+        /* Положение консоли при нижних вкладках */
+        .console-modal.tabs-bottom {
+        bottom: 95px !important;
+        top: auto !important;
         }
     </style>
 </head>
@@ -3443,14 +3375,10 @@ _____                                                                    _____
                 </label>
             </div>
             <div class="switch-container">
-                <span>Позиция вкладок</span>
+                <span>Расположение вкладок</span>
                 <label class="switch">
                     <input type="checkbox" id="tab-position-toggle">
                     <span class="slider round"></span>
-                    <span class="slider-labels">
-                        <span class="label-top">Верх</span>
-                        <span class="label-bottom">Низ</span>
-                    </span>
                 </label>
             </div>
             <div class="switch-container feature-disabled" id="logging-toggle-container">
@@ -4943,79 +4871,6 @@ _____                                                                    _____
                 showCustomAlert(message, 'error');
             }
         }
-        async function toggleTabPosition() {
-            const isChecked = document.getElementById('tab-position-toggle').checked;
-            const tabs = document.querySelector('.tabs');
-            const container = document.querySelector('.container');
-            const consoleModal = document.getElementById('console-modal');
-            if (isChecked) {
-                tabs.style.animation = 'slideDown 0.3s ease-out';
-                setTimeout(() => {
-                tabs.classList.add('tabs-bottom');
-                tabs.style.animation = 'slideUp 0.4s ease-out';
-                container.classList.add('content-with-bottom-tabs');
-                if (consoleModal) {
-                    consoleModal.classList.add('console-bottom-position');
-                }
-                const errorBtn = document.getElementById('error-btn');
-                if (errorBtn) {
-                    errorBtn.style.bottom = '120px';
-                }
-                }, 300);
-            } else {
-                tabs.style.animation = 'slideUp 0.3s ease-out';
-                setTimeout(() => {
-                tabs.classList.remove('tabs-bottom');
-                tabs.style.animation = 'slideDown 0.4s ease-out';
-                container.classList.remove('content-with-bottom-tabs');
-                if (consoleModal) {
-                    consoleModal.classList.remove('console-bottom-position');
-                }
-                const errorBtn = document.getElementById('error-btn');
-                if (errorBtn) {
-                    errorBtn.style.bottom = '';
-                }
-                }, 300);
-            }
-            if (currentUserId && supabase) {
-                try {
-                await supabase.from('users').update({
-                    tab_position: isChecked ? 'bottom' : 'top',
-                    updated_at: new Date().toISOString()
-                }).eq('id', currentUserId);
-                
-                await logAction('settings_change', {
-                    setting: 'tab_position',
-                    value: isChecked ? 'bottom' : 'top',
-                    section: 'interface'
-                });
-                showCustomAlert(`Вкладки перемещены ${isChecked ? 'вниз' : 'вверх'}`, 'success');
-                } catch (error) {
-                console.error('Ошибка сохранения позиции вкладок:', error);
-                showCustomAlert('Ошибка сохранения настройки', 'error');
-                }
-            }
-        }
-        async function initTabPosition() {
-            if (currentUserId && supabase) {
-                try {
-                const { data, error } = await supabase
-                    .from('users')
-                    .select('tab_position')
-                    .eq('id', currentUserId)
-                    .single();
-                if (error) throw error;
-                const tabPosition = data.tab_position || 'top';
-                const toggle = document.getElementById('tab-position-toggle');
-                if (tabPosition === 'bottom') {
-                    toggle.checked = true;
-                    setTimeout(toggleTabPosition, 300);
-                }
-                } catch (error) {
-                console.error('Ошибка загрузки позиции вкладок:', error);
-                }
-            }
-        }
         async function verifyPinCode(enteredPin) {
             try {
                 const { data, error } = await supabase
@@ -6135,7 +5990,14 @@ _____                                                                    _____
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
-
+                try {
+                    if (user.tab_position) {
+                    document.getElementById('tab-position-toggle').checked = (user.tab_position === 'bottom');
+                    updateTabPosition(user.tab_position);
+                    }
+                } catch (error) {
+                    console.error('Ошибка загрузки позиции вкладок:', error);
+                }
             } catch (error) {
                 console.error('Ошибка загрузки настроек:', error);
                 document.getElementById('border-animation-toggle').checked = false;
@@ -6181,12 +6043,121 @@ _____                                                                    _____
                 }
             });
         });
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabPositionToggle = document.getElementById('tab-position-toggle');
-            if (tabPositionToggle) {
-                tabPositionToggle.addEventListener('change', toggleTabPosition);
+        async function toggleTabPosition() {
+        const isChecked = document.getElementById('tab-position-toggle').checked;
+        const tabPosition = isChecked ? 'bottom' : 'top';
+        
+        // Сохраняем в базу данных
+        if (currentUserId && supabase) {
+            try {
+            await supabase.from('users').update({
+                tab_position: tabPosition,
+                updated_at: new Date().toISOString()
+            }).eq('id', currentUserId);
+            
+            await logAction('settings_change', {
+                setting: 'tab_position',
+                value: tabPosition,
+                section: 'interface'
+            });
+            
+            // Обновляем интерфейс
+            updateTabPosition(tabPosition);
+            } catch (error) {
+            console.error('Ошибка сохранения позиции вкладок:', error);
+            showCustomAlert('Ошибка сохранения настроек', 'error');
+            // Возвращаем переключатель в предыдущее состояние
+            document.getElementById('tab-position-toggle').checked = !isChecked;
             }
-            setTimeout(initTabPosition, 500);
+        } else {
+            // Обновляем интерфейс без сохранения в БД (если не авторизован)
+            updateTabPosition(tabPosition);
+        }
+        }
+
+        // Функция для обновления позиции вкладок
+        function updateTabPosition(position) {
+        const tabs = document.querySelector('.tabs');
+        const container = document.querySelector('.container');
+        const consoleModal = document.getElementById('console-modal');
+        
+        if (position === 'bottom') {
+            // Перемещаем вкладки в конец body
+            document.body.appendChild(tabs);
+            tabs.classList.add('tabs-bottom');
+            
+            // Добавляем класс контейнеру для корректировки отступов
+            container.classList.add('container-tabs-bottom');
+            
+            // Корректируем положение консоли
+            if (consoleModal) {
+            consoleModal.classList.add('tabs-bottom');
+            }
+            
+            // Сохраняем текущую позицию в data-атрибуте
+            tabs.setAttribute('data-position', 'bottom');
+        } else {
+            // Создаем или находим header
+            let header = document.getElementById('app-header');
+            if (!header) {
+            header = document.createElement('div');
+            header.id = 'app-header';
+            document.body.insertBefore(header, document.body.firstChild);
+            }
+            
+            // Возвращаем вкладки в header
+            header.appendChild(tabs);
+            tabs.classList.remove('tabs-bottom');
+            
+            // Убираем класс у контейнера
+            container.classList.remove('container-tabs-bottom');
+            
+            // Возвращаем исходное положение консоли
+            if (consoleModal) {
+            consoleModal.classList.remove('tabs-bottom');
+            }
+            
+            // Сохраняем текущую позицию в data-атрибуте
+            tabs.setAttribute('data-position', 'top');
+        }
+        }
+
+        // Загрузка позиции вкладок при инициализации
+        async function loadTabPosition() {
+        try {
+            if (currentUserId && supabase) {
+            const { data: user, error } = await supabase
+                .from('users')
+                .select('tab_position')
+                .eq('id', currentUserId)
+                .single();
+                
+            if (error) throw error;
+            
+            const tabPosition = user.tab_position || 'top';
+            document.getElementById('tab-position-toggle').checked = (tabPosition === 'bottom');
+            updateTabPosition(tabPosition);
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки позиции вкладок:', error);
+            // По умолчанию вкладки сверху
+            document.getElementById('tab-position-toggle').checked = false;
+            updateTabPosition('top');
+        }
+        }
+
+        // Инициализация тумблера
+        document.addEventListener('DOMContentLoaded', () => {
+        // Добавляем обработчик для тумблера
+        const tabPositionToggle = document.getElementById('tab-position-toggle');
+        if (tabPositionToggle) {
+            tabPositionToggle.addEventListener('change', toggleTabPosition);
+        }
+        
+        // Загружаем сохраненную позицию вкладок
+        if (document.getElementById('tab-position-toggle')) {
+            loadTabPosition();
+        }
         });
         document.addEventListener('DOMContentLoaded', initializeApp);</script>
 </body>
