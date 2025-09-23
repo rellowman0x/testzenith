@@ -5024,6 +5024,7 @@ _____                                                                    _____
                     <div><strong>Статус:</strong> ${statusBadge}</div>
                 </div>
             `;
+            await applyTabsPositionSetting();
         }
         function updateTabBorders() {
             const tabs = document.querySelectorAll('.tab');
@@ -5131,7 +5132,6 @@ _____                                                                    _____
                 updateLoadingProgress(85);
                 await loadUserData();
                 initEventHandlers();
-                await applyTabsPositionSetting(); 
                 updateLoadingProgress(100);
                 await logAction('app_enter', {
                     user_status: userStatus,
