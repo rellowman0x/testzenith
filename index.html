@@ -5131,7 +5131,7 @@ _____                                                                    _____
                 updateLoadingProgress(85);
                 await loadUserData();
                 initEventHandlers();
-                await loadTabsPosition();
+                await applyTabsPositionSetting(); 
                 updateLoadingProgress(100);
                 await logAction('app_enter', {
                     user_status: userStatus,
@@ -6021,13 +6021,7 @@ _____                                                                    _____
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
-                if (data.tabs_position === true) {
-                    document.querySelector('.tabs').classList.add('bottom-position');
-                    document.querySelector('.container').classList.add('no-top-padding');
-                    document.getElementById('tabs-position-toggle').checked = true;
-                } else {
-                    document.getElementById('tabs-position-toggle').checked = false;
-                }
+                await applyTabsPositionSetting();
             } catch (error) {
                 console.error('Ошибка загрузки настроек:', error);
                 document.getElementById('border-animation-toggle').checked = false;
