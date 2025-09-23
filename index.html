@@ -5099,16 +5099,16 @@ _____                                                                    _____
                 .eq('id', currentUserId);
                 userStatus = await checkUserStatus(currentUserId);
                 isAdmin = ['admin', 'developer'].includes(userStatus);
-                updateLoadingProgress(85);
+                updateLoadingProgress(80);
                 await loadUserSettings();
-                await logAction('app_enter', {
-                    user_status: userStatus,
-                    is_admin: isAdmin,
-                    app_version: 'V52.3219'
-                });
+                updateLoadingProgress(85);
                 await loadUserData();
                 initEventHandlers();
                 updateLoadingProgress(100);
+                await logAction('app_enter', {
+                    user_status: userStatus,
+                    is_admin: isAdmin
+                });
             } catch (error) {
                 updateLoadingProgress(100);
                 console.error('Критическая ошибка инициализации:', error);
