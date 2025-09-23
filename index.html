@@ -5131,7 +5131,7 @@ _____                                                                    _____
                 updateLoadingProgress(85);
                 await loadUserData();
                 initEventHandlers();
-                await applyTabsPositionSetting();
+                await loadTabsPosition();
                 updateLoadingProgress(100);
                 await logAction('app_enter', {
                     user_status: userStatus,
