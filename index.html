@@ -8,7 +8,7 @@
 
 
 
- _____                                                                    _____ 
+_____                                                                    _____ 
 ( ___ )                                                                  ( ___ )
  |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
  |   |  ▄███████▄     ▄████████ ███▄▄▄▄    ▄█      ███        ▄█    █▄    |   | 
@@ -3033,97 +3033,49 @@
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
         }
-
-        .custom-toggle {
-            position: relative;
-            width: 160px;
-            height: 60px;
-            cursor: pointer;
-            user-select: none;
+        #tabs-position-toggle + .slider.round {
+            border-radius: 34px;
+            background: linear-gradient(to right, #ccc 50%, #fff 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
+            transition: background-position 0.4s ease;
         }
-
-        .toggle-track {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(var(--border-color-rgb), 0.1);
-            border: 2px solid var(--border-color);
-            border-radius: 30px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            padding: 0 5px;
+        #tabs-position-toggle:checked + .slider.round {
+            background-position: left bottom;
         }
-
-        .toggle-indicator {
-            width: 50%;
-            height: 85%;
-            background: var(--border-color);
-            border-radius: 25px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toggle-indicator::before {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
+        #tabs-position-toggle + .slider.round:before {
+            height: 26px;
+            width: 26px;
             border-radius: 50%;
-            background: var(--background-color);
-            box-shadow: 0 0 0 2px var(--background-color);
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .toggle-labels {
-            position: absolute;
-            top: 0;
+        #tabs-position-toggle:checked + .slider.round:before {
+            transform: translateX(26px);
+        }
+        #tabs-position-toggle + .slider {
+            background-color: #ccc;
+        }
+        #tabs-position-toggle:checked + .slider {
+            background-color: transparent;
+        }
+        .tabs-bottom {
+            position: fixed;
+            bottom: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            pointer-events: none;
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--text-color);
-            opacity: 0.7;
+            right: 0;
+            top: auto;
+            margin-bottom: 0;
+            box-shadow: 0 -2px 10px var(--shadow-color);
+            z-index: 999;
+            background: var(--background-color);
         }
-
-        .custom-toggle.active .toggle-track {
-            background: rgba(var(--border-color-rgb), 0.2);
+        body .container {
+            padding-bottom: 70px;
         }
-
-        .custom-toggle.active .toggle-indicator {
-            transform: translateX(100%);
-            background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black));
-        }
-
-        /* Адаптация под темную тему */
-        body.dark-theme .toggle-track,
-        body.dark-purple-theme .toggle-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        body.dark-theme .toggle-labels,
-        body.dark-purple-theme .toggle-labels {
-            color: #aaa;
-        }
-
-        /* Эффект при наведении */
-        .custom-toggle:hover .toggle-indicator {
-            transform: scale(1.05);
-        }
-
-        .custom-toggle:active .toggle-indicator {
-            transform: scale(0.95);
+        .tabs-bottom + .container {
+            padding-top: 15px;
         }
     </style>
 </head>
@@ -3356,6 +3308,13 @@
                     </div>
                 </div>
             </div>
+            <div class="switch-container">
+                <span>Позиция вкладок</span>
+                <label class="switch">
+                    <input type="checkbox" id="tabs-position-toggle" onchange="toggleTabsPosition()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
             <div class="switch-container feature-disabled">
                 <span>Анимация обводки<span class="beta-badge">BETA</span></span>
                 <label class="switch">
@@ -3386,18 +3345,6 @@
                     <input type="checkbox" id="icons-toggle" checked onchange="toggleIcons()">
                     <span class="slider"></span>
                 </label>
-            </div>
-            <div class="switch-container" style="align-items: center; padding: 15px;">
-                <span>Положение вкладок</span>
-                <div class="custom-toggle" id="tabs-position-toggle">
-                    <div class="toggle-track">
-                        <div class="toggle-indicator"></div>
-                    </div>
-                    <div class="toggle-labels">
-                        <span class="label-top">Вверху</span>
-                        <span class="label-bottom">Внизу</span>
-                    </div>
-                </div>
             </div>
             <div class="switch-container feature-disabled" id="logging-toggle-container">
                 <span>Логирование<span class="beta-badge">BETA</span></span>
@@ -5097,7 +5044,6 @@
                     status: 'user',
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString(),
-                    tabs_position: 'top'
                 });
                 if (createError) throw createError;
                 }
@@ -5115,10 +5061,12 @@
                 await loadUserSettings();
                 await logAction('app_enter', {
                     user_status: userStatus,
-                    is_admin: isAdmin
+                    is_admin: isAdmin,
+                    app_version: 'V52.3219'
                 });
                 await loadUserData();
                 initEventHandlers();
+                
                 if (userStatus === 'developer') {
                     document.getElementById('error-btn').classList.remove('hidden');
                 }
@@ -5140,6 +5088,7 @@
                 }, 1200);
             }, remainingTime);
         }
+
         async function applyTheme(theme, isUserAction = true) {
             document.body.className = theme + '-theme';
             document.querySelectorAll('.theme-option').forEach(option => {
@@ -5224,6 +5173,34 @@
                     }
                 }, 10);
             }, 300);
+        }
+        async function toggleTabsPosition() {
+            const isChecked = document.getElementById('tabs-position-toggle').checked;
+            const tabsContainer = document.querySelector('.tabs');
+            if (isChecked) {
+                tabsContainer.classList.add('tabs-bottom');
+            } else {
+                tabsContainer.classList.remove('tabs-bottom');
+            }
+            if (currentUserId && supabase) {
+                try {
+                    await supabase
+                        .from('users')
+                        .update({
+                            tabpos: isChecked ? 'bottom' : 'top',
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', currentUserId);
+                    await logAction('settings_change', {
+                        setting: 'tabs_position',
+                        value: isChecked ? 'bottom' : 'top',
+                        section: 'appearance'
+                    });
+                } catch (error) {
+                    console.error('Ошибка сохранения позиции вкладок:', error);
+                    showCustomAlert('Ошибка сохранения настройки', 'error');
+                }
+            }
         }
         function loadHomeworkContent() {
             const educationContent = document.getElementById('education-content');
@@ -5982,33 +5959,12 @@
                 console.error('Ошибка записи лога:', error);
             }
         }
-        function setTabsPosition(position) {
-            const toggle = document.getElementById('tabs-position-toggle');
-            const tabsContainer = document.querySelector('.tabs');
-
-            if (position === 'bottom') {
-                toggle.classList.add('active');
-                if (tabsContainer) {
-                    const container = document.querySelector('.container');
-                    container.style.display = 'flex';
-                    container.style.flexDirection = 'column';
-                    container.appendChild(tabsContainer);
-                }
-            } else {
-                toggle.classList.remove('active');
-                if (tabsContainer) {
-                    const container = document.querySelector('.container');
-                    container.style.display = 'block';
-                    container.prepend(tabsContainer);
-                }
-            }
-        }
         async function loadUserSettings() {
             if (!currentUserId || !supabase) return;
             try {
                 const { data, error } = await supabase
                     .from('users')
-                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled')
+                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabpos') // Добавили tabpos
                     .eq('id', currentUserId)
                     .single();
                 if (error) throw error;
@@ -6018,18 +5974,22 @@
                 document.getElementById('tags-toggle').checked = data.tags_enabled !== false;
                 document.getElementById('icons-toggle').checked = data.icons_enabled !== false;
                 document.getElementById('logging-toggle').checked = data.logging_enabled !== false;
+                const isTabsAtBottom = data.tabpos === 'bottom';
+                document.getElementById('tabs-position-toggle').checked = isTabsAtBottom;
+                const tabsContainer = document.querySelector('.tabs');
+                if (isTabsAtBottom) {
+                    tabsContainer.classList.add('tabs-bottom');
+                } else {
+                    tabsContainer.classList.remove('tabs-bottom');
+                }
                 if (!data.tags_enabled) {
                     document.body.classList.add('hide-tags');
                 } else {
                     document.body.classList.remove('hide-tags');
                 }
-                if (data.tabs_position) {
-                    setTabsPosition(data.tabs_position);
-                }
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
-
             } catch (error) {
                 console.error('Ошибка загрузки настроек:', error);
                 document.getElementById('border-animation-toggle').checked = false;
@@ -6039,6 +5999,8 @@
                 document.getElementById('logging-toggle').checked = true;
                 document.body.classList.remove('hide-tags');
                 document.body.classList.remove('show-icons');
+                document.getElementById('tabs-position-toggle').checked = false;
+                document.querySelector('.tabs').classList.remove('tabs-bottom');
                 removeIcons();
                 
                 if (userStatus !== 'developer') {
@@ -6074,32 +6036,6 @@
                     e.stopPropagation();
                 }
             });
-        });
-        document.getElementById('tabs-position-toggle').addEventListener('click', async function() {
-            const currentPosition = this.classList.contains('active') ? 'bottom' : 'top';
-            const newPosition = currentPosition === 'top' ? 'bottom' : 'top';
-            setTabsPosition(newPosition);
-            if (currentUserId && supabase) {
-                try {
-                    await supabase
-                        .from('users')
-                        .update({
-                            tabs_position: newPosition,
-                            updated_at: new Date().toISOString()
-                        })
-                        .eq('id', currentUserId);
-                    await logAction('settings_change', {
-                        setting: 'tabs_position',
-                        value: newPosition,
-                        section: 'appearance'
-                    });
-                    showCustomAlert(`Вкладки перемещены ${newPosition === 'bottom' ? 'вниз' : 'вверх'}`, 'success');
-                } catch (error) {
-                    console.error('Ошибка сохранения положения вкладок:', error);
-                    showCustomAlert('Ошибка сохранения настроек', 'error');
-                    setTabsPosition(currentPosition);
-                }
-            }
         });
         document.addEventListener('DOMContentLoaded', initializeApp);</script>
 </body>
