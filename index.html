@@ -4869,15 +4869,21 @@ _____                                                                    _____
             }
         }
         async function loadUserData() {
-            if (!tg.initDataUnsafe?.user) return;
-            
-            const user = tg.initDataUnsafe.user;
+            let user;
+            if (tg.initDataUnsafe?.user) {
+                user = tg.initDataUnsafe.user;
+            } else if (window.currentUserData) {
+                user = window.currentUserData;
+            } else {
+                console.warn('Нет данных для отображения профиля');
+                return;
+            }
+
             let photoHtml = '';
-            
             if (user.photo_url) {
                 photoHtml = `<img src="${user.photo_url}" class="profile-photo" alt="Profile Photo">`;
             }
-            
+
             const tagsEnabled = document.getElementById('tags-toggle').checked;
             const gradientEnabled = document.getElementById('gradient-toggle').checked;
             
@@ -4894,7 +4900,6 @@ _____                                                                    _____
                 statusBadge = userStatus === 'developer' ? 'Разработчик' : 
                             userStatus === 'admin' ? 'Администратор' : 'Пользователь';
             }
-            
             document.getElementById('profile-content').innerHTML = `
                 ${photoHtml}
                 <div class="profile-info">
