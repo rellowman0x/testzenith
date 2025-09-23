@@ -5100,9 +5100,9 @@ _____                                                                    _____
                 userStatus = await checkUserStatus(currentUserId);
                 isAdmin = ['admin', 'developer'].includes(userStatus);
                 updateLoadingProgress(80);
-                await loadUserSettings();
-                updateLoadingProgress(85);
                 await loadUserData();
+                updateLoadingProgress(85);
+                await loadUserSettings();
                 initEventHandlers();
                 updateLoadingProgress(100);
                 await logAction('app_enter', {
