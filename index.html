@@ -4946,6 +4946,7 @@ _____                                                                    _____
             const container = document.querySelector('.container');
             const startTime = Date.now();
             const minLoadingTime = 3000;
+
             try {
                 applyLoadingTheme('light');
             } catch (e) {
@@ -4953,33 +4954,71 @@ _____                                                                    _____
                 document.documentElement.style.setProperty('--background-color', '#f8f8f8');
                 document.documentElement.style.setProperty('--text-color', '#333');
             }
+
             container.style.display = 'none';
             welcomeScreen.style.display = 'none';
             loadingScreen.style.display = 'flex';
             loadingScreen.style.opacity = '1';
+
             try {
                 initLoaderParticles();
                 supabase = await initSupabase();
-                updateLoadingProgress(30);
-                if (!tg.initDataUnsafe?.user) {
-                    throw new Error('Данные пользователя Telegram недоступны');
+                updateLoadingProgress(20);
+
+                // Шаг 1: Пытаемся получить user_id из Telegram Web App SDK
+                let tgUser = null;
+                if (tg.initDataUnsafe?.user) {
+                    tgUser = tg.initDataUnsafe.user;
+                    currentUserId = tgUser.id.toString();
+                    console.log('Авторизация через Telegram. User ID:', currentUserId);
+                } else {
+                    // Шаг 2: Если данных Telegram нет, пытаемся получить код из URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const activationCode = urlParams.get('code');
+
+                    if (!activationCode || !/^\d{5}$/.test(activationCode)) {
+                        throw new Error('Не удалось получить данные для авторизации. Откройте приложение через Telegram или используйте корректную ссылку с кодом.');
+                    }
+
+                    // Шаг 3: По коду находим user_id в таблице scbot
+                    const { data: scbotRecord, error: scbotError } = await supabase
+                        .from('scbot')
+                        .select('user_id, act')
+                        .eq('code', activationCode)
+                        .single();
+
+                    if (scbotError || !scbotRecord) {
+                        throw new Error('Неверный код активации или код не найден.');
+                    }
+
+                    if (!scbotRecord.act) {
+                        throw new Error('Аккаунт не активирован. Обратитесь к разработчику.');
+                    }
+
+                    currentUserId = scbotRecord.user_id.toString();
+                    console.log('Авторизация через код в URL. User ID:', currentUserId);
                 }
-                const tgUser = tg.initDataUnsafe.user;
-                currentUserId = tgUser.id.toString();
-                updateLoadingProgress(50);
+
+                updateLoadingProgress(40);
+
+                // Шаг 4: Проверяем/создаем запись в основной таблице `users`
                 const { data: existingUser, error: fetchError } = await supabase
                     .from('users')
                     .select('*')
                     .eq('id', currentUserId)
                     .maybeSingle();
+
                 if (fetchError) throw fetchError;
+
                 if (!existingUser) {
+                    // Если пользователя нет, создаем новую запись
+                    // Данные берем из tgUser, если он есть, иначе оставляем пустыми
                     const { error: createError } = await supabase.from('users').insert({
                         id: currentUserId,
-                        username: tgUser.username || null,
-                        first_name: tgUser.first_name || null,
-                        last_name: tgUser.last_name || null,
-                        photo_url: tgUser.photo_url || null,
+                        username: tgUser?.username || null,
+                        first_name: tgUser?.first_name || null,
+                        last_name: tgUser?.last_name || null,
+                        photo_url: tgUser?.photo_url || null,
                         last_seen: new Date().toISOString(),
                         theme: 'light',
                         animation_enabled: false,
@@ -4991,7 +5030,10 @@ _____                                                                    _____
                     });
                     if (createError) throw createError;
                 }
-                updateLoadingProgress(70);
+
+                updateLoadingProgress(60);
+
+                // Шаг 5: Обновляем время последнего визита
                 await supabase
                     .from('users')
                     .update({ 
@@ -4999,41 +5041,47 @@ _____                                                                    _____
                         updated_at: new Date().toISOString() 
                     })
                     .eq('id', currentUserId);
+
+                // Шаг 6: Проверяем статус пользователя (через таблицу scbot или users)
                 userStatus = await checkUserStatus(currentUserId);
                 isAdmin = ['admin', 'developer'].includes(userStatus);
 
-                if (userStatus !== 'user') {
-                    try {
-                        const { data: fullUserData, error: userDataError } = await supabase
-                            .from('users')
-                            .select('*')
-                            .eq('id', currentUserId)
-                            .single();
-                        if (!userDataError && fullUserData) {
-                            console.log('Полные данные пользователя загружены:', fullUserData);
-                        }
-                    } catch (fetchError) {
-                        console.error('Ошибка при загрузке полных данных пользователя:', fetchError);
-                    }
-                }
-                updateLoadingProgress(90);
+                updateLoadingProgress(80);
 
+                // Шаг 7: Загружаем пользовательские настройки (тема, теги и т.д.)
                 await loadUserSettings();
+
+                // Шаг 8: Логируем вход
                 await logAction('app_enter', {
                     user_status: userStatus,
                     is_admin: isAdmin,
-                    app_version: 'V52.3219'
+                    app_version: 'V52.3219',
+                    auth_method: tgUser ? 'telegram' : 'url_code' // Логируем способ авторизации
                 });
+
+                // Шаг 9: Загружаем и отображаем данные профиля
                 await loadUserData();
+
+                // Шаг 10: Инициализируем обработчики событий
                 initEventHandlers();
+
+                // Шаг 11: Показываем панель разработчика, если нужно
                 if (userStatus === 'developer') {
                     document.getElementById('error-btn').classList.remove('hidden');
                 }
+
                 updateLoadingProgress(100);
+
             } catch (error) {
                 updateLoadingProgress(100);
                 console.error('Критическая ошибка инициализации:', error);
+                // Показываем пользователю сообщение об ошибке
+                showErrorToUser();
+                // Можно также показать alert или модальное окно с текстом ошибки
+                alert('Ошибка инициализации: ' + error.message);
             }
+
+            // Обеспечиваем минимальное время загрузки для UX
             const elapsedTime = Date.now() - startTime;
             const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
             setTimeout(() => {
