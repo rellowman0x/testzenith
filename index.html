@@ -4694,6 +4694,33 @@ _____                                                                    _____
                 }
             }
         }
+        async function applyTabsPositionSetting() {
+            if (!currentUserId || !supabase) return;
+            try {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('tabs_position')
+                    .eq('id', currentUserId)
+                    .single();
+                if (error) throw error;
+                const isBottom = data.tabs_position === true;
+                document.getElementById('tabs-position-toggle').checked = isBottom;
+                const tabs = document.querySelector('.tabs');
+                const container = document.querySelector('.container');
+                if (isBottom) {
+                    tabs.classList.add('bottom-position');
+                    container.classList.add('no-top-padding');
+                    container.classList.add('tabs-at-bottom');
+                } else {
+                    tabs.classList.remove('bottom-position');
+                    container.classList.remove('no-top-padding');
+                    container.classList.remove('tabs-at-bottom');
+                }
+            } catch (error) {
+                console.error('Ошибка применения настройки позиции вкладок:', error);
+                document.getElementById('tabs-position-toggle').checked = false;
+            }
+        }
         async function loadTabsPosition() {
             if (!currentUserId || !supabase) return;
 
@@ -5100,10 +5127,11 @@ _____                                                                    _____
                 userStatus = await checkUserStatus(currentUserId);
                 isAdmin = ['admin', 'developer'].includes(userStatus);
                 updateLoadingProgress(80);
-                await loadUserData();
-                updateLoadingProgress(85);
                 await loadUserSettings();
+                updateLoadingProgress(85);
+                await loadUserData();
                 initEventHandlers();
+                await applyTabsPositionSetting();
                 updateLoadingProgress(100);
                 await logAction('app_enter', {
                     user_status: userStatus,
