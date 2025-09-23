@@ -4953,60 +4953,71 @@ _____                                                                    _____
                 document.documentElement.style.setProperty('--background-color', '#f8f8f8');
                 document.documentElement.style.setProperty('--text-color', '#333');
             }
-
             container.style.display = 'none';
             welcomeScreen.style.display = 'none';
             loadingScreen.style.display = 'flex';
             loadingScreen.style.opacity = '1';
-
             try {
                 initLoaderParticles();
                 supabase = await initSupabase();
                 updateLoadingProgress(30);
                 if (!tg.initDataUnsafe?.user) {
-                throw new Error('Данные пользователя Telegram недоступны');
+                    throw new Error('Данные пользователя Telegram недоступны');
                 }
-
                 const tgUser = tg.initDataUnsafe.user;
                 currentUserId = tgUser.id.toString();
                 updateLoadingProgress(50);
                 const { data: existingUser, error: fetchError } = await supabase
-                .from('users')
-                .select('*')
-                .eq('id', currentUserId)
-                .maybeSingle();
-
+                    .from('users')
+                    .select('*')
+                    .eq('id', currentUserId)
+                    .maybeSingle();
                 if (fetchError) throw fetchError;
-
                 if (!existingUser) {
-                const { error: createError } = await supabase.from('users').insert({
-                    id: currentUserId,
-                    username: tgUser.username || null,
-                    first_name: tgUser.first_name || null,
-                    last_name: tgUser.last_name || null,
-                    photo_url: tgUser.photo_url || null,
-                    last_seen: new Date().toISOString(),
-                    theme: 'light',
-                    animation_enabled: false,
-                    gradient_enabled: false,
-                    tags_enabled: true,
-                    status: 'user',
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
-                });
-                if (createError) throw createError;
+                    const { error: createError } = await supabase.from('users').insert({
+                        id: currentUserId,
+                        username: tgUser.username || null,
+                        first_name: tgUser.first_name || null,
+                        last_name: tgUser.last_name || null,
+                        photo_url: tgUser.photo_url || null,
+                        last_seen: new Date().toISOString(),
+                        theme: 'light',
+                        animation_enabled: false,
+                        gradient_enabled: false,
+                        tags_enabled: true,
+                        status: 'user',
+                        created_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString(),
+                    });
+                    if (createError) throw createError;
                 }
                 updateLoadingProgress(70);
                 await supabase
-                .from('users')
-                .update({ 
-                    last_seen: new Date().toISOString(),
-                    updated_at: new Date().toISOString() 
-                })
-                .eq('id', currentUserId);
+                    .from('users')
+                    .update({ 
+                        last_seen: new Date().toISOString(),
+                        updated_at: new Date().toISOString() 
+                    })
+                    .eq('id', currentUserId);
                 userStatus = await checkUserStatus(currentUserId);
                 isAdmin = ['admin', 'developer'].includes(userStatus);
-                updateLoadingProgress(85);
+
+                if (userStatus !== 'user') {
+                    try {
+                        const { data: fullUserData, error: userDataError } = await supabase
+                            .from('users')
+                            .select('*')
+                            .eq('id', currentUserId)
+                            .single();
+                        if (!userDataError && fullUserData) {
+                            console.log('Полные данные пользователя загружены:', fullUserData);
+                        }
+                    } catch (fetchError) {
+                        console.error('Ошибка при загрузке полных данных пользователя:', fetchError);
+                    }
+                }
+                updateLoadingProgress(90);
+
                 await loadUserSettings();
                 await logAction('app_enter', {
                     user_status: userStatus,
@@ -5015,7 +5026,6 @@ _____                                                                    _____
                 });
                 await loadUserData();
                 initEventHandlers();
-                
                 if (userStatus === 'developer') {
                     document.getElementById('error-btn').classList.remove('hidden');
                 }
