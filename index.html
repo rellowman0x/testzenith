@@ -3028,7 +3028,13 @@ _____                                                                    _____
             opacity: 0.3;
             z-index: -2;
         }
-
+        body.tabs-at-bottom .modal .modal-content {
+            max-height: calc(80vh - 80px);
+            margin-bottom: 80px;
+        }
+        body.tabs-at-bottom .modal .modal-content {
+            padding-bottom: 80px;
+        }
         @keyframes starsFlow {
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
@@ -3043,6 +3049,9 @@ _____                                                                    _____
         }
         .console-modal {
             margin-bottom: 70px !important;
+        }
+        .container.tabs-at-bottom {
+            padding-bottom: 80px;
         }
     </style>
 </head>
@@ -3307,7 +3316,7 @@ _____                                                                    _____
                 </label>
             </div>
             <div class="switch-container">
-                <span>Расположение вкладок</span>
+                <span>Нижние вкладки</span>
                 <label class="switch">
                     <input type="checkbox" id="tabs-position-toggle" onchange="toggleTabsPosition()">
                     <span class="slider"></span>
@@ -4650,6 +4659,7 @@ _____                                                                    _____
             if (isChecked) {
                 tabs.classList.add('bottom-position');
                 container.classList.add('no-top-padding');
+                container.classList.add('tabs-at-bottom');
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
@@ -4657,6 +4667,7 @@ _____                                                                    _____
             } else {
                 tabs.classList.remove('bottom-position');
                 container.classList.remove('no-top-padding');
+                container.classList.remove('tabs-at-bottom');
             }
             if (currentUserId && supabase) {
                 try {
