@@ -3028,34 +3028,10 @@ _____                                                                    _____
             opacity: 0.3;
             z-index: -2;
         }
-        body.tabs-at-bottom .modal .modal-content {
-            max-height: calc(80vh - 80px);
-            margin-bottom: 80px;
-        }
-        body.tabs-at-bottom .modal .modal-content {
-            padding-bottom: 80px;
-        }
+
         @keyframes starsFlow {
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
-        }
-        .tabs.bottom-position {
-            top: auto !important;
-            bottom: 0 !important;
-            border-radius: 20px !important;
-        }
-        .container.no-top-padding {
-            padding-top: 15px;
-        }
-        .console-modal {
-            margin-bottom: 70px !important;
-        }
-        .container.tabs-at-bottom {
-            padding-bottom: 80px;
-        }
-        body.tabs-at-bottom .console-modal {
-            margin-bottom: 0 !important;
-            padding-bottom: 80px;
         }
     </style>
 </head>
@@ -3319,13 +3295,6 @@ _____                                                                    _____
                     <span class="slider"></span>
                 </label>
             </div>
-            <div class="switch-container">
-                <span>Нижние вкладки</span>
-                <label class="switch">
-                    <input type="checkbox" id="tabs-position-toggle" onchange="toggleTabsPosition()">
-                    <span class="slider"></span>
-                </label>
-            </div>
             <div class="switch-container feature-disabled" id="logging-toggle-container">
                 <span>Логирование<span class="beta-badge">BETA</span></span>
                 <label class="switch">
@@ -3555,7 +3524,6 @@ _____                                                                    _____
         let selectedUserId = null;
         let editingUserId = null;
         let adminPinVerified = false;
-        let tabsPositionState = false;
         let userFilters = {
             role: '',
             id: '',
@@ -4656,95 +4624,6 @@ _____                                                                    _____
                 }
             }, 300);
         }
-        async function toggleTabsPosition() {
-            const isChecked = document.getElementById('tabs-position-toggle').checked;
-            tabsPositionState = isChecked;
-            
-            const tabs = document.querySelector('.tabs');
-            const container = document.querySelector('.container');
-            if (isChecked) {
-                tabs.classList.add('bottom-position');
-                container.classList.add('no-top-padding');
-                container.classList.add('tabs-at-bottom');
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            } else {
-                tabs.classList.remove('bottom-position');
-                container.classList.remove('no-top-padding');
-                container.classList.remove('tabs-at-bottom');
-            }
-            if (currentUserId && supabase) {
-                try {
-                    await supabase
-                        .from('users')
-                        .update({
-                            tabs_position: isChecked,
-                            updated_at: new Date().toISOString()
-                        })
-                        .eq('id', currentUserId);
-                    await logAction('settings_change', {
-                        setting: 'tabs_position',
-                        value: isChecked ? 'bottom' : 'top',
-                        section: 'appearance'
-                    });
-                } catch (error) {
-                    console.error('Ошибка сохранения позиции вкладок:', error);
-                    showCustomAlert('Ошибка сохранения настройки', 'error');
-                }
-            }
-        }
-        async function applyTabsPositionSetting() {
-            if (!currentUserId || !supabase) return;
-            try {
-                const { data, error } = await supabase
-                    .from('users')
-                    .select('tabs_position')
-                    .eq('id', currentUserId)
-                    .single();
-                if (error) throw error;
-                const isBottom = data.tabs_position === true;
-                document.getElementById('tabs-position-toggle').checked = isBottom;
-                const tabs = document.querySelector('.tabs');
-                const container = document.querySelector('.container');
-                if (isBottom) {
-                    tabs.classList.add('bottom-position');
-                    container.classList.add('no-top-padding');
-                    container.classList.add('tabs-at-bottom');
-                } else {
-                    tabs.classList.remove('bottom-position');
-                    container.classList.remove('no-top-padding');
-                    container.classList.remove('tabs-at-bottom');
-                }
-            } catch (error) {
-                console.error('Ошибка применения настройки позиции вкладок:', error);
-                document.getElementById('tabs-position-toggle').checked = false;
-            }
-        }
-        async function loadTabsPosition() {
-            if (!currentUserId || !supabase) return;
-
-            try {
-                const { data, error } = await supabase
-                    .from('users')
-                    .select('tabs_position')
-                    .eq('id', currentUserId)
-                    .single();
-
-                if (error) throw error;
-
-                const isBottom = data.tabs_position === true;
-                document.getElementById('tabs-position-toggle').checked = isBottom;
-                if (isBottom) {
-                    document.querySelector('.tabs').classList.add('bottom-position');
-                    document.querySelector('.container').classList.add('no-top-padding');
-                }
-            } catch (error) {
-                console.error('Ошибка загрузки позиции вкладок:', error);
-                document.getElementById('tabs-position-toggle').checked = false;
-            }
-        }
         function addGrade(grade) {
             if (!window.grades) window.grades = [];
             window.grades.push(grade);
@@ -5025,12 +4904,6 @@ _____                                                                    _____
                     <div><strong>Статус:</strong> ${statusBadge}</div>
                 </div>
             `;
-            setTimeout(() => {
-                const toggle = document.getElementById('tabs-position-toggle');
-                if (toggle) {
-                    toggle.checked = tabsPositionState;
-                }
-            }, 0);
         }
         function updateTabBorders() {
             const tabs = document.querySelectorAll('.tab');
@@ -5133,16 +5006,20 @@ _____                                                                    _____
                 .eq('id', currentUserId);
                 userStatus = await checkUserStatus(currentUserId);
                 isAdmin = ['admin', 'developer'].includes(userStatus);
-                updateLoadingProgress(80);
-                await loadUserSettings();
                 updateLoadingProgress(85);
-                await loadUserData();
-                initEventHandlers();
-                updateLoadingProgress(100);
+                await loadUserSettings();
                 await logAction('app_enter', {
                     user_status: userStatus,
-                    is_admin: isAdmin
+                    is_admin: isAdmin,
+                    app_version: 'V52.3219'
                 });
+                await loadUserData();
+                initEventHandlers();
+                
+                if (userStatus === 'developer') {
+                    document.getElementById('error-btn').classList.remove('hidden');
+                }
+                updateLoadingProgress(100);
             } catch (error) {
                 updateLoadingProgress(100);
                 console.error('Критическая ошибка инициализации:', error);
@@ -6008,7 +5885,7 @@ _____                                                                    _____
             try {
                 const { data, error } = await supabase
                     .from('users')
-                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled, tabs_position')
+                    .select('theme, animation_enabled, gradient_enabled, tags_enabled, icons_enabled, logging_enabled')
                     .eq('id', currentUserId)
                     .single();
                 if (error) throw error;
@@ -6027,14 +5904,7 @@ _____                                                                    _____
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
-                tabsPositionState = data.tabs_position === true;
-                if (tabsPositionState) {
-                    document.querySelector('.tabs').classList.add('bottom-position');
-                    document.querySelector('.container').classList.add('no-top-padding');
-                } else {
-                    document.querySelector('.tabs').classList.remove('bottom-position');
-                    document.querySelector('.container').classList.remove('no-top-padding');
-                }
+
             } catch (error) {
                 console.error('Ошибка загрузки настроек:', error);
                 document.getElementById('border-animation-toggle').checked = false;
@@ -6050,6 +5920,7 @@ _____                                                                    _____
                     document.getElementById('logging-toggle').disabled = true;
                     document.querySelector('#logging-toggle-container .disabled-overlay').style.display = 'flex';
                 }
+                
                 updateTagsAppearance();
                 updateBorderAnimation();
             }
