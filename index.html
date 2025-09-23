@@ -5108,10 +5108,6 @@ _____                                                                    _____
                 });
                 await loadUserData();
                 initEventHandlers();
-                
-                if (userStatus === 'developer') {
-                    document.getElementById('error-btn').classList.remove('hidden');
-                }
                 updateLoadingProgress(100);
             } catch (error) {
                 updateLoadingProgress(100);
