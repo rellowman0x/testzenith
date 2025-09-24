@@ -5029,6 +5029,18 @@ _____                                                                    _____
                     .eq('id', currentUserId);
 
                 userStatus = await checkUserStatus(currentUserId);
+                const { data: fullUserData, error: userDataError } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('id', currentUserId)
+                    .single();
+
+                if (userDataError || !fullUserData) {
+                    console.warn('Не удалось загрузить данные пользователя из Supabase');
+                } else {
+                    window.currentUserData = fullUserData;
+                    console.log('Полные данные пользователя загружены:', fullUserData);
+                }
                 isAdmin = ['admin', 'developer'].includes(userStatus);
                 if (userStatus !== 'user') {
                     try {
