@@ -4825,47 +4825,38 @@ _____                                                                    _____
                     .select('*')
                     .eq('id', user.id.toString())
                     .maybeSingle();
-
+                const updateData = {
+                    username: user.username || null,
+                    first_name: user.first_name || null,
+                    last_name: user.last_name || null,
+                    photo_url: user.photo_url || null,
+                    last_seen: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                };
                 if (fetchError) throw fetchError;
-                
                 if (existingUser) {
-                    const { data, error } = await supabase
+                    const { error } = await supabase
                         .from('users')
-                        .update({
-                            username: user.username || null,
-                            first_name: user.first_name || null,
-                            last_name: user.last_name || null,
-                            last_seen: new Date().toISOString(),
-                            updated_at: new Date().toISOString()
-                        })
+                        .update(updateData)
                         .eq('id', user.id.toString());
-                    
                     if (error) throw error;
-                    return data;
                 } else {
-                    const { data, error } = await supabase
+                    const { error } = await supabase
                         .from('users')
                         .insert({
+                            ...updateData,
                             id: user.id.toString(),
-                            username: user.username || null,
-                            first_name: user.first_name || null,
-                            last_name: user.last_name || null,
-                            last_seen: new Date().toISOString(),
                             theme: 'light',
                             animation_enabled: false,
                             gradient_enabled: false,
                             tags_enabled: true,
                             status: 'user',
-                            created_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString()
+                            created_at: new Date().toISOString()
                         });
-                    
                     if (error) throw error;
-                    return data;
                 }
             } catch (error) {
                 console.error('Ошибка сохранения пользователя:', error);
-                return null;
             }
         }
         async function loadUserData() {
@@ -4969,19 +4960,18 @@ _____                                                                    _____
                 initLoaderParticles();
                 supabase = await initSupabase();
                 updateLoadingProgress(20);
-
-                // Шаг 1: Пытаемся получить user_id из Telegram Web App SDK
                 let tgUser = null;
                 if (tg.initDataUnsafe?.user) {
                     tgUser = tg.initDataUnsafe.user;
                     currentUserId = tgUser.id.toString();
+                    await createOrUpdateUser(tgUser); 
                     console.log('Авторизация через Telegram. User ID:', currentUserId);
                 } else {
                     const urlParams = new URLSearchParams(window.location.search);
                     const activationCode = urlParams.get('code');
 
                     if (!activationCode || !/^\d{5}$/.test(activationCode)) {
-                        throw new Error('Не удалось получить данные для авторизации. Откройте приложение через Telegram или используйте корректную ссылку с кодом.');
+                        throw new Error('Не удалось получить данные для авторизации. Откройте приложение через Telegram или используйте оффициальное приложение.');
                     }
                     const { data: scbotRecord, error: scbotError } = await supabase
                         .from('scbot')
@@ -5042,16 +5032,17 @@ _____                                                                    _____
                 isAdmin = ['admin', 'developer'].includes(userStatus);
                 if (userStatus !== 'user') {
                     try {
-                        const { data: fullUserData, error: userDataError } = await supabase
+                        const { data: fullUserData, error: userError } = await supabase
                             .from('users')
                             .select('*')
                             .eq('id', currentUserId)
                             .single();
 
-                        if (!userDataError && fullUserData) {
-                            window.currentUserData = fullUserData;
-                            console.log('Полные данные пользователя загружены:', fullUserData);
+                        if (userError || !fullUserData) {
+                            throw new Error('Данные пользователя не найдены');
                         }
+
+                        window.currentUserData = fullUserData;
                     } catch (fetchError) {
                         console.error('Ошибка при загрузке полных данных пользователя:', fetchError);
                     }
