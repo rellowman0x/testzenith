@@ -5196,9 +5196,12 @@ _____                                                                    _____
                     </button>
                 </div>
                 <div class="homework-days" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-                    <div class="homework-day" onclick="switchHomeworkDay('monday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                    <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-day" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Понедельник</h4>
+                        <div class="disabled-overlay">
+                            <span>Недоступно</span>
+                        </div>
                     </div>
                     <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-alt" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
@@ -5221,12 +5224,9 @@ _____                                                                    _____
                             <span>Недоступно</span>
                         </div>
                     </div>
-                    <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                    <div class="homework-day" onclick="switchHomeworkDay('friday') style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Пятница</h4>
-                        <div class="disabled-overlay">
-                            <span>Недоступно</span>
-                        </div>
                     </div>
                     <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-minus" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
@@ -5328,9 +5328,13 @@ _____                                                                    _____
                     'friday': {
                         title: 'Пятница',
                         subjects: [
-                            {name: 'example', link: 'https://example.com/'},
-                            {name: 'example', link: 'https://example.com/'},
-                            {name: 'example', link: 'https://example.com/'}
+                            {name: 'Информатика', links: [
+                                {text: '7-2тип 55задание', url: 'https://vopvet.ru/news/muzykalnyj_fragment_stereo_54_mbajt/2016-10-08-5942'},
+                                {text: '7-2тип 56задание', url: 'https://vopvet.ru/news/muzykalnyj_fragment_mono_70_mbajt/2016-10-08-5943'},
+                                {text: '7-2тип 57задание', url: 'https://vopvet.ru/news/muzykalnyj_fragment_stereo_63_mbajt/2016-10-08-5944'},
+                                {text: '7-2тип 58задание', url: 'https://alex-math.ru/gia/show/zadaniye-7-informatika-yege-polyakov-1877/'},
+                            ]},
+                            {name: 'Биология', text: 'В разделе Биология(не в ДЗ)'}
                         ]
                     },
                     'saturday': {
