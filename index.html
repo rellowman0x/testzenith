@@ -5163,15 +5163,18 @@ _____                                                                    _____
                         loadGradesContent();
                     } else if (tabId === 'homework') {
                         loadHomeworkContent();
-                    } else if (tabId === 'biology') {
+                    }
+                    if (tabId === 'biology') {
                         logAction('education_section_view', {
                             section: 'biology'
                         });
+                        window.currentEducationSection = 'biology';
                         loadEducationContent();
                     } else if (tabId === 'geography') {
                         logAction('education_section_view', {
                             section: 'geography'
                         });
+                        window.currentEducationSection = 'geography';
                         loadEducationContent();
                     }
                 }, 10);
@@ -5695,17 +5698,55 @@ _____                                                                    _____
         }
         function loadEducationContent() {
             const educationContent = document.getElementById('education-content');
-            educationContent.innerHTML = `
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
-                        <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
-                    </button>
-                </div>
-                <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2);">
-                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">Скоро здесь будет контент</h3>
-                    <p style="text-align: center; font-size: 16px; color: var(--text-color);">Этот раздел находится в разработке.</p>
-                </div>
-            `;
+            const isBiology = window.currentEducationSection === 'biology';
+            if (isBiology) {
+                educationContent.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
+                            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+                        </button>
+                    </div>
+                    <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2); white-space: pre-wrap; font-family: 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text-color);">
+        Свойства биологических систем:
+        Питание, дыхание, выделение, развитие, рост, размножение.
+        Живые системы способны и к обмену веществ, и к обмену энергии. Другие системы способны только к обмену энергии. Энергия взаимно превращается и никуда не исчезает Е(кин) -> Е(пот).
+        Обмен веществ делится на:
+        1) Пластический обмен  (анаболизм, ассимиляция - синтез веществ с затратами энергии)
+        2) Энергетический обмен (катаболизм, диссимиляция - распад веществ с выделением энергии)
+
+        Эмерджентность - это наличие у системы особых свойств, не присущих её к отдельным компонентам. Например 1 дерево - не лес, 1 особь - не популяция. Только у популяции есть свойства: рождаемость, смертность, наследственность.
+
+        Энтропия - это мера перехода части, упорядоченный энергии(энергия движения тела, активации химических процессов) в неупорядоченную, в конечном счёте в теплоту. Организм должен постоянно поддерживать отрицательную энтропию, он берет её из пищи. Положительная энтропия - смерть.
+
+        Регуляция процессов жизнедеятельности:
+        Гомеостаз - это относительное постоянство состава внутренней среды организма. Например, при повышении уровня глюкозы в крови - идет выброс инсулина, а при понижении - снижение инсулина.
+
+        Наследственность и изменчивость:
+        Наследственность - это свойство живых организмов передавать свои признаки из поколения в поколение.
+        Изменчивость - это свойство приобретать новые признаки и свойства в процессе онтогенеза.
+
+        Иерархичность - наличие уровня организации живых систем:
+        1) молекулярно-генетический уровень -> 2) клеточный -> 3) тканевый -> 4) органный -> 5) организменный -> 6) популяционно-видовой -> 7) биогеоценотический -> 8) биосферный
+
+        Дискретность - у живых организмов можно выделить четко разделимые структуры.
+        Целостность - все живые организмы целые и имеют структуры.
+
+        Живые организмы эволюционируют. Эволюция - наука о историческом развитии живых организмов.
+                    </div>
+                `;
+            } else {
+                educationContent.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
+                            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+                        </button>
+                    </div>
+                    <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2);">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">Скоро здесь будет контент</h3>
+                        <p style="text-align: center; font-size: 16px; color: var(--text-color);">Этот раздел находится в разработке.</p>
+                    </div>
+                `;
+            }
         }
         function loadGradesContent() {
             const educationContent = document.getElementById('education-content');
