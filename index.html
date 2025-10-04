@@ -2860,7 +2860,6 @@ _____                                                                    _____
             overflow: hidden;
             opacity: 1;
             transition: opacity 0.8s ease;
-            pointer-events: none;
         }
 
         #zenith-loader.hidden {
@@ -3033,18 +3032,52 @@ _____                                                                    _____
             0% { transform: translateZ(0) rotate(0deg); }
             100% { transform: translateZ(0) rotate(360deg); }
         }
+        .update-tag {
+            display: inline-block;
+            background: rgba(var(--border-color-rgb), 0.15);
+            color: var(--text-color);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(var(--border-color-rgb), 0.2);
+        }
+        body.dark-theme .update-tag,
+        body.dark-purple-theme .update-tag,
+        body.dark-green-theme .update-tag,
+        body.dark-red-theme .update-tag,
+        body.dark-blue-theme .update-tag,
+        body.dark-pink-theme .update-tag,
+        body.dark-orange-theme .update-tag {
+            background: rgba(var(--border-color-rgb), 0.2);
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
     <div id="zenith-loader">
         <div class="loader-overlay"></div>
         <div class="loader-particles" id="loader-particles"></div>
-        <div class="loader-content">
+        <div class="loader-content" id="loader-main">
             <div class="loader-logo">#zh</div>
             <div class="loader-signature">#rellowman</div>
             <div class="loader-ring">
                 <div class="loader-percent" id="loader-percent">0%</div>
             </div>
+        </div>
+        <div class="loader-content hidden" id="auth-form" style="text-align: center; width: 90%; max-width: 400px;">
+            <h3 style="color: var(--text-color); margin-bottom: 15px;">🔐 Данные отсутствуют</h3>
+            <p style="color: var(--text-color); opacity: 0.8; margin-bottom: 20px; font-size: 16px;">
+                Получите код активации через команду <code>/activate</code> в боте.
+            </p>
+            <input type="text" id="activation-code-input" placeholder="Введите 5-значный код"
+                style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--background-color); color: var(--text-color); font-size: 18px; text-align: center; margin-bottom: 20px;">
+            <button id="auth-submit-btn" class="back-btn" style="width: 100%; padding: 14px;">
+                Авторизация
+            </button>
+            <div id="auth-error" style="color: #dc3545; margin-top: 10px; min-height: 20px; font-size: 14px;"></div>
         </div>
     </div>
     <div id="welcome-screen">
@@ -3077,6 +3110,7 @@ _____                                                                    _____
                             <strong>Расписание</strong>
                             <small>Список уроков по дням</small>
                         </div>
+                        <i class="fas fa-calendar-alt" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
                 </div>
                 <div class="education-feature">
@@ -3085,6 +3119,7 @@ _____                                                                    _____
                             <strong>Средняя оценка</strong>
                             <small>Отображение вашей успеваемости</small>
                         </div>
+                        <i class="fas fa-chart-line" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
                 </div>
                 <div class="education-feature">
@@ -3093,6 +3128,7 @@ _____                                                                    _____
                             <strong>Домашнее задание</strong>
                             <small>Просмотр домашнего задания</small>
                         </div>
+                        <i class="fas fa-book" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
                 </div>
                 <div class="education-feature">
@@ -3101,6 +3137,7 @@ _____                                                                    _____
                             <strong>Биология</strong>
                             <small>Материалы по биологии</small>
                         </div>
+                        <i class="fas fa-seedling" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
                 </div>
                 <div class="education-feature">
@@ -3109,6 +3146,25 @@ _____                                                                    _____
                             <strong>География</strong>
                             <small>Материалы по географии</small>
                         </div>
+                        <i class="fas fa-map-marked-alt" style="color: var(--border-color); font-size: 18px;"></i>
+                    </div>
+                </div>
+                <div class="education-feature">
+                    <div class="admin-item" onclick="switchEducationTab('fipi')">
+                        <div style="display: flex; flex-direction: column; width: 100%;">
+                            <strong>ФИПИ <span class="update-tag">upd 04.10.25</span></strong>
+                            <small>Официальные материалы ЕГЭ/ОГЭ</small>
+                        </div>
+                        <i class="fas fa-graduation-cap" style="color: var(--border-color); font-size: 18px;"></i>
+                    </div>
+                </div>
+                <div class="education-feature">
+                    <div class="admin-item" onclick="switchEducationTab('physics')">
+                        <div style="display: flex; flex-direction: column; width: 100%;">
+                            <strong>Физика <span class="update-tag">upd 04.10.25</span></strong>
+                            <small>Теория и задачи по физике</small>
+                        </div>
+                        <i class="fas fa-atom" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
                 </div>
             </div>
@@ -3509,7 +3565,6 @@ _____                                                                    _____
             </div>
         </div>
     </div>
-
     <script>
         const supabaseUrl = 'https://didzuiwhxfogxakqhjpr.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpZHp1aXdoeGZvZ3hha3FoanByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzMjkwNTMsImV4cCI6MjA2NDkwNTA1M30.5EmBfVBPPL5MlDhAuqShKRGtcBzGgM-j_QOrk87YmX4';
@@ -3524,6 +3579,7 @@ _____                                                                    _____
         let selectedUserId = null;
         let editingUserId = null;
         let adminPinVerified = false;
+        let activationCode = null;
         let userFilters = {
             role: '',
             id: '',
@@ -4938,11 +4994,10 @@ _____                                                                    _____
         
         async function initializeApp() {
             const loadingScreen = document.getElementById('zenith-loader');
-            const welcomeScreen = document.getElementById('welcome-screen');
             const container = document.querySelector('.container');
-            const startTime = Date.now();
-            const minLoadingTime = 3000;
-
+            container.style.display = 'none';
+            loadingScreen.style.display = 'flex';
+            loadingScreen.style.opacity = '1';
             try {
                 applyLoadingTheme('light');
             } catch (e) {
@@ -4950,121 +5005,119 @@ _____                                                                    _____
                 document.documentElement.style.setProperty('--background-color', '#f8f8f8');
                 document.documentElement.style.setProperty('--text-color', '#333');
             }
-
-            container.style.display = 'none';
-            welcomeScreen.style.display = 'none';
-            loadingScreen.style.display = 'flex';
-            loadingScreen.style.opacity = '1';
-
+            let tgUser = null;
+            let authMethod = null;
             try {
                 initLoaderParticles();
                 supabase = await initSupabase();
                 updateLoadingProgress(20);
-                let tgUser = null;
                 if (tg.initDataUnsafe?.user) {
                     tgUser = tg.initDataUnsafe.user;
                     currentUserId = tgUser.id.toString();
-                    await createOrUpdateUser(tgUser); 
-                    console.log('Авторизация через Telegram. User ID:', currentUserId);
-                } else {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const activationCode = urlParams.get('code');
-
-                    if (!activationCode || !/^\d{5}$/.test(activationCode)) {
-                        throw new Error('Не удалось получить данные для авторизации. Откройте приложение через Telegram или используйте оффициальное приложение.');
-                    }
-                    const { data: scbotRecord, error: scbotError } = await supabase
-                        .from('scbot')
-                        .select('user_id, act')
-                        .eq('code', activationCode)
-                        .single();
-
-                    if (scbotError || !scbotRecord) {
-                        throw new Error('Неверный код активации или код не найден.');
-                    }
-
-                    if (!scbotRecord.act) {
-                        throw new Error('Аккаунт не активирован. Обратитесь к разработчику.');
-                    }
-
-                    currentUserId = scbotRecord.user_id.toString();
-                    console.log('Авторизация через код в URL. User ID:', currentUserId);
+                    authMethod = 'telegram';
+                    console.log('✅ Telegram (initDataUnsafe)', currentUserId);
                 }
-
+                if (!currentUserId) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const urlCode = urlParams.get('code');
+                    if (urlCode && /^\d{5}$/.test(urlCode)) {
+                        const { data: scbotRecord, error: scbotError } = await supabase
+                            .from('scbot')
+                            .select('user_id, act')
+                            .eq('code', urlCode)
+                            .single();
+                        if (!scbotError && scbotRecord && scbotRecord.act) {
+                            currentUserId = scbotRecord.user_id.toString();
+                            localStorage.setItem('zenith_activation_code', urlCode);
+                            authMethod = 'url_code';
+                            console.log('✅ Авторизация через URL-код', currentUserId);
+                        }
+                    }
+                }
+                if (!currentUserId) {
+                    const savedCode = localStorage.getItem('zenith_activation_code');
+                    if (savedCode && /^\d{5}$/.test(savedCode)) {
+                        const { data: scbotRecord, error: scbotError } = await supabase
+                            .from('scbot')
+                            .select('user_id, act')
+                            .eq('code', savedCode)
+                            .single();
+                        if (!scbotError && scbotRecord && scbotRecord.act) {
+                            currentUserId = scbotRecord.user_id.toString();
+                            authMethod = 'saved_code';
+                            console.log('✅ Авторизация через сохранённый код', currentUserId);
+                        } else {
+                            localStorage.removeItem('zenith_activation_code');
+                        }
+                    }
+                }
+                if (!currentUserId) {
+                    throw new Error('NO_AUTH');
+                }
                 updateLoadingProgress(40);
+                const now = new Date().toISOString();
                 const { data: existingUser, error: fetchError } = await supabase
                     .from('users')
-                    .select('*')
+                    .select('id')
                     .eq('id', currentUserId)
                     .maybeSingle();
-
                 if (fetchError) throw fetchError;
-
-                if (!existingUser) {
-                    const { error: createError } = await supabase.from('users').insert({
-                        id: currentUserId,
-                        username: tgUser?.username || null,
-                        first_name: tgUser?.first_name || null,
-                        last_name: tgUser?.last_name || null,
-                        photo_url: tgUser?.photo_url || null,
+                if (existingUser) {
+                    const updateData = {
                         last_seen: new Date().toISOString(),
-                        theme: 'light',
-                        animation_enabled: false,
-                        gradient_enabled: false,
-                        tags_enabled: true,
-                        status: 'user',
-                        created_at: new Date().toISOString(),
-                        updated_at: new Date().toISOString(),
-                    });
-                    if (createError) throw createError;
+                        updated_at: new Date().toISOString()
+                    };
+                    if (tgUser) {
+                        updateData.username = tgUser.username || null;
+                        updateData.first_name = tgUser.first_name || null;
+                        updateData.last_name = tgUser.last_name || null;
+                        updateData.photo_url = tgUser.photo_url || null;
+                    }
+                    const { error: updateError } = await supabase
+                        .from('users')
+                        .update(updateData)
+                        .eq('id', currentUserId);
+                    if (updateError) throw updateError;
+                } else {
+                    const { error: insertError } = await supabase
+                        .from('users')
+                        .insert({
+                            id: currentUserId,
+                            username: tgUser?.username || null,
+                            first_name: tgUser?.first_name || null,
+                            last_name: tgUser?.last_name || null,
+                            photo_url: tgUser?.photo_url || null,
+                            last_seen: new Date().toISOString(),
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString(),
+                            theme: 'light',
+                            animation_enabled: false,
+                            gradient_enabled: false,
+                            tags_enabled: true,
+                            status: 'user'
+                        });
+                    if (insertError) throw insertError;
                 }
-
                 updateLoadingProgress(60);
-                await supabase
-                    .from('users')
-                    .update({ 
-                        last_seen: new Date().toISOString(),
-                        updated_at: new Date().toISOString() 
-                    })
-                    .eq('id', currentUserId);
-
-                userStatus = await checkUserStatus(currentUserId);
                 const { data: fullUserData, error: userDataError } = await supabase
                     .from('users')
                     .select('*')
                     .eq('id', currentUserId)
                     .single();
-
                 if (userDataError || !fullUserData) {
-                    console.warn('Не удалось загрузить данные пользователя из Supabase');
+                    console.warn('⚠️ Не удалось загрузить данные пользователя из sb');
                 } else {
                     window.currentUserData = fullUserData;
-                    console.log('Полные данные пользователя загружены:', fullUserData);
+                    console.log('✅ Полные данные пользователя загружены:', fullUserData);
                 }
+                userStatus = await checkUserStatus(currentUserId);
                 isAdmin = ['admin', 'developer'].includes(userStatus);
-                if (userStatus !== 'user') {
-                    try {
-                        const { data: fullUserData, error: userError } = await supabase
-                            .from('users')
-                            .select('*')
-                            .eq('id', currentUserId)
-                            .single();
-
-                        if (userError || !fullUserData) {
-                            throw new Error('Данные пользователя не найдены');
-                        }
-
-                        window.currentUserData = fullUserData;
-                    } catch (fetchError) {
-                        console.error('Ошибка при загрузке полных данных пользователя:', fetchError);
-                    }
-                }
                 updateLoadingProgress(80);
                 await loadUserSettings();
                 await logAction('app_enter', {
                     user_status: userStatus,
                     is_admin: isAdmin,
-                    auth_method: tgUser ? 'telegram' : 'url_code'
+                    auth_method: authMethod
                 });
                 await loadUserData();
                 initEventHandlers();
@@ -5072,26 +5125,106 @@ _____                                                                    _____
                     document.getElementById('error-btn').classList.remove('hidden');
                 }
                 updateLoadingProgress(100);
-            } catch (error) {
-                updateLoadingProgress(100);
-                console.error('Критическая ошибка инициализации:', error);
-                showErrorToUser();
-                alert('Ошибка инициализации: ' + error.message);
-            }
-            const elapsedTime = Date.now() - startTime;
-            const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
-            setTimeout(() => {
                 setTimeout(() => {
                     loadingScreen.style.opacity = '0';
-                    loadingScreen.style.transition = 'opacity 0.5s ease';
                     setTimeout(() => {
                         loadingScreen.style.display = 'none';
                         showWelcomeScreen();
                     }, 500);
                 }, 1200);
-            }, remainingTime);
-        }
 
+            } catch (error) {
+                updateLoadingProgress(0);
+                console.error('❌ Ошибка инициализации:', error);
+                if (error.message === 'NO_AUTH') {
+                    showActivationForm();
+                } else {
+                    showErrorToUser();
+                }
+            }
+        }
+        async function handleAuthSubmit() {
+            const code = document.getElementById('activation-code-input').value.trim();
+            const errorDiv = document.getElementById('auth-error');
+            const btn = document.getElementById('auth-submit-btn');
+
+            if (!/^\d{5}$/.test(code)) {
+                errorDiv.textContent = 'Код должен состоять из 5 цифр.';
+                return;
+            }
+
+            errorDiv.textContent = 'Проверка...';
+            btn.disabled = true;
+
+            try {
+                const { data: scbotRecord, error: scbotError } = await supabase
+                    .from('scbot')
+                    .select('user_id, act')
+                    .eq('code', code)
+                    .single();
+
+                if (scbotError || !scbotRecord) {
+                    throw new Error('Неверный код активации.');
+                }
+                if (!scbotRecord.act) {
+                    throw new Error('Аккаунт не активирован.');
+                }
+
+                localStorage.setItem('zenith_activation_code', code);
+                location.reload();
+
+            } catch (err) {
+                errorDiv.textContent = err.message;
+                btn.disabled = false;
+            }
+        }
+        function showActivationForm() {
+            const loadingScreen = document.getElementById('zenith-loader');
+            if (!loadingScreen) return;
+            loadingScreen.style.pointerEvents = 'auto';
+            const mainLoader = document.getElementById('loader-main');
+            if (mainLoader) mainLoader.classList.add('hidden');
+            const authForm = document.getElementById('auth-form');
+            if (authForm) {
+                authForm.classList.remove('hidden');
+                const input = authForm.querySelector('#activation-code-input');
+                const btn = authForm.querySelector('#auth-submit-btn');
+                const errorDiv = authForm.querySelector('#auth-error');
+                btn.onclick = null;
+                btn.onclick = async () => {
+                    const code = input.value.trim();
+                    if (!/^\d{5}$/.test(code)) {
+                        errorDiv.textContent = 'Код должен состоять из 5 цифр.';
+                        return;
+                    }
+                    errorDiv.textContent = 'Проверка...';
+                    btn.disabled = true;
+                    try {
+                        const { data: scbotRecord, error: scbotError } = await supabase
+                            .from('scbot')
+                            .select('user_id, act')
+                            .eq('code', code)
+                            .single();
+
+                        if (scbotError || !scbotRecord) {
+                            throw new Error('Неверный код активации.');
+                        }
+                        if (!scbotRecord.act) {
+                            throw new Error('Аккаунт не активирован.');
+                        }
+
+                        localStorage.setItem('zenith_activation_code', code);
+                        location.reload();
+                    } catch (err) {
+                        errorDiv.textContent = err.message;
+                        btn.disabled = false;
+                    }
+                };
+
+                // Фокус на поле ввода
+                setTimeout(() => input.focus(), 300);
+            }
+        }
         async function applyTheme(theme, isUserAction = true) {
             document.body.className = theme + '-theme';
             document.querySelectorAll('.theme-option').forEach(option => {
@@ -5176,6 +5309,14 @@ _____                                                                    _____
                         });
                         window.currentEducationSection = 'geography';
                         loadEducationContent();
+                    } else if (tabId === 'fipi') {
+                        logAction('education_section_view', { section: 'fipi' });
+                        window.currentEducationSection = 'fipi';
+                        loadEducationContent();
+                    } else if (tabId === 'physics') {
+                        logAction('education_section_view', { section: 'physics' });
+                        window.currentEducationSection = 'physics';
+                        loadEducationContent();
                     }
                 }, 10);
             }, 300);
@@ -5199,11 +5340,8 @@ _____                                                                    _____
                     <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-day" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Понедельник</h4>
-                        <div class="disabled-overlay">
-                            <span>Недоступно</span>
-                        </div>
                     </div>
-                    <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                    <div class="homework-day" onclick="switchHomeworkDay('monday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-alt" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Вторник</h4>
                         <div class="disabled-overlay">
@@ -5227,8 +5365,11 @@ _____                                                                    _____
                     <div class="homework-day" onclick="switchHomeworkDay('friday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Пятница</h4>
+                        <div class="disabled-overlay">
+                            <span>Недоступно</span>
+                        </div>
                     </div>
-                    <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                    <div class="homework-day" onclick="switchHomeworkDay('saturday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-minus" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Суббота</h4>
                         <div class="disabled-overlay">
@@ -5253,40 +5394,28 @@ _____                                                                    _____
                     'monday': {
                         title: 'Понедельник',
                         subjects: [
-                            {name: 'Английский язык', links: [
-                                {text: 'стр15зад8', url: 'https://reshak.ru/otvet/otvet_txt.php?otvet1=/spotlight10/images/module1/c/8'},
-                                {text: 'стр15зад9', url: 'https://reshak.ru/otvet/otvet_txt.php?otvet1=/spotlight10/images/module1/c/9'}
-                            ]},
-                            {name: 'Физика В1', links: [
-                                {text: '1задание', url: 'https://www.euroki.org/koza/skolko-vremeni-passazhir-stoyaschiy-u-okna-poezda-kotoryy-idyot-so-skorostyu--kmch-budet-videt-prohod'},
-                                {text: '2задание', url: 'https://uchi.ru/otvety/questions/kakovo-uskorenie-avtomobilya-dvizhuschegosya-so-skorostyu-72km-ch-esli-cherez-20s-on-osta'},
-                                {text: '3задание', url: 'https://reshak.ru/otvet/otvet10.php?otvet1=64&var=1var'},
-                                {text: '4задание', url: 'https://online-otvet.ru/fizika/5cea783c96f4e19a2901d0f2'},
-                                {text: '5задание', url: 'https://reshalka.com/uchebniki/7-klass/physics/maron1/1437'},
-                                {text: '6задание', url: 'https://uchi.ru/otvety/questions/opredelite-nachalnuyu-skorost-tela-kotoroe-dvigayas-s-uskoreniem-2m-s-kvadrate-za-5sekund'},
-                                {text: '7задание', url: 'https://reshak.ru/otvet/otvet10.php?otvet1=37&var=1var'},
-                                {text: '8задание', url: 'https://otvet-master.ru/11112728/скатываясь-наклонной-плоскости'},
-                                {text: '9задание', url: 'https://uchi.ru/otvety/questions/telo-dvizhetsya-ravnomerno-i-pryamolineyno-so-skorostyu-3-m-s-v-techenie-20-s-zatem-v-tec'}
-                            ]},
-                            {name: 'Физика В4 (В2)', links: [
-                                {text: '1задание', url: 'https://physics-urok.sdamgia.ru/problem?id=164'},
-                                {text: '2задание', url: 'https://uchi.ru/otvety/questions/opredelite-vremya-za-kotoroe-tramvay-razvivaet-skorost-36km-ch-trogayas-s-mesta-s-uskoren'},
-                                {text: '3задание', url: 'https://uchi.ru/otvety/questions/velosipedist-dvizhuscheysya-so-skorostyu-3-m-s-nachinaet-spuskatsya-s-gori-s-uskoreniem-0'},
-                                {text: '4задание', url: 'https://www.euroki.org/koza/zadacha--motornaya-lodka-prohodit-rasstoyanie-mezhdu-dvumya-punktami-a-i-v-po-techeniyu-reki-za--ch-a'},
-                                {text: '5задание', url: 'https://uchi.ru/otvety/questions/opredelite-za-kakoe-vremya-trolleybus-dvigayas-iz-sostoyaniya-pokoya-na-puti-500m-priobry'},
-                                {text: '6задание', url: 'https://uchi.ru/otvety/questions/1-dvigayas-ot-ostanovki-telo-dostiglo-skorosti-50-m-s-proydya-put-50-m-chemu-ravno-uskore'},
-                                {text: '7задание', url: 'https://uchi.ru/otvety/questions/skorost-poezda-na-podyome-30-km-ch-a-na-spuske-90-km-ch-opredelite-srednyuyu-skorost-na-v'},
-                                {text: '8задание', url: 'https://www.soloby.ru/931558/последнюю-равнозамедленного-останавливается-пройденный'},
-                                {text: '9задание', url: 'https://a-otvet.ru/493267/'}
+                            {name: 'текст', links: [
+                                {text: 'текст', url: 'текст'}
                             ]}
                         ]
                     },
                     'tuesday': {
                         title: 'Вторник',
                         subjects: [
-                            {name: 'example', link: 'https://example.com/'},
-                            {name: 'example', link: 'https://example.com/'},
-                            {name: 'example', link: 'https://example.com/'}
+                            {name: 'Алгебра', links: [
+                                {text: '1фотка', url: 'https://www.euroki.org/koza/reshite-uravneniyaa-%7Cx--%7C---b-%7Cx--%7C---v-%7Cx²--x%7C---g-%7C%7Cx--%7C--%7C--d-%7C%7C%7Cx-–-%7C--%7C--%7C'},
+                                {text: '2фотка3зад', url: 'https://i.postimg.cc/vTZ2Xb2C/image.png'}
+                                /*,
+                                {text: '2фотка4зад', url: 'текст'},
+                                {text: '2фотка5зад', url: 'httтекст'}
+                                */
+                            ]},
+                            {name: 'Физика', links: [
+                                {text: '172', url: 'https://gdz.ru/class-11/fizika/rymkevich/172-nom/'},
+                                {text: '173', url: 'https://gdz.ru/class-11/fizika/rymkevich/173-nom/'},
+                                {text: '174', url: 'https://gdz.ru/class-11/fizika/rymkevich/174-nom/'}
+                            ]},
+                            {name: 'Информатика', text: '18) 2\n19) 2\n20) 3'}
                         ]
                     },
                     'wednesday': {
@@ -5301,48 +5430,50 @@ _____                                                                    _____
                         title: 'Четверг',
                         subjects: [
                             {name: 'Английский язык', links: [
-                                {text: '9/10 стр.13', url: 'https://gdz.ru/class-10/english/reshebnik-spotlight-10-afanaseva-o-v/13-s-1/'}
+                                {text: 'текст', url: 'текст'}
                             ]},
-                            {name: 'Информатика', links: [
-                                {text: '7тип 27задание', url: 'https://www.euroki.org/koza/tsvetnoe-izobrazhenie-bylo-otsifrovano-i-sohraneno-v-vide-fayla-bez-ispolzovaniya-szhatiya-dannyh-raz'},
-                                {text: '7тип 28задание [H]', url: 'https://i.postimg.cc/250T4ZWk/image.png'},
-                                {text: '7тип 29задание [H]', url: 'https://i.postimg.cc/8cR6m2YR/image.png'},
-                                {text: '7тип 30задание [H]', url: 'https://i.postimg.cc/rwPKxym6/image.png'}
-                            ]},
-                            /*{name: 'География', links: [
-                                {text: 'текст', url: ''}
+                            {name: 'География / Практическая [H]', links: [
+                                {text: '2 задание / 1пример', url: 'https://i.postimg.cc/02qW9yFP/image.png'},
+                                {text: '2 задание / 2пример', url: 'https://i.postimg.cc/V6vyBk10/image.png'},
+                                {text: '3/4 задание / 1пример', url: 'https://i.postimg.cc/D0fScs0d/image.png'},
+                                {text: '3/4 задание / 2пример', url: 'https://i.postimg.cc/FsV44qPY/image.png'},
+                                {text: '5/6/вывод', url: 'https://i.postimg.cc/PqzZzdKt/image.png'}
                             ]},
                             {name: 'Геометрия', links: [
-                                {text: 'назв', url: ''}
-                            ]},*/
-                            {name: 'Физика ', links: [
-                                {text: '1 и 2 вар(онли ответы)', url: 'https://testschool.ru/2018/08/02/test-po-fizike-peremeshhenie-skorost-ravnomernoe-pryamolineynoe-dvizhenie-dlya-10-klassa/'}
+                                {text: 'текст', url: 'текст'}
                             ]},
-                            {name: 'Алгебра', links: [
-                                {text: 'C-19', url: 'https://www.euroki.org/gdz/ru/algebra/8_klass/algebra__8_klass_zhohov_makarychev_262/samostoyatelnye-raboty-s-1919-kvadratnyy-koren-iz-drobi-chastnoe-korney-zadanie-variant-2'},
-                                {text: 'C-21 / 1задание', url: 'https://megaresheba.ru/publ/reshebnik/algebra/didakticheskie_materialy_8_klass_zhokhov/34-1-0-2092/2-21-sr-1'},
-                                {text: 'C-21 / 2задание', url: 'https://megaresheba.ru/publ/reshebnik/algebra/didakticheskie_materialy_8_klass_zhokhov/34-1-0-2092/2-21-sr-2'}
-                            ]}
+                            {name: 'Физика ', links: [
+                                {text: 'Решу ЕГЭ 10611121', url: 'https://phys-ege.sdamgia.ru/test?id=10611121'}
+                            ],
+                            text: "1) 20\n2) -0,5\n3) 0,7\n4) -2\n5) 5\n6) 100\n7) 4\n8) 1\n9) 150\n10) 2\n11) 5\n12) 8\n13) 24\n14) 0,4\n15) 50\n16) 14\n17) 234\n18) 14\n19) 14\n20) 34\n21) 34\n22) 13\n23) 22\n24) 24\n25) 22"}
                         ]
                     },
                     'friday': {
                         title: 'Пятница',
                         subjects: [
-                            {name: 'Информатика', links: [
-                                {text: '7-2тип 55задание', url: 'https://vopvet.ru/news/muzykalnyj_fragment_stereo_54_mbajt/2016-10-08-5942'},
-                                {text: '7-2тип 56задание', url: 'https://vopvet.ru/news/muzykalnyj_fragment_mono_70_mbajt/2016-10-08-5943'},
-                                {text: '7-2тип 57задание', url: 'https://vopvet.ru/news/muzykalnyj_fragment_stereo_63_mbajt/2016-10-08-5944'},
-                                {text: '7-2тип 58задание', url: 'https://alex-math.ru/gia/show/zadaniye-7-informatika-yege-polyakov-1877/'},
-                            ]},
-                            {name: 'Биология', text: 'В разделе Биология(не в ДЗ)'}
+                            /*{name: 'Информатика', links: [
+                                {text: 'текст', url: 'текст'}
+                            ]},*/
+                            {name: 'Алгебра', links: [
+                                {text: '160номер', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=povtor/160&predmet=nikol11'},
+                                {text: '161номер', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=povtor/161&predmet=nikol11'},
+                                {text: '162номер', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=povtor/162&predmet=nikol11'},
+                                {text: '163номер', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=povtor/163&predmet=nikol11'},
+                                {text: '164номер', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=povtor/164&predmet=nikol11'},
+                                {text: '165номер', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=povtor/165&predmet=nikol11'}
+                            ]}
+                            /*,
+                            {name: 'Биология', text: 'текст'}
+                            */
                         ]
                     },
                     'saturday': {
                         title: 'Суббота',
                         subjects: [
-                            {name: 'example', link: 'https://example.com/'},
-                            {name: 'example', link: 'https://example.com/'},
-                            {name: 'example', link: 'https://example.com/'}
+                            {name: ' текст', links: [
+                                {text: 'текст', url: 'текст'}
+                            ]},
+                            {name: 'текст', text: 'текст'}
                         ]
                     }
                 };
@@ -5361,7 +5492,7 @@ _____                                                                    _____
                             `;
                         });
                     }
-                    else if (subject.text) {
+                    if (subject.text) {
                         const lines = subject.text.split('\n');
                         lines.forEach(line => {
                             if (line.trim()) {
@@ -5373,7 +5504,7 @@ _____                                                                    _____
                             }
                         });
                     }
-                    else if (subject.link) {
+                    if (!subject.links && !subject.text && subject.link) {
                         contentHTML += `
                             <a href="${subject.link}" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 14px; margin: 5px 0; padding: 5px 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 5px; transition: all 0.3s ease;">
                                 <i class="fas fa-external-link-alt" style="margin-right: 5px;"></i> Ссылка на материалы
@@ -5460,7 +5591,7 @@ _____                                                                    _____
                     {name: 'Химия', time: '10:30 - 11:15'},
                     {name: 'Физика', time: '11:35 - 12:20'},
                     {name: 'Обществознание', time: '12:35 - 13:20'},
-                    {name: 'Геометрия', time: '13:30 - 14:15'},
+                    {name: 'Алгебра', time: '13:30 - 14:15'},
                     {name: 'Родной язык', time: '14:25 - 15:10'}
                 ],
                 'Четверг': [
@@ -5468,7 +5599,7 @@ _____                                                                    _____
                     {name: 'Английский язык', time: '09:25 - 10:05'},
                     {name: 'География', time: '10:20 - 11:00'},
                     {name: 'Физика', time: '11:15 - 11:55'},
-                    {name: 'Алгебра', time: '12:10 - 12:50'},
+                    {name: 'Геометрия', time: '12:10 - 12:50'},
                     {name: 'Геометрия', time: '13:40 - 14:20'}
                 ],
                 'Пятница': [
@@ -5710,32 +5841,159 @@ _____                                                                    _____
                             <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
                         </button>
                     </div>
-                    <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2); white-space: pre-wrap; font-family: 'Segoe UI', Roboto, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text-color);">
-        Свойства биологических систем:
-        Питание, дыхание, выделение, развитие, рост, размножение.
-        Живые системы способны и к обмену веществ, и к обмену энергии. Другие системы способны только к обмену энергии. Энергия взаимно превращается и никуда не исчезает Е(кин) -> Е(пот).
-        Обмен веществ делится на:
-        1) Пластический обмен  (анаболизм, ассимиляция - синтез веществ с затратами энергии)
-        2) Энергетический обмен (катаболизм, диссимиляция - распад веществ с выделением энергии)
+                    <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 25px; border: 2px solid var(--border-color); box-shadow: 0 6px 20px rgba(0,0,0,0.08);">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">Химический состав клетки</h3>
 
-        Эмерджентность - это наличие у системы особых свойств, не присущих её к отдельным компонентам. Например 1 дерево - не лес, 1 особь - не популяция. Только у популяции есть свойства: рождаемость, смертность, наследственность.
+                        <p style="margin-bottom: 20px; line-height: 1.6; color: var(--text-color);">
+                            Структуры клетки построены из молекул, а молекулы — из атомов. Атомы представляют собой разновидности химических элементов.
+                        </p>
 
-        Энтропия - это мера перехода части, упорядоченный энергии(энергия движения тела, активации химических процессов) в неупорядоченную, в конечном счёте в теплоту. Организм должен постоянно поддерживать отрицательную энтропию, он берет её из пищи. Положительная энтропия - смерть.
+                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Основные элементы клетки (% массы)</h4>
+                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                            <li>O (Кислород) — 62%</li>
+                            <li>C (Углерод) — 21%</li>
+                            <li>H (Водород) — 10%</li>
+                            <li>N (Азот) — 3%</li>
+                        </ul>
+                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Классификация элементов</h4>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            По содержанию в организме элементы делятся на:
+                        </p>
+                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                            <li><strong>Макроэлементы</strong> — содержатся в больших количествах</li>
+                            <li><strong>Микроэлементы</strong> — необходимы в малых дозах</li>
+                            <li><strong>Ультрамикроэлементы</strong> — следовые количества, но важны для жизнедеятельности</li>
+                        </ul>
 
-        Регуляция процессов жизнедеятельности:
-        Гомеостаз - это относительное постоянство состава внутренней среды организма. Например, при повышении уровня глюкозы в крови - идет выброс инсулина, а при понижении - снижение инсулина.
+                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вещества клетки</h4>
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
+                                <strong>Органические:</strong>
+                                <ul style="padding-left: 20px; margin-top: 6px;">
+                                    <li>Белки (протеины)</li>
+                                    <li>Жиры (липиды)</li>
+                                    <li>Углеводы</li>
+                                    <li>Нуклеиновые кислоты</li>
+                                </ul>
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
+                                <strong>Неорганические:</strong>
+                                <ul style="padding-left: 20px; margin-top: 6px;">
+                                    <li>Вода</li>
+                                    <li>Минеральные соли</li>
+                                </ul>
+                            </div>
+                        </div>
 
-        Наследственность и изменчивость:
-        Наследственность - это свойство живых организмов передавать свои признаки из поколения в поколение.
-        Изменчивость - это свойство приобретать новые признаки и свойства в процессе онтогенеза.
+                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вода и её свойства</h4>
+                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                            <li>Молекулы воды образуют <strong>диполь</strong></li>
+                            <li>Высокая <strong>теплоёмкость</strong>, <strong>теплопроводность</strong> и <strong>температура кипения</strong></li>
+                            <li>Между молекулами воды действуют <strong>межмолекулярные взаимодействия</strong></li>
+                            <li>Полярность и водородные связи создают <strong>поверхностное натяжение</strong> → водомерки скользят по воде</li>
+                        </ul>
 
-        Иерархичность - наличие уровня организации живых систем:
-        1) молекулярно-генетический уровень -> 2) клеточный -> 3) тканевый -> 4) органный -> 5) организменный -> 6) популяционно-видовой -> 7) биогеоценотический -> 8) биосферный
+                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль воды в клетке</h4>
+                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                            <li>Среда для протекания <strong>биохимических реакций</strong></li>
+                            <li>Обеспечивает <strong>тургор</strong> — давление на плазматическую мембрану</li>
+                            <li>Содержание воды:
+                                <ul style="padding-left: 20px; margin-top: 6px;">
+                                    <li>У растений — до <strong>90%</strong></li>
+                                    <li>У животных — <strong>65–70%</strong></li>
+                                </ul>
+                            </li>
+                            <li>Чем выше <strong>метаболизм</strong>, тем больше воды в клетке</li>
+                        </ul>
 
-        Дискретность - у живых организмов можно выделить четко разделимые структуры.
-        Целостность - все живые организмы целые и имеют структуры.
-
-        Живые организмы эволюционируют. Эволюция - наука о историческом развитии живых организмов.
+                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль химических элементов</h4>
+                        <div style="display: grid; gap: 14px; margin-bottom: 20px;">
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Na (Натрий)</strong><br>
+                                Обеспечивает транспортный потенциал клетки, синтез гормонов, регулирует рост.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Cl (Хлор)</strong><br>
+                                Входит в состав соляной кислоты желудка — обеззараживает пищу и инактивирует ферменты.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Ca (Кальций)</strong><br>
+                                Входит в состав клеточных стенок растений, костей и зубов.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>K (Калий)</strong><br>
+                                Способствует сокращению скелетных мышц.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Mg (Магний)</strong><br>
+                                Поддерживает целостность нервной системы, расслабляет мускулатуру, участвует в синтезе ДНК.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>B (Бор)</strong><br>
+                                Регулирует ростовые процессы у растений.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Si (Кремний)</strong><br>
+                                Входит в состав хвощей и крапивы; у человека активизирует ферменты.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>P (Фосфор)</strong><br>
+                                У растений — созревание плодов; у животных — строительный материал костей (в виде фосфатов).
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>S (Сера)</strong><br>
+                                Активизирует ферменты для синтеза коллагена и эластина.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>F (Фтор)</strong><br>
+                                Входит в состав зубной эмали, повышает устойчивость к кариесу, укрепляет кости.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Br (Бром)</strong><br>
+                                В виде бромид-ионов регулирует торможение в ЦНС (центральная нервная система).
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Cu (Медь)</strong><br>
+                                Необходим для синтеза гемоглобина, входит в состав ферментов нервной и соединительной ткани.
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                <strong>Fe (Железо)</strong><br>
+                                Входит в состав гемоглобина и миоглобина — транспортирует и хранит кислород.
+                            </div>
+                        </div>
+                    </div>
+                `;          
+            } else if (section === 'fipi') {
+                educationContent.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
+                            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+                        </button>
+                    </div>
+                    <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2);">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">Здесь пока пусто...</h3>
+                    </div>
+                `;
+            } else if (section === 'physics') {
+                educationContent.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
+                            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+                        </button>
+                    </div>
+                    <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2);">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">Здесь пока пусто...</h3>
+                    </div>
+                `;
+            } else if (section === 'geography') {
+                educationContent.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
+                            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+                        </button>
+                    </div>
+                    <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2);">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">Здесь пока пусто...</h3>
                     </div>
                 `;
             } else {
@@ -5746,8 +6004,7 @@ _____                                                                    _____
                         </button>
                     </div>
                     <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 30px; border: 3px solid var(--border-color); box-shadow: 0 8px 30px rgba(var(--border-color-rgb), 0.2);">
-                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">Скоро здесь будет контент</h3>
-                        <p style="text-align: center; font-size: 16px; color: var(--text-color);">Этот раздел находится в разработке.</p>
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">Здесь пока пусто...</h3>
                     </div>
                 `;
             }
