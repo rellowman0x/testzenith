@@ -5818,13 +5818,8 @@ _____                                                                    _____
         function loadEducationContent() {
             const educationContent = document.getElementById('education-content');
             const section = window.currentEducationSection;
-
-            // Универсальный шаблон контента
-            const renderContent = (title, contentHtml, updateDate = null) => {
+            const renderContent = (title, contentHtml) => {
                 let updateBadge = '';
-                if (updateDate) {
-                    updateBadge = `<span class="beta-badge" style="font-size: 11px; margin-left: 6px;">upd ${updateDate}</span>`;
-                }
 
                 return `
                     <div style="text-align: center; margin-bottom: 30px;">
@@ -5840,22 +5835,13 @@ _____                                                                    _____
                     </div>
                 `;
             };
-
             let title = '';
             let contentHtml = '';
-            let updateDate = '04.10.25';
-
             switch (section) {
                 case 'biology':
                     title = 'Химический состав клетки';
                     contentHtml = `
-                        <div style="text-align: center; margin-bottom: 30px;">
-                            <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
-                                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
-                            </button>
-                        </div>
                         <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 25px; border: 2px solid var(--border-color); box-shadow: 0 6px 20px rgba(0,0,0,0.08);">
-                            <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">Химический состав клетки</h3>
 
                             <p style="margin-bottom: 20px; line-height: 1.6; color: var(--text-color);">
                                 Структуры клетки построены из молекул, а молекулы — из атомов. Атомы представляют собой разновидности химических элементов.
@@ -6012,10 +5998,9 @@ _____                                                                    _____
                 default:
                     title = 'Раздел временно недоступен';
                     contentHtml = `<p>Скоро здесь появится полезный контент.</p>`;
-                    updateDate = null;
             }
 
-            educationContent.innerHTML = renderContent(title, contentHtml, updateDate);
+            educationContent.innerHTML = renderContent(title, contentHtml);
         }
         function loadGradesContent() {
             const educationContent = document.getElementById('education-content');
