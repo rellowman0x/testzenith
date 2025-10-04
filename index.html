@@ -5288,124 +5288,60 @@ _____                                                                    _____
                     } else if (tabId === 'biology') {
                         title = 'Биология';
                         contentHTML = `
-                            <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">Химический состав клетки</h3>
-
+                            <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">Белки: строение и функции</h3>
                             <p style="margin-bottom: 20px; line-height: 1.6; color: var(--text-color);">
-                                Структуры клетки построены из молекул, а молекулы — из атомов. Атомы представляют собой разновидности химических элементов.
+                                Белки — это непериодические полимеры, мономерами которых являются <strong>аминокислоты (АМК)</strong>.
                             </p>
-
-                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Основные элементы клетки (% массы)</h4>
-                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                                <li>O (Кислород) — 62%</li>
-                                <li>C (Углерод) — 21%</li>
-                                <li>H (Водород) — 10%</li>
-                                <li>N (Азот) — 3%</li>
-                            </ul>
-                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Классификация элементов</h4>
-                            <p style="margin-bottom: 15px; line-height: 1.6;">
-                                По содержанию в организме элементы делятся на:
-                            </p>
-                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                                <li><strong>Макроэлементы</strong> — содержатся в больших количествах</li>
-                                <li><strong>Микроэлементы</strong> — необходимы в малых дозах</li>
-                                <li><strong>Ультрамикроэлементы</strong> — следовые количества, но важны для жизнедеятельности</li>
-                            </ul>
-
-                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вещества клетки</h4>
-                            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
-                                    <strong>Органические:</strong>
-                                    <ul style="padding-left: 20px; margin-top: 6px;">
-                                        <li>Белки (протеины)</li>
-                                        <li>Жиры (липиды)</li>
-                                        <li>Углеводы</li>
-                                        <li>Нуклеиновые кислоты</li>
-                                    </ul>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Амфотерные свойства АМК:</strong> Аминокислоты могут взаимодействовать как с кислотами, так и со щелочами благодаря наличию аминогруппы (–NH₂) и карбоксильной группы (–COOH).
+                            </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 25px; border-left: 3px solid var(--border-color);">
+                                <strong>Историческая справка:</strong> Впервые структура белка была расшифрована у <strong>инсулина</strong> в 1954 году Фредериком Сенгером.
+                            </div>
+                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Структура белка</h4>
+                            <div style="display: grid; gap: 16px; margin-bottom: 25px;">
+                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #28a745;">
+                                    <strong>1. Первичная структура</strong><br>
+                                    Последовательность аминокислот в полипептидной цепи.<br>
+                                    <small>• Полипептиды — до 50 аминокислотных остатков.<br>
+                                    • Белки — более 50 остатков.<br>
+                                    • Связи: только <strong>пептидные</strong>.</small>
                                 </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
-                                    <strong>Неорганические:</strong>
-                                    <ul style="padding-left: 20px; margin-top: 6px;">
-                                        <li>Вода</li>
-                                        <li>Минеральные соли</li>
+                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #007bff;">
+                                    <strong>2. Вторичная структура</strong><br>
+                                    Две основные формы:
+                                    <ul style="margin-top: 6px; padding-left: 20px;">
+                                        <li>α-спираль</li>
+                                        <li>β-складчатый слой</li>
                                     </ul>
+                                    <small>• Стабилизируется <strong>водородными связями</strong>.</small>
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #ffc107;">
+                                    <strong>3. Третичная структура</strong><br>
+                                    Пространственная укладка полипептидной цепи в форму глобулы (шарика).<br>
+                                    <small>• Связи: ковалентные, ионные, дисульфидные, гидрофобные взаимодействия.</small>
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #dc3545;">
+                                    <strong>4. Четвертичная структура</strong><br>
+                                    Состоит из нескольких полипептидных цепей.<br>
+                                    <small>• Пример: <strong>гемоглобин</strong> — 2 α-спирали + 2 β-цепи + небелковый компонент <strong>гем</strong>, содержащий <strong>двухвалентное железо (Fe²⁺)</strong>.</small>
                                 </div>
                             </div>
 
-                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вода и её свойства</h4>
-                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                                <li>Молекулы воды образуют <strong>диполь</strong></li>
-                                <li>Высокая <strong>теплоёмкость</strong>, <strong>теплопроводность</strong> и <strong>температура кипения</strong></li>
-                                <li>Между молекулами воды действуют <strong>межмолекулярные взаимодействия</strong></li>
-                                <li>Полярность и водородные связи создают <strong>поверхностное натяжение</strong> → водомерки скользят по воде</li>
-                            </ul>
+                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Функции белков</h4>
 
-                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль воды в клетке</h4>
-                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                                <li>Среда для протекания <strong>биохимических реакций</strong></li>
-                                <li>Обеспечивает <strong>тургор</strong> — давление на плазматическую мембрану</li>
-                                <li>Содержание воды:
-                                    <ul style="padding-left: 20px; margin-top: 6px;">
-                                        <li>У растений — до <strong>90%</strong></li>
-                                        <li>У животных — <strong>65–70%</strong></li>
-                                    </ul>
-                                </li>
-                                <li>Чем выше <strong>метаболизм</strong>, тем больше воды в клетке</li>
-                            </ul>
-
-                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль химических элементов</h4>
-                            <div style="display: grid; gap: 14px; margin-bottom: 20px;">
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Na (Натрий)</strong><br>
-                                    Обеспечивает транспортный потенциал клетки, синтез гормонов, регулирует рост.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Cl (Хлор)</strong><br>
-                                    Входит в состав соляной кислоты желудка — обеззараживает пищу и инактивирует ферменты.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Ca (Кальций)</strong><br>
-                                    Входит в состав клеточных стенок растений, костей и зубов.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>K (Калий)</strong><br>
-                                    Способствует сокращению скелетных мышц.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Mg (Магний)</strong><br>
-                                    Поддерживает целостность нервной системы, расслабляет мускулатуру, участвует в синтезе ДНК.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>B (Бор)</strong><br>
-                                    Регулирует ростовые процессы у растений.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Si (Кремний)</strong><br>
-                                    Входит в состав хвощей и крапивы; у человека активизирует ферменты.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>P (Фосфор)</strong><br>
-                                    У растений — созревание плодов; у животных — строительный материал костей (в виде фосфатов).
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>S (Сера)</strong><br>
-                                    Активизирует ферменты для синтеза коллагена и эластина.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>F (Фтор)</strong><br>
-                                    Входит в состав зубной эмали, повышает устойчивость к кариесу, укрепляет кости.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Br (Бром)</strong><br>
-                                    В виде бромид-ионов регулирует торможение в ЦНС (центральная нервная система).
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Cu (Медь)</strong><br>
-                                    Необходим для синтеза гемоглобина, входит в состав ферментов нервной и соединительной ткани.
-                                </div>
-                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                    <strong>Fe (Железо)</strong><br>
-                                    Входит в состав гемоглобина и миоглобина — транспортирует и хранит кислород.
-                                </div>
+                            <ol style="padding-left: 20px; margin-bottom: 25px; line-height: 1.7; color: var(--text-color);">
+                                <li><strong>Ферментативная</strong> — катализ биохимических реакций.</li>
+                                <li><strong>Строительная</strong> — коллаген, кератин.</li>
+                                <li><strong>Двигательная</strong> — актин и миозин в мышцах.</li>
+                                <li><strong>Регуляторная</strong> — гормоны (инсулин).</li>
+                                <li><strong>Рецепторная</strong> — восприятие сигналов (рецепторы на мембранах).</li>
+                                <li><strong>Транспортная</strong> — гемоглобин, альбумин.</li>
+                                <li><strong>Защитная</strong> — антитела, интерфероны.</li>
+                                <li><strong>Токсическая</strong> — яды (например, змеиный яд).</li>
+                                <li><strong>Энергетическая</strong> — 1 г белка = <strong>17,6 кДж</strong>/<strong>4,1 ккал</strong></li>
+                                <li><strong>Запасающая</strong> — яичный альбумин, казеин молока.</li>
+                            </ol>
                             </div>
                         `;
                     } else if (tabId === 'geography') {
@@ -5414,12 +5350,54 @@ _____                                                                    _____
                     } else if (tabId === 'fipi') {
                         title = 'ФИПИ';
                         contentHTML = `
-                            <p>Официальные материалы ФИПИ для подготовки к ЕГЭ и ОГЭ:</p>
-                            <ul>
-                                <li><a href="https://fipi.ru/ege/" target="_blank">ЕГЭ</a></li>
-                                <li><a href="https://fipi.ru/oge/" target="_blank">ОГЭ</a></li>
-                                <li><a href="https://fipi.ru/bank-zadaniy" target="_blank">Банк заданий</a></li>
-                            </ul>
+                            <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">ФИПИ — материалы ЕГЭ/ОГЭ</h3>
+                            <div id="fipi-page-1" class="fipi-page" style="display: block;">
+                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+                                    <a href="https://3.shkolkovo.online/catalog/7241/90757" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №1 — Белки и их функции</a>
+                                    <a href="https://3.shkolkovo.online/catalog/7776/137553" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №2 — Структура белков</a>
+                                    <a href="https://fipi.ru/ege/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">ЕГЭ — Официальный сайт</a>
+                                    <a href="https://fipi.ru/oge/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">ОГЭ — Официальный сайт</a>
+                                    <a href="https://fipi.ru/bank-zadaniy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Банк заданий ФИПИ</a>
+                                    <a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Демоверсии ЕГЭ</a>
+                                    <a href="https://fipi.ru/oge/demoversii-specifikacii-kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Демоверсии ОГЭ</a>
+                                    <a href="https://fipi.ru/ege/kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Кодификаторы ЕГЭ</a>
+                                    <a href="https://fipi.ru/ege/specifikacii" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Спецификации ЕГЭ</a>
+                                    <a href="https://fipi.ru/oge/kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Кодификаторы ОГЭ</a>
+                                </div>
+                            </div>
+                            <div id="fipi-page-2" class="fipi-page" style="display: none;">
+                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+                                    <a href="https://fipi.ru/oge/specifikacii" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Спецификации ОГЭ</a>
+                                    <a href="https://fipi.ru/materialy-dlya-podgotovki-k-gve" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Материалы для ГВЭ</a>
+                                    <a href="https://fipi.ru/rekomendatsii-po-podgotovke-k-ege" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Рекомендации к ЕГЭ</a>
+                                    <a href="https://fipi.ru/rekomendatsii-po-podgotovke-k-oge" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Рекомендации к ОГЭ</a>
+                                    <a href="https://fipi.ru/metodicheskie-materialy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Методические материалы</a>
+                                    <a href="https://fipi.ru/analiticheskie-i-metodicheskie-materialy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Аналитические материалы</a>
+                                    <a href="https://fipi.ru/novosti" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Новости ФИПИ</a>
+                                    <a href="https://fipi.ru/kontakty" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Контакты</a>
+                                    <a href="https://fipi.ru/o-fipi" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">О ФИПИ</a>
+                                    <a href="https://fipi.ru/otkrytye-dannye" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Открытые данные</a>
+                                </div>
+                            </div>
+                            <div id="fipi-page-3" class="fipi-page" style="display: none;">
+                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+                                    <a href="https://fipi.ru/proekty-npa" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Проекты НПА</a>
+                                    <a href="https://fipi.ru/obshchestvennoe-obsuzhdenie" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Общественное обсуждение</a>
+                                    <a href="https://fipi.ru/press-tsentr" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Пресс-центр</a>
+                                    <a href="https://fipi.ru/kariera" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Карьера в ФИПИ</a>
+                                    <a href="https://fipi.ru/chasto-zadavaemye-voprosy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Часто задаваемые вопросы</a>
+                                    <a href="https://fipi.ru/politika-konfidentsialnosti" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Политика конфиденциальности</a>
+                                    <a href="https://fipi.ru/polzovatelskoe-soglashenie" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Пользовательское соглашение</a>
+                                    <a href="https://fipi.ru/karta-sayta" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Карта сайта</a>
+                                    <a href="https://fipi.ru/rss" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">RSS-лента</a>
+                                    <a href="https://fipi.ru/obratnaya-svyaz" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Обратная связь</a>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: center; gap: 8px;">
+                                <button onclick="showFipiPage(1)" style="width: 32px; height: 32px; border-radius: 8px; background: var(--border-color); color: white; border: none; font-weight: bold;">1</button>
+                                <button onclick="showFipiPage(2)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">2</button>
+                                <button onclick="showFipiPage(3)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">3</button>
+                            </div>
                         `;
                     } else if (tabId === 'physics') {
                         title = 'Физика';
@@ -5436,7 +5414,6 @@ _____                                                                    _____
                         title = 'Неизвестный раздел';
                         contentHTML = `<p>Раздел временно недоступен.</p>`;
                     }
-
                     educationContent.innerHTML = `
                         <div style="text-align: center; margin-bottom: 30px;">
                             <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
@@ -5448,13 +5425,28 @@ _____                                                                    _____
                             <div>${contentHTML}</div>
                         </div>
                     `;
-
-                    // Логирование
                     logAction('education_section_view', { section: tabId });
                     window.currentEducationSection = tabId;
 
                 }, 10);
             }, 300);
+        }
+        function showFipiPage(pageNum) {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`fipi-page-${i}`).style.display = i === pageNum ? 'block' : 'none';
+            }
+            const buttons = document.querySelectorAll('[onclick^="showFipiPage"]');
+            buttons.forEach((btn, idx) => {
+                if (idx + 1 === pageNum) {
+                    btn.style.background = 'var(--border-color)';
+                    btn.style.color = 'white';
+                    btn.style.border = 'none';
+                } else {
+                    btn.style.background = 'rgba(var(--border-color-rgb), 0.1)';
+                    btn.style.color = 'var(--text-color)';
+                    btn.style.border = '1px solid var(--border-color)';
+                }
+            });
         }
         function loadHomeworkContent() {
             const educationContent = document.getElementById('education-content');
@@ -5472,16 +5464,13 @@ _____                                                                    _____
                     </button>
                 </div>
                 <div class="homework-days" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-                    <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                    <div class="homework-day" onclick="switchHomeworkDay('monday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-day" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Понедельник</h4>
                     </div>
-                    <div class="homework-day" onclick="switchHomeworkDay('monday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                    <div class="homework-day" onclick="switchHomeworkDay('tuesday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-alt" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Вторник</h4>
-                        <div class="disabled-overlay">
-                            <span>Недоступно</span>
-                        </div>
                     </div>
                     <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-check" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
@@ -5529,8 +5518,18 @@ _____                                                                    _____
                     'monday': {
                         title: 'Понедельник',
                         subjects: [
-                            {name: 'текст', links: [
-                                {text: 'текст', url: 'текст'}
+                            {name: 'Английский язык', links: [
+                                {text: 'упр8стр29 (пример)', url: 'https://reshak.ru/otvet/otvet_txt.php?otvet1=/spotlight10/images/module2/a/8'}
+                            ]},
+                            {name: 'Русский язык', links: [
+                                {text: 'Стили речи и их признаки', url: 'https://3.shkolkovo.online/theory/936?SubjectId=2'}
+                            ]},
+                            {name: 'Физика', links: [
+                                {text: '§23 1задача', url: 'https://5terka.com/node/12362'},
+                                {text: '§23 2задача', url: 'https://5terka.com/node/12363'},
+                                {text: '§23 3задача', url: 'https://class.rambler.ru/temy-gdz/sila-uprugosti-fizika-kasyanov-10-klass-171-5948.htm'},
+                                {text: '§23 4задача', url: 'https://5terka.com/node/12365'},
+                                {text: '§23 5задача', url: 'https://5terka.com/node/12366'}
                             ]}
                         ]
                     },
@@ -5538,19 +5537,23 @@ _____                                                                    _____
                         title: 'Вторник',
                         subjects: [
                             {name: 'Алгебра', links: [
-                                {text: '1фотка', url: 'https://www.euroki.org/koza/reshite-uravneniyaa-%7Cx--%7C---b-%7Cx--%7C---v-%7Cx²--x%7C---g-%7C%7Cx--%7C--%7C--d-%7C%7C%7Cx-–-%7C--%7C--%7C'},
-                                {text: '2фотка3зад', url: 'https://i.postimg.cc/vTZ2Xb2C/image.png'}
-                                /*,
-                                {text: '2фотка4зад', url: 'текст'},
-                                {text: '2фотка5зад', url: 'httтекст'}
-                                */
+                                {text: '2.77', url: 'https://www.euroki.org/gdz/ru/algebra/10_klass/reshebnik-po-algebre-10-klass-nikolskii-potapov-217/2-ratsionalnye-uravneniya-i-neravenstva-zadanie-77'},
+                                {text: '2.78', url: 'https://www.euroki.org/gdz/ru/algebra/10_klass/reshebnik-po-algebre-10-klass-nikolskii-potapov-217/2-ratsionalnye-uravneniya-i-neravenstva-zadanie-78'},
+                                {text: '2.79', url: 'https://www.euroki.org/gdz/ru/algebra/10_klass/reshebnik-po-algebre-10-klass-nikolskii-potapov-217/2-ratsionalnye-uravneniya-i-neravenstva-zadanie-79'},
+                                {text: '2.84', url: 'https://www.euroki.org/gdz/ru/algebra/10_klass/reshebnik-po-algebre-10-klass-nikolskii-potapov-217/2-ratsionalnye-uravneniya-i-neravenstva-zadanie-84'},
+                                {text: '2.85', url: 'https://www.euroki.org/gdz/ru/algebra/10_klass/reshebnik-po-algebre-10-klass-nikolskii-potapov-217/2-ratsionalnye-uravneniya-i-neravenstva-zadanie-85'},
+                                {text: '2.86', url: 'https://www.euroki.org/gdz/ru/algebra/10_klass/reshebnik-po-algebre-10-klass-nikolskii-potapov-217/2-ratsionalnye-uravneniya-i-neravenstva-zadanie-86'},
+                                {text: '2.87', url: 'https://www.euroki.org/gdz/ru/algebra/10_klass/reshebnik-po-algebre-10-klass-nikolskii-potapov-217/2-ratsionalnye-uravneniya-i-neravenstva-zadanie-87'}
                             ]},
                             {name: 'Физика', links: [
-                                {text: '172', url: 'https://gdz.ru/class-11/fizika/rymkevich/172-nom/'},
-                                {text: '173', url: 'https://gdz.ru/class-11/fizika/rymkevich/173-nom/'},
-                                {text: '174', url: 'https://gdz.ru/class-11/fizika/rymkevich/174-nom/'}
+                                {text: 'текст', url: 'текст'}
                             ]},
-                            {name: 'Информатика', text: '18) 2\n19) 2\n20) 3'}
+                            {name: 'Информатика', links: [
+                                {text: 'текст', url: 'текст'}
+                            ]},
+                            {name: 'текст', links: [
+                                {text: 'текст', url: 'текст'}
+                            ]}
                         ]
                     },
                     'wednesday': {
@@ -5565,7 +5568,7 @@ _____                                                                    _____
                         title: 'Четверг',
                         subjects: [
                             {name: 'Английский язык', links: [
-                                {text: 'текст', url: 'текст'}
+                                {text: 'упр8стр29 (пример)', url: 'https://reshak.ru/otvet/otvet_txt.php?otvet1=/spotlight10/images/module2/a/8'}
                             ]},
                             {name: 'География / Практическая [H]', links: [
                                 {text: '2 задание / 1пример', url: 'https://i.postimg.cc/02qW9yFP/image.png'},
