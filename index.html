@@ -3108,7 +3108,7 @@ _____                                                                    _____
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('homework')">
                         <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Домашнее задание <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">upd 05.10.25</span></strong>
+                            <strong>Домашнее задание <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">05.10.25</span></strong>
                             <small>Просмотр домашнего задания</small>
                         </div>
                         <i class="fas fa-book" style="color: var(--border-color); font-size: 18px;"></i>
@@ -3117,7 +3117,7 @@ _____                                                                    _____
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('biology')">
                         <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Биология <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">upd 05.10.25</span></strong>
+                            <strong>Биология <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">04.10.25</span></strong>
                             <small>Материалы по биологии</small>
                         </div>
                         <i class="fas fa-seedling" style="color: var(--border-color); font-size: 18px;"></i>
@@ -3126,7 +3126,7 @@ _____                                                                    _____
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('geography')">
                         <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>География <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">upd 05.10.25</span></strong>
+                            <strong>География</strong>
                             <small>Материалы по географии</small>
                         </div>
                         <i class="fas fa-map-marked-alt" style="color: var(--border-color); font-size: 18px;"></i>
@@ -3135,7 +3135,7 @@ _____                                                                    _____
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('fipi')">
                         <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>ФИПИ <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">upd 05.10.25</span></strong>
+                            <strong>ФИПИ <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">04.10.25</span></strong>
                             <small>Официальные материалы ЕГЭ/ОГЭ</small>
                         </div>
                         <i class="fas fa-graduation-cap" style="color: var(--border-color); font-size: 18px;"></i>
@@ -3144,7 +3144,7 @@ _____                                                                    _____
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('physics')">
                         <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Физика <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">upd 05.10.25</span></strong>
+                            <strong>Физика </strong>
                             <small>Теория и задачи по физике</small>
                         </div>
                         <i class="fas fa-atom" style="color: var(--border-color); font-size: 18px;"></i>
@@ -5204,7 +5204,6 @@ _____                                                                    _____
                     }
                 };
 
-                // Фокус на поле ввода
                 setTimeout(() => input.focus(), 300);
             }
         }
@@ -5348,67 +5347,59 @@ _____                                                                    _____
                         title = 'География';
                         contentHTML = `<p>Здесь пока пусто...</p>`;
                     } else if (tabId === 'fipi') {
-                        title = 'ФИПИ';
+                        title = 'ФИПИ / ВиС 3страницы на Вторник [07.10.25]';
                         contentHTML = `
-                            <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">ФИПИ — материалы ЕГЭ/ОГЭ</h3>
-                            <div id="fipi-page-1" class="fipi-page" style="display: block;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://3.shkolkovo.online/catalog/7241/90757" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №1 — Белки и их функции</a>
-                                    <a href="https://3.shkolkovo.online/catalog/7776/137553" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №2 — Структура белков</a>
-                                    <a href="https://fipi.ru/ege/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">ЕГЭ — Официальный сайт</a>
-                                    <a href="https://fipi.ru/oge/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">ОГЭ — Официальный сайт</a>
-                                    <a href="https://fipi.ru/bank-zadaniy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Банк заданий ФИПИ</a>
-                                    <a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Демоверсии ЕГЭ</a>
-                                    <a href="https://fipi.ru/oge/demoversii-specifikacii-kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Демоверсии ОГЭ</a>
-                                    <a href="https://fipi.ru/ege/kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Кодификаторы ЕГЭ</a>
-                                    <a href="https://fipi.ru/ege/specifikacii" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Спецификации ЕГЭ</a>
-                                    <a href="https://fipi.ru/oge/kodifikatory" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Кодификаторы ОГЭ</a>
-                                </div>
-                            </div>
-                            <div id="fipi-page-2" class="fipi-page" style="display: none;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://fipi.ru/oge/specifikacii" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Спецификации ОГЭ</a>
-                                    <a href="https://fipi.ru/materialy-dlya-podgotovki-k-gve" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Материалы для ГВЭ</a>
-                                    <a href="https://fipi.ru/rekomendatsii-po-podgotovke-k-ege" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Рекомендации к ЕГЭ</a>
-                                    <a href="https://fipi.ru/rekomendatsii-po-podgotovke-k-oge" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Рекомендации к ОГЭ</a>
-                                    <a href="https://fipi.ru/metodicheskie-materialy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Методические материалы</a>
-                                    <a href="https://fipi.ru/analiticheskie-i-metodicheskie-materialy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Аналитические материалы</a>
-                                    <a href="https://fipi.ru/novosti" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Новости ФИПИ</a>
-                                    <a href="https://fipi.ru/kontakty" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Контакты</a>
-                                    <a href="https://fipi.ru/o-fipi" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">О ФИПИ</a>
-                                    <a href="https://fipi.ru/otkrytye-dannye" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Открытые данные</a>
-                                </div>
-                            </div>
-                            <div id="fipi-page-3" class="fipi-page" style="display: none;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://fipi.ru/proekty-npa" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Проекты НПА</a>
-                                    <a href="https://fipi.ru/obshchestvennoe-obsuzhdenie" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Общественное обсуждение</a>
-                                    <a href="https://fipi.ru/press-tsentr" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Пресс-центр</a>
-                                    <a href="https://fipi.ru/kariera" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Карьера в ФИПИ</a>
-                                    <a href="https://fipi.ru/chasto-zadavaemye-voprosy" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Часто задаваемые вопросы</a>
-                                    <a href="https://fipi.ru/politika-konfidentsialnosti" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Политика конфиденциальности</a>
-                                    <a href="https://fipi.ru/polzovatelskoe-soglashenie" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Пользовательское соглашение</a>
-                                    <a href="https://fipi.ru/karta-sayta" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Карта сайта</a>
-                                    <a href="https://fipi.ru/rss" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">RSS-лента</a>
-                                    <a href="https://fipi.ru/obratnaya-svyaz" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Обратная связь</a>
-                                </div>
-                            </div>
                             <div style="display: flex; justify-content: center; gap: 8px;">
                                 <button onclick="showFipiPage(1)" style="width: 32px; height: 32px; border-radius: 8px; background: var(--border-color); color: white; border: none; font-weight: bold;">1</button>
                                 <button onclick="showFipiPage(2)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">2</button>
                                 <button onclick="showFipiPage(3)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">3</button>
                             </div>
+                            <div id="fipi-page-1" class="fipi-page" style="display: block;">
+                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+                                    <a href="https://3.shkolkovo.online/catalog/7241/90757" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №1 [0,92]</a>
+                                    <a href="https://3.shkolkovo.online/catalog/7776/137553" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №2 [0,4]</a>
+                                    <a href="https://3.shkolkovo.online/catalog/7776/137558" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №3 [0,4]</a>
+                                    <a href="https://ege.sdamgia.ru/problem?id=541369" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №4 [0,17]</a>
+                                    <a href="https://www.bolshoyvopros.ru/questions/4476203-kak-reshit-v-srednem-iz-3000-sadovyh-nasosov-9-podtekajut.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №5 [0,997]</a>
+                                    <a href="https://foxyege.ru/math/task/34/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №6 [0,125]</a>
+                                    <a href="https://www.bolshoyvopros.ru/questions/4476205-kak-reshit-v-chempionate-po-gimnastike-uchastvujut-25-sportsmenok.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №7 [0,4]</a>
+                                    <a href="https://www.bolshoyvopros.ru/questions/4476209-kak-reshit-v-sbornike-biletov-po-matematike-vsego-48-biletov.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №8 [0,75]</a>
+                                    <a href="https://lk.99ballov.ru/task/view?id=61238" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №9 [0,2]</a>
+                                    <a href="https://3.shkolkovo.online/catalog/138/58766" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №10 [0,5]</a>
+                                </div>
+                            </div>
+                            <div id="fipi-page-2" class="fipi-page" style="display: none;">
+                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+                                    <a href="https://www.bolshoyvopros.ru/questions/4476214-kak-reshit-na-chempionate-po-pryzhkam-v-vodu-vystupajut-25-sportsmenov.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №1 [0,4]</a>
+                                    <a href="https://www.bolshoyvopros.ru/questions/4491891-kak-reshit-v-sbornike-biletov-po-himii-30-biletov-v-devjati-iz-nih.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №2 [0,7]</a>
+                                    <a href="https://www.bolshoyvopros.ru/questions/4476223-kak-najti-verojatnost-togo-chto-a-verno-reshit-rovno-4-zadachi.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №3 [0,13]</a>
+                                    <a href="https://uchenik-online.ru/26368004/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №4 [0,4]</a>
+                                    <a href="https://www.euroki.org/koza/v-chempionate-po-gimnastike-uchastvuyut--sportsmenok--iz-velikobritanii--iz-frantsii-ostalnye-—-iz-ge-5996421" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №5 [0,6]</a>
+                                    <a href="https://www.euroki.org/koza/v-sbornike-biletov-po-istorii-vsego--biletov-v-pyati-iz-nih-vstrechaetsya-vopros-po-teme-velikaya-ote" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №6 [0,9]</a>
+                                    <a href="https://math-ege.sdamgia.ru/problem?id=665291" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №7 [0,35]</a>
+                                    <a href="https://3.shkolkovo.online/catalog/8563" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №8 [0,3]</a>
+                                    <a href="https://www.bolshoyvopros.ru/questions/4493431-kak-reshit-v-sbornike-biletov-po-geografii-vsego-20-biletov.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №9 [0,35]</a>
+                                    <a href="https://ege.sdamgia.ru/problem?id=541813" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №10 [0,09]</a>
+                                </div>
+                            </div>
+                            <div id="fipi-page-3" class="fipi-page" style="display: none;">
+                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+                                    <a href="https://egeguru.com/task/272.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №1 [0,1]</a>
+                                    <a href="https://3.shkolkovo.online/catalog/7776/137559" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №2 [0,45]</a>
+                                    <a href="https://ege.sdamgia.ru/problem?id=502129" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №3 [0,25]</a>
+                                    <a href="https://3.shkolkovo.online/catalog/7776/137560" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №4 [0,6]</a>
+                                    <a href="https://ege.sdamgia.ru/problem?id=629166" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №5 [0,35]</a>
+                                    <a href="https://i.postimg.cc/bvGbG8LT/image.png" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №6 [0,35]</a>
+                                    <a href="https://ege.sdamgia.ru/problem?id=517150" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №7 [0,5]</a>
+                                    <a href="https://ege.sdamgia.ru/problem?id=320194" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №8 [0,2]</a>
+                                    <a href="https://foxyege.ru/math/task/41/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №9 [0,92]</a>
+                                    <a href="https://www.bolshoyvopros.ru/questions/4493432-kak-reshit-v-sbornike-biletov-po-geografii-vsego-60-biletov.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">Задание №10 [0,85]</a>
+                                </div>
+                            </div>
                         `;
                     } else if (tabId === 'physics') {
                         title = 'Физика';
                         contentHTML = `
-                            <p>Основные формулы и концепции:</p>
-                            <ul>
-                                <li>Кинематика: $v = v_0 + at$</li>
-                                <li>Динамика: $F = ma$</li>
-                                <li>Энергия: $E_k = \\frac{1}{2}mv^2$</li>
-                            </ul>
-                            <p>Подробные материалы — в разработке.</p>
                         `;
                     } else {
                         title = 'Неизвестный раздел';
