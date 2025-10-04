@@ -740,27 +740,6 @@ _____                                                                    _____
             transform: translateY(0) scale(0.97) !important;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
         }
-        .update-tag {
-            font-size: 10px;
-            background: rgba(var(--border-color-rgb), 0.15);
-            color: var(--text-color);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 8px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
-        }
-        body.dark-theme .update-tag,
-        body.dark-purple-theme .update-tag,
-        body.dark-green-theme .update-tag,
-        body.dark-red-theme .update-tag,
-        body.dark-blue-theme .update-tag,
-        body.dark-pink-theme .update-tag,
-        body.dark-orange-theme .update-tag {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-        }
         body.dark-theme .modal-content,
         body.dark-purple-theme .modal-content,
         body.dark-green-theme .modal-content,
@@ -3105,64 +3084,78 @@ _____                                                                    _____
             <div id="education-main" style="display: block;">
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('schedule')">
-                        <i class="fas fa-calendar-week" style="font-size: 18px; color: var(--border-color);"></i>
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Расписание</strong>
-                            <small>Список уроков по дням</small>
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div style="display: flex; flex-direction: column;">
+                                <strong>Расписание</strong>
+                                <small>Список уроков по дням</small>
+                            </div>
+                            <i class="fas fa-calendar-alt" style="font-size: 18px; color: var(--border-color);"></i>
                         </div>
                     </div>
                 </div>
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('grades')">
-                        <i class="fas fa-chart-line" style="font-size: 18px; color: var(--border-color);"></i>
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Средняя оценка</strong>
-                            <small>Отображение вашей успеваемости</small>
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div style="display: flex; flex-direction: column;">
+                                <strong>Средняя оценка</strong>
+                                <small>Отображение вашей успеваемости</small>
+                            </div>
+                            <i class="fas fa-chart-line" style="font-size: 18px; color: var(--border-color);"></i>
                         </div>
                     </div>
                 </div>
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('homework')">
-                        <i class="fas fa-book-open" style="font-size: 18px; color: var(--border-color);"></i>
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Домашнее задание <span class="update-tag">upd 04.10.25</span> </strong>
-                            <small>Просмотр домашнего задания</small>
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div style="display: flex; flex-direction: column;">
+                                <strong>Домашнее задание</strong>
+                                <small>Просмотр домашнего задания</small>
+                            </div>
+                            <i class="fas fa-book-open" style="font-size: 18px; color: var(--border-color);"></i>
                         </div>
                     </div>
                 </div>
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('biology')">
-                        <i class="fas fa-seedling" style="font-size: 18px; color: var(--border-color);"></i>
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Биология <span class="update-tag">upd 04.10.25</span> </strong>
-                            <small>текст</small>
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div style="display: flex; flex-direction: column;">
+                                <strong>Биология</strong>
+                                <small>Материалы по биологии</small>
+                            </div>
+                            <i class="fas fa-dna" style="font-size: 18px; color: var(--border-color);"></i>
                         </div>
                     </div>
                 </div>
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('geography')">
-                        <i class="fas fa-mountain" style="font-size: 18px; color: var(--border-color);"></i>
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>География <span class="update-tag">upd 04.10.25</span> </strong>
-                            <small>текст</small>
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div style="display: flex; flex-direction: column;">
+                                <strong>География</strong>
+                                <small>Материалы по географии</small>
+                            </div>
+                            <i class="fas fa-globe-europe" style="font-size: 18px; color: var(--border-color);"></i>
                         </div>
                     </div>
                 </div>
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('fipi')">
-                        <i class="fas fa-graduation-cap" style="font-size: 18px; color: var(--border-color);"></i>
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>ФИПИ <span class="update-tag">upd 04.10.25</span> </strong>
-                            <small>текст</small>
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div style="display: flex; flex-direction: column;">
+                                <strong>ФИПИ <span class="beta-badge">upd 04.10.25</span></strong>
+                                <small>Официальные материалы ЕГЭ/ОГЭ</small>
+                            </div>
+                            <i class="fas fa-graduation-cap" style="font-size: 18px; color: var(--border-color);"></i>
                         </div>
                     </div>
                 </div>
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('physics')">
-                        <i class="fas fa-atom" style="font-size: 18px; color: var(--border-color);"></i>
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Физика <span class="update-tag">upd 04.10.25</span> </strong>
-                            <small>текст</small>
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div style="display: flex; flex-direction: column;">
+                                <strong>Физика <span class="beta-badge">upd 04.10.25</span></strong>
+                                <small>Теория и задачи по физике</small>
+                            </div>
+                            <i class="fas fa-atom" style="font-size: 18px; color: var(--border-color);"></i>
                         </div>
                     </div>
                 </div>
@@ -5297,21 +5290,16 @@ _____                                                                    _____
                         loadHomeworkContent();
                     }
                     if (tabId === 'biology') {
-                        logAction('education_section_view', { section: 'biology' });
+                        logAction('education_section_view', {
+                            section: 'biology'
+                        });
                         window.currentEducationSection = 'biology';
                         loadEducationContent();
                     } else if (tabId === 'geography') {
-                        logAction('education_section_view', { section: 'geography' });
+                        logAction('education_section_view', {
+                            section: 'geography'
+                        });
                         window.currentEducationSection = 'geography';
-                        loadEducationContent();
-                    }
-                    if (tabId === 'fipi') {
-                        logAction('education_section_view', { section: 'fipi' });
-                        window.currentEducationSection = 'fipi';
-                        loadEducationContent();
-                    } else if (tabId === 'physics') {
-                        logAction('education_section_view', { section: 'physics' });
-                        window.currentEducationSection = 'physics';
                         loadEducationContent();
                     }
                 }, 10);
@@ -5831,162 +5819,203 @@ _____                                                                    _____
             const educationContent = document.getElementById('education-content');
             const section = window.currentEducationSection;
 
-            let title = '', content = '';
-             if (section === 'biology') {
-                title = 'Биология';
-                content = `
+            // Универсальный шаблон контента
+            const renderContent = (title, contentHtml, updateDate = null) => {
+                let updateBadge = '';
+                if (updateDate) {
+                    updateBadge = `<span class="beta-badge" style="font-size: 11px; margin-left: 6px;">upd ${updateDate}</span>`;
+                }
+
+                return `
                     <div style="text-align: center; margin-bottom: 30px;">
                         <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
                             <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
                         </button>
                     </div>
                     <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 25px; border: 2px solid var(--border-color); box-shadow: 0 6px 20px rgba(0,0,0,0.08);">
-                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">Химический состав клетки</h3>
-
-                        <p style="margin-bottom: 20px; line-height: 1.6; color: var(--text-color);">
-                            Структуры клетки построены из молекул, а молекулы — из атомов. Атомы представляют собой разновидности химических элементов.
-                        </p>
-
-                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Основные элементы клетки (% массы)</h4>
-                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                            <li>O (Кислород) — 62%</li>
-                            <li>C (Углерод) — 21%</li>
-                            <li>H (Водород) — 10%</li>
-                            <li>N (Азот) — 3%</li>
-                        </ul>
-                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Классификация элементов</h4>
-                        <p style="margin-bottom: 15px; line-height: 1.6;">
-                            По содержанию в организме элементы делятся на:
-                        </p>
-                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                            <li><strong>Макроэлементы</strong> — содержатся в больших количествах</li>
-                            <li><strong>Микроэлементы</strong> — необходимы в малых дозах</li>
-                            <li><strong>Ультрамикроэлементы</strong> — следовые количества, но важны для жизнедеятельности</li>
-                        </ul>
-
-                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вещества клетки</h4>
-                        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
-                                <strong>Органические:</strong>
-                                <ul style="padding-left: 20px; margin-top: 6px;">
-                                    <li>Белки (протеины)</li>
-                                    <li>Жиры (липиды)</li>
-                                    <li>Углеводы</li>
-                                    <li>Нуклеиновые кислоты</li>
-                                </ul>
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
-                                <strong>Неорганические:</strong>
-                                <ul style="padding-left: 20px; margin-top: 6px;">
-                                    <li>Вода</li>
-                                    <li>Минеральные соли</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вода и её свойства</h4>
-                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                            <li>Молекулы воды образуют <strong>диполь</strong></li>
-                            <li>Высокая <strong>теплоёмкость</strong>, <strong>теплопроводность</strong> и <strong>температура кипения</strong></li>
-                            <li>Между молекулами воды действуют <strong>межмолекулярные взаимодействия</strong></li>
-                            <li>Полярность и водородные связи создают <strong>поверхностное натяжение</strong> → водомерки скользят по воде</li>
-                        </ul>
-
-                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль воды в клетке</h4>
-                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                            <li>Среда для протекания <strong>биохимических реакций</strong></li>
-                            <li>Обеспечивает <strong>тургор</strong> — давление на плазматическую мембрану</li>
-                            <li>Содержание воды:
-                                <ul style="padding-left: 20px; margin-top: 6px;">
-                                    <li>У растений — до <strong>90%</strong></li>
-                                    <li>У животных — <strong>65–70%</strong></li>
-                                </ul>
-                            </li>
-                            <li>Чем выше <strong>метаболизм</strong>, тем больше воды в клетке</li>
-                        </ul>
-
-                        <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль химических элементов</h4>
-                        <div style="display: grid; gap: 14px; margin-bottom: 20px;">
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Na (Натрий)</strong><br>
-                                Обеспечивает транспортный потенциал клетки, синтез гормонов, регулирует рост.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Cl (Хлор)</strong><br>
-                                Входит в состав соляной кислоты желудка — обеззараживает пищу и инактивирует ферменты.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Ca (Кальций)</strong><br>
-                                Входит в состав клеточных стенок растений, костей и зубов.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>K (Калий)</strong><br>
-                                Способствует сокращению скелетных мышц.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Mg (Магний)</strong><br>
-                                Поддерживает целостность нервной системы, расслабляет мускулатуру, участвует в синтезе ДНК.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>B (Бор)</strong><br>
-                                Регулирует ростовые процессы у растений.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Si (Кремний)</strong><br>
-                                Входит в состав хвощей и крапивы; у человека активизирует ферменты.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>P (Фосфор)</strong><br>
-                                У растений — созревание плодов; у животных — строительный материал костей (в виде фосфатов).
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>S (Сера)</strong><br>
-                                Активизирует ферменты для синтеза коллагена и эластина.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>F (Фтор)</strong><br>
-                                Входит в состав зубной эмали, повышает устойчивость к кариесу, укрепляет кости.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Br (Бром)</strong><br>
-                                В виде бромид-ионов регулирует торможение в ЦНС (центральная нервная система).
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Cu (Медь)</strong><br>
-                                Необходим для синтеза гемоглобина, входит в состав ферментов нервной и соединительной ткани.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
-                                <strong>Fe (Железо)</strong><br>
-                                Входит в состав гемоглобина и миоглобина — транспортирует и хранит кислород.
-                            </div>
-                        </div>
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">
+                            ${title}${updateBadge}
+                        </h3>
+                        ${contentHtml}
                     </div>
                 `;
-            } else if (section === 'fipi') {
-                title = 'ФИПИ';
-                content = `<p>Здесь пока пусто...</p>`;
-            } else if (section === 'physics') {
-                title = 'Физика';
-                content = `<p>Здесь пока пусто...</p>`;
-            }else if (section === 'geography') {
-                title = 'География';
-                content = `<p>Здесь пока пусто...</p>`;
-            } else {
-                title = 'Раздел в разработке';
-                content = `<p>Здесь пока пусто...</p>`;
+            };
+
+            let title = '';
+            let contentHtml = '';
+            let updateDate = '04.10.25';
+
+            switch (section) {
+                case 'biology':
+                    title = 'Химический состав клетки';
+                    contentHtml = `
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
+                                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+                            </button>
+                        </div>
+                        <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 25px; border: 2px solid var(--border-color); box-shadow: 0 6px 20px rgba(0,0,0,0.08);">
+                            <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">Химический состав клетки</h3>
+
+                            <p style="margin-bottom: 20px; line-height: 1.6; color: var(--text-color);">
+                                Структуры клетки построены из молекул, а молекулы — из атомов. Атомы представляют собой разновидности химических элементов.
+                            </p>
+
+                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Основные элементы клетки (% массы)</h4>
+                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                                <li>O (Кислород) — 62%</li>
+                                <li>C (Углерод) — 21%</li>
+                                <li>H (Водород) — 10%</li>
+                                <li>N (Азот) — 3%</li>
+                            </ul>
+                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Классификация элементов</h4>
+                            <p style="margin-bottom: 15px; line-height: 1.6;">
+                                По содержанию в организме элементы делятся на:
+                            </p>
+                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                                <li><strong>Макроэлементы</strong> — содержатся в больших количествах</li>
+                                <li><strong>Микроэлементы</strong> — необходимы в малых дозах</li>
+                                <li><strong>Ультрамикроэлементы</strong> — следовые количества, но важны для жизнедеятельности</li>
+                            </ul>
+
+                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вещества клетки</h4>
+                            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
+                                    <strong>Органические:</strong>
+                                    <ul style="padding-left: 20px; margin-top: 6px;">
+                                        <li>Белки (протеины)</li>
+                                        <li>Жиры (липиды)</li>
+                                        <li>Углеводы</li>
+                                        <li>Нуклеиновые кислоты</li>
+                                    </ul>
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 12px; border-radius: 12px;">
+                                    <strong>Неорганические:</strong>
+                                    <ul style="padding-left: 20px; margin-top: 6px;">
+                                        <li>Вода</li>
+                                        <li>Минеральные соли</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Вода и её свойства</h4>
+                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                                <li>Молекулы воды образуют <strong>диполь</strong></li>
+                                <li>Высокая <strong>теплоёмкость</strong>, <strong>теплопроводность</strong> и <strong>температура кипения</strong></li>
+                                <li>Между молекулами воды действуют <strong>межмолекулярные взаимодействия</strong></li>
+                                <li>Полярность и водородные связи создают <strong>поверхностное натяжение</strong> → водомерки скользят по воде</li>
+                            </ul>
+
+                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль воды в клетке</h4>
+                            <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6;">
+                                <li>Среда для протекания <strong>биохимических реакций</strong></li>
+                                <li>Обеспечивает <strong>тургор</strong> — давление на плазматическую мембрану</li>
+                                <li>Содержание воды:
+                                    <ul style="padding-left: 20px; margin-top: 6px;">
+                                        <li>У растений — до <strong>90%</strong></li>
+                                        <li>У животных — <strong>65–70%</strong></li>
+                                    </ul>
+                                </li>
+                                <li>Чем выше <strong>метаболизм</strong>, тем больше воды в клетке</li>
+                            </ul>
+
+                            <h4 style="color: var(--border-color); margin: 20px 0 10px; font-size: 18px;">Роль химических элементов</h4>
+                            <div style="display: grid; gap: 14px; margin-bottom: 20px;">
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Na (Натрий)</strong><br>
+                                    Обеспечивает транспортный потенциал клетки, синтез гормонов, регулирует рост.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Cl (Хлор)</strong><br>
+                                    Входит в состав соляной кислоты желудка — обеззараживает пищу и инактивирует ферменты.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Ca (Кальций)</strong><br>
+                                    Входит в состав клеточных стенок растений, костей и зубов.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>K (Калий)</strong><br>
+                                    Способствует сокращению скелетных мышц.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Mg (Магний)</strong><br>
+                                    Поддерживает целостность нервной системы, расслабляет мускулатуру, участвует в синтезе ДНК.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>B (Бор)</strong><br>
+                                    Регулирует ростовые процессы у растений.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Si (Кремний)</strong><br>
+                                    Входит в состав хвощей и крапивы; у человека активизирует ферменты.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>P (Фосфор)</strong><br>
+                                    У растений — созревание плодов; у животных — строительный материал костей (в виде фосфатов).
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>S (Сера)</strong><br>
+                                    Активизирует ферменты для синтеза коллагена и эластина.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>F (Фтор)</strong><br>
+                                    Входит в состав зубной эмали, повышает устойчивость к кариесу, укрепляет кости.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Br (Бром)</strong><br>
+                                    В виде бромид-ионов регулирует торможение в ЦНС (центральная нервная система).
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Cu (Медь)</strong><br>
+                                    Необходим для синтеза гемоглобина, входит в состав ферментов нервной и соединительной ткани.
+                                </div>
+                                <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 12px; border-radius: 12px; border-left: 3px solid var(--border-color);">
+                                    <strong>Fe (Железо)</strong><br>
+                                    Входит в состав гемоглобина и миоглобина — транспортирует и хранит кислород.
+                                </div>
+                            </div>
+                        </div>
+                `; break;
+                case 'fipi':
+                    title = 'ФИПИ';
+                    contentHtml = `
+                        <p>Официальные демоверсии, кодификаторы и спецификации от Федерального института педагогических измерений.</p>
+                        <div style="margin-top: 20px;">
+                            <a href="https://fipi.ru/ege" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 15px; margin: 8px 0; padding: 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 8px;">
+                                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i> Демоверсии ЕГЭ
+                            </a>
+                            <a href="https://fipi.ru/oge" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 15px; margin: 8px 0; padding: 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 8px;">
+                                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i> Демоверсии ОГЭ
+                            </a>
+                            <a href="https://fipi.ru/bank-zadaniy" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 15px; margin: 8px 0; padding: 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 8px;">
+                                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i> Открытый банк заданий
+                            </a>
+                        </div>
+                    `;
+                    break;
+
+                case 'physics':
+                    title = 'Физика';
+                    contentHtml = `
+                        <p>Основные формулы, конспекты и разборы задач по школьной физике.</p>
+                        <div style="margin-top: 20px;">
+                            <a href="https://phys-ege.sdamgia.ru/" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 15px; margin: 8px 0; padding: 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 8px;">
+                                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i> Решу ЕГЭ — Физика
+                            </a>
+                            <a href="https://school-physics.ru/" target="_blank" style="display: block; color: var(--border-color); text-decoration: none; font-size: 15px; margin: 8px 0; padding: 10px; background: rgba(var(--border-color-rgb), 0.1); border-radius: 8px;">
+                                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i> School-physics.ru
+                            </a>
+                        </div>
+                    `;
+                    break;
+
+                default:
+                    title = 'Раздел временно недоступен';
+                    contentHtml = `<p>Скоро здесь появится полезный контент.</p>`;
+                    updateDate = null;
             }
 
-            educationContent.innerHTML = `
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <button onclick="backToEducationMain()" class="back-btn">
-                        <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
-                    </button>
-                </div>
-                <div style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 20px; padding: 25px; border: 2px solid var(--border-color);">
-                    <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color);">${title}</h3>
-                    ${content}
-                </div>
-            `;
+            educationContent.innerHTML = renderContent(title, contentHtml, updateDate);
         }
         function loadGradesContent() {
             const educationContent = document.getElementById('education-content');
