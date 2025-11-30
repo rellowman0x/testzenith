@@ -8,7 +8,7 @@
 
 
 
-_____                                                                    _____ 
+______                                                                    _____ 
 ( ___ )                                                                  ( ___ )
  |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
  |   |  ▄███████▄     ▄████████ ███▄▄▄▄    ▄█      ███        ▄█    █▄    |   | 
@@ -1026,44 +1026,59 @@ _____                                                                    _____
         }
         
         .tabs {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 5px !important;
-            gap: 8px;
+            display: flex;
+            background: #fff;
+            border-radius: 20px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 15px; 
+            left: 15px; 
+            right: 15px; 
+            z-index: 10; 
+            margin-bottom: 0; 
         }
 
         .tab {
             flex: 1;
             text-align: center;
             padding: 14px 8px;
-            border-radius: 16px !important;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
             font-weight: 600;
             font-size: 15px;
             color: var(--text-color);
-            background: rgba(var(--border-color-rgb), 0.08);
-            position: relative;
-            opacity: 0.85;
+            opacity: 0.7;
         }
         
         .tab.active {
             opacity: 1;
-            background: var(--button-color);
-            color: var(--button-text-color);
-            transform: translateY(0);
-            box-shadow: 0 4px 12px rgba(var(--border-color-rgb), 0.2);
-        }
-
-        .tab:hover:not(.active) {
-            opacity: 1;
-            background: rgba(var(--border-color-rgb), 0.15);
+            background: rgba(var(--border-color-rgb), 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(var(--border-color-rgb), 0.15);
         }
         
-        .tab::after,
-        .tab.active::after {
-            display: none;
+        .tab.active::after,
+        .tab::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            border: 2px solid var(--border-color);
+            animation: var(--border-animation);
+        }
+        
+        .tab:hover:not(.active) {
+            opacity: 0.9;
+            background: rgba(var(--border-color-rgb), 0.05);
         }
 
         .tab::after {
@@ -1325,16 +1340,18 @@ _____                                                                    _____
         }
 
         .show-icons .tab {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 12px 8px;
+            position: relative;
+            padding-top: 25px;
         }
 
         .show-icons .tab::before {
-            margin: 0;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 16px;
         }
 
         .show-icons .tab[onclick*="home"]::before { 
@@ -3060,8 +3077,8 @@ _____                                                                    _____
         <div class="zenith-logo">
             <div class="zenith-logo-glow"></div>
             <div class="zenith-logo-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12,2L13.8,8.2L20,9L15.5,13.5L16.8,20L12,16.8L7.2,20L8.5,13.5L4,9L10.2,8.2L12,2Z"/>
+                <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"/>
                 </svg>
             </div>
             <div class="zenith-logo-text">ZENITH</div>
@@ -3100,7 +3117,7 @@ _____                                                                    _____
                     </svg>
                 </div>
                 <div class="zenith-logo-text" style="color: #dc3545;">ТЕХ.РАБОТЫ</div>
-                <div class="zenith-logo-subtext">ZENITH PROJECT</div>
+                <div class="zenith-logo-subtext">ZENITH ✦ PROJECT</div>
             </div>
             <div class="zenith-status" id="maintenance-message" style="color: #dc3545; font-size: 20px; margin: 20px 0;">
                 Проект временно недоступен
@@ -3121,14 +3138,72 @@ _____                                                                    _____
             <div class="tab hidden" id="admin-tab" onclick="switchTab('admin')">Админ</div>
         </div>
         <div id="home" class="content active">
-            <div class="app-info">
-                <h2>Информация о приложении</h2>
-                <div><strong>Версия приложения:</strong><span class="beta-badge">V72NC</span></div>
-                <div><strong>Версия бота:</strong> 0.8.4.4</div>
-                <div><strong>Разработчик:</strong> @rellowman <span class="swiftx-tag">#zenith</span></div>
+            <div class="app-info-card" style="
+                background: var(--background-color);
+                border-radius: 24px;
+                padding: 32px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+                border: 2px solid var(--border-color);
+                margin-bottom: 36px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                position: relative;
+                overflow: hidden;">
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 4px;
+                    background: linear-gradient(90deg, transparent, var(--border-color), transparent);"></div>
+                <h2 style="
+                    font-size: 28px;
+                    font-weight: 800;
+                    margin-bottom: 24px;
+                    background: linear-gradient(to right, var(--text-color), var(--border-color));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;">𝙕𝙀𝙉𝙄𝙏𝙃 ✦ 𝙋𝙍𝙊𝙅𝙀𝘾𝙏</h2>
+                <div id="app-info-content" style="width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 18px;"></div>
             </div>
-            <h2>Профиль пользователя</h2>
-            <div id="profile-content">
+            <div class="profile-card" style="
+                background: var(--background-color);
+                border-radius: 24px;
+                padding: 32px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+                border: 2px solid var(--border-color);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                position: relative;
+                overflow: hidden;">
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 4px;
+                    background: linear-gradient(90deg, transparent, var(--border-color), transparent);"></div>
+                <h2 style="
+                    font-size: 28px;
+                    font-weight: 800;
+                    margin-bottom: 24px;
+                    background: linear-gradient(to right, var(--text-color), var(--border-color));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;">Ваш профиль</h2>
+                <div id="profile-content" style="
+                    width: 100%;
+                    max-width: 420px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+                    font-size: 16px;"></div>
             </div>
         </div>
         <div id="education" class="content">
@@ -3152,20 +3227,21 @@ _____                                                                    _____
                         <i class="fas fa-chart-line" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
                 </div>
+                <!--
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('homework')">
                         <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Домашнее задание <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">13.11.25</span></strong>
+                            <strong>Домашнее задание <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">21.11.25</span></strong>
                             <small>Просмотр домашнего задания</small>
                         </div>
                         <i class="fas fa-book" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
-                </div>
+                </div>-->
                 <div class="education-feature">
                     <div class="admin-item" onclick="switchEducationTab('biology')">
                         <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Биология <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">07.11.25</span></strong>
-                            <small>Клеточная теория.</small>
+                            <strong>Биология <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">28.11.25</span></strong>
+                            <small>Цитоплазма. Комплекс Гольджи.</small>
                         </div>
                         <i class="fas fa-seedling" style="color: var(--border-color); font-size: 18px;"></i>
                     </div>
