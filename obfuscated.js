@@ -1,5 +1,5 @@
-        const supabaseUrl = 'https://didzuiwhxfogxakqhjpr.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpZHp1aXdoeGZvZ3hha3FoanByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzMjkwNTMsImV4cCI6MjA2NDkwNTA1M30.5EmBfVBPPL5MlDhAuqShKRGtcBzGgM-j_QOrk87YmX4';
+        const supabaseUrl = 'https://mnplvefoyrmehfojqvln.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ucGx2ZWZveXJtZWhmb2pxdmxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0OTk1NjUsImV4cCI6MjA4MDA3NTU2NX0.Rq-2wNtqhadqg9VCZWFyQuet2kx3j2AxggJQTWP9WJo';
         const tg = window.Telegram.WebApp;
         tg.expand();
         let supabase;
@@ -654,27 +654,54 @@
                 }
             }
         }
-
+        function updateAppInfoTags() {
+            const tagsEnabled = document.getElementById('tags-toggle')?.checked || false;
+            const appInfoContent = document.getElementById('app-info-content');
+            if (!appInfoContent) return;
+            const gradientEnabled = document.getElementById('gradient-toggle')?.checked || false;
+            const appVersion = tagsEnabled
+                ? `<span class="swiftx-tag${gradientEnabled ? ' gradient' : ''}">V73W</span>`
+                : 'V73W';
+            const botVersion = tagsEnabled
+                ? `<span class="swiftx-tag${gradientEnabled ? ' gradient' : ''}">0.8.4.4</span>`
+                : '0.8.4.4';
+            const developer = tagsEnabled
+                ? `<span class="swiftx-tag${gradientEnabled ? ' gradient' : ''}">rellowman</span>`
+                : '';
+            appInfoContent.innerHTML = `
+                <div style="display: flex; justify-content: space-between; font-size: 16px;">
+                    <span style="font-weight: 600; opacity: 0.9;">Версия приложения:</span>
+                    <span>${appVersion}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 16px;">
+                    <span style="font-weight: 600; opacity: 0.9;">Версия бота:</span>
+                    <span>${botVersion}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 16px;">
+                    <span style="font-weight: 600; opacity: 0.9;">Разработчик:</span>
+                    <span><span class="swiftx-tag${tagsEnabled && gradientEnabled ? ' gradient' : ''}" style="${tagsEnabled ? '' : 'display:none;'}">rellowman</span></span>
+                </div>
+            `;
+        }
         function updateTagsAppearance() {
-            const tagsEnabled = document.getElementById('tags-toggle').checked;
-            const gradientEnabled = document.getElementById('gradient-toggle').checked;
-            
+            const tagsEnabled = document.getElementById('tags-toggle')?.checked || false;
+            const gradientEnabled = document.getElementById('gradient-toggle')?.checked || false;
             document.querySelectorAll('.beta-badge, .user-status, .swiftx-tag, .status-user, .status-admin, .status-developer, .dev-badge').forEach(tag => {
                 if (tagsEnabled) {
                     tag.style.display = 'inline-block';
                     if (gradientEnabled) {
                         tag.classList.add('gradient');
-                        tag.style.animation = 'none';
                     } else {
                         tag.classList.remove('gradient');
-                        tag.style.animation = 'none';
                     }
                 } else {
                     tag.style.display = 'none';
-                    tag.classList.remove('gradient');
-                    tag.style.animation = 'none';
                 }
             });
+            if (window.currentUserData || tg.initDataUnsafe?.user) {
+                loadUserData();
+            }
+            updateAppInfoTags();
         }
 
         function showErrorButton() {
@@ -1628,6 +1655,7 @@
                 });
                 console.log("STEP7");
                 await loadUserData();
+                updateAppInfoTags();
                 initEventHandlers();
                 if (userStatus === 'developer') {
                     document.getElementById('error-btn').classList.remove('hidden');
@@ -1813,107 +1841,38 @@
                 } else if (tabId === 'biology') {
                     title = 'Биология';
                         contentHTML = `
-                            <h3 style="text-align: center; margin-bottom: 20px; color: var(--border-color); font-size: 22px;">Клеточная теория и строение клетки</h3>
+                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Цитоплазма и клеточные структуры</h4>
 
-                        <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                            Клеточная теория 1830–1831 была создана немецким ботаником Маттиасом Шлейденом и немецким зоологом/физиологом Теодором Шванном.
-                        </div>
-
-                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Основные положения клеточной теории</h4>
-                        <ol style="padding-left: 20px; margin-bottom: 25px; line-height: 1.7; color: var(--text-color);">
-                            <li><strong>Клетка</strong> — это структурно-функциональная единица жизни.</li>
-                            <li><strong>Все живые организмы</strong> состоят из клеток.</li>
-                            <li><strong>Клетки всех живых организмов</strong> сходны по строению и функциям.</li>
-                            <li><strong>Каждая клетка</strong> происходит в ходе деления исходной материнской клетки.<br>
-                                Это положение было дополнено позже в 1855 году Рудольфом Вирховым.</li>
-                        </ol>
-
-                        <div style="display: grid; gap: 16px; margin-bottom: 25px;">
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #28a745;">
-                                <strong>1831 год</strong> — открыто ядро Робертом Броуном.
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Цитоплазма</strong> — это всё внутреннее содержимое клетки (кроме ядра и некоторых других структур). В ней происходят биохимические реакции, перемещаются вещества и органоиды, а также поддерживается внутриклеточное давление (тургор). Цитоплазма может менять свою густоту — становиться жидкой или более плотной.
                             </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #007bff;">
-                                <strong>1865 год</strong> — Эрнст Геккель доказал участие ядра в передаче наследственной информации.
+
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Цитозоль</strong> — это жидкая часть цитоплазмы (без органоидов и включений), где происходят многие биохимические реакции, например гликолиз. Это «внутриклеточная вода» со смесями ионов, белков, сахаров и т.п.
                             </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #ffc107;">
-                                <strong>1953–1954 годы</strong> — ДНК (единица наследственности) открыта Джеймсом Уотсоном и Фрэнсисом Криком.
+
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Цитоскелет</strong> — это сеть тонких белковых нитей внутри цитоплазмы. Он не имеет мембран, но придаёт клетке форму, удерживает органоиды на месте и участвует в движении веществ (эндоцитоз и экзоцитоз). Состоит из трёх частей: 1) микрофиламенты, 2) микротрубочки, 3) промежуточные филаменты.
                             </div>
-                        </div>
 
-                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Плазматическая мембрана</h4>
-                        <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.6; color: var(--text-color);">
-                            <li><strong>Углеводы</strong> обеспечивают связь клеток друг с другом.</li>
-                            <li><strong>Полуинтегральные и интегральные белки</strong> необходимы для транспорта веществ внутрь клетки.</li>
-                            <li><strong>Гидрофильные головки</strong> ориентированы наружу и внутрь самой клетки, так как снаружи и внутри клетки имеется вода<br>
-                                (<em>гидрофильные — любят воду</em>).</li>
-                        </ul>
-
-                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Функции мембраны</h4>
-                        <ol style="padding-left: 20px; margin-bottom: 25px; line-height: 1.7; color: var(--text-color);">
-                            <li><strong>Защита клетки</strong></li>
-                            <li><strong>Избирательное проникновение веществ</strong> внутрь клетки</li>
-                        </ol>
-
-                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Транспорт веществ</h4>
-                        <ol style="padding-left: 20px; margin-bottom: 25px; line-height: 1.7; color: var(--text-color);">
-                            <li><strong>Диффузия</strong> — проникновение газов (O<sub>2</sub>, CO<sub>2</sub>), жирорастворимых веществ (спирт) через билипидный слой.</li>
-                            <li><strong>Осмос</strong> — диффузия воды через клеточную мембрану.</li>
-                            <li><strong>Пассивный транспорт</strong> через белковые каналы: глицерин, аминокислоты, глюкоза — без затрат энергии.</li>
-                            <li><strong>Активный транспорт</strong> через белковые каналы или с помощью белков-переносчиков — с затратой энергии.</li>
-                        </ol>
-
-                        <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                            <strong>Натрий-калиевый насос</strong> — снаружи клетки должно быть больше натрия, а внутри — больше калия. При нарушении этого соотношения включается насос, который проталкивает ионы калия внутрь клетки с затратой энергии.
-                        </div>
-
-                        <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                            К белкам-переносчикам поступает молекула <strong>АТФ</strong> (аденозинтрифосфорная кислота). С помощью фермента <strong>АТФ-азы</strong> происходит высвобождение энергии, заключённой в молекуле АТФ.
-                        </div>
-
-                        <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                            <strong>Белки-переносчики</strong> — специальные белки, которые захватывают молекулы, изменяют свою структуру и проходят сквозь билипидный слой. Перенос калия и натрия осуществляется именно с их помощью.
-                        </div>
-
-                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Растворы</h4>
-                        <ol style="padding-left: 20px; margin-bottom: 25px; line-height: 1.7; color: var(--text-color);">
-                            <li><strong>Гипертонический раствор</strong> — раствор, в котором концентрация солей (натрия и хлора) выше, чем в клетке.</li>
-                            <li><strong>Изотонический раствор</strong> — концентрация солей равна внутри и снаружи клетки.</li>
-                            <li><strong>Гипотонический раствор</strong> — концентрация солей ниже, чем в клетке.</li>
-                        </ol>
-
-                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Вопросы и ответы</h4>
-
-                        <div style="display: grid; gap: 16px; margin-bottom: 25px;">
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #dc3545;">
-                                <strong>1. Что произойдёт с эритроцитом в трёх типах растворов?</strong><br>
-                                — В <strong>гипертоническом</strong> растворе вода выходит из эритроцита → клетка сморщивается (криноз).<br>
-                                — В <strong>изотоническом</strong> растворе вода движется равномерно → форма не меняется.<br>
-                                — В <strong>гипотоническом</strong> растворе вода поступает внутрь → клетка набухает и лопается (гемолиз).
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Циклоз (цитоплазматический ток)</strong> — это движение цитоплазмы внутри клетки (часто наблюдается в растительных клетках). Благодаря ему вещества и органоиды перемещаются по клетке.
                             </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #6f42c1;">
-                                <strong>2. Что такое плазмолиз?</strong><br>
-                                Плазмолиз — отделение протопласта от клеточной стенки в растительной клетке при помещении её в гипертонический раствор.
-                            </div>
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 14px; border-radius: 12px; border-left: 4px solid #20c997;">
-                                <strong>3. Что значит «по градиенту» и «против градиента концентрации»?</strong><br>
-                                — <strong>По градиенту</strong>: из области с большей концентрацией в область с меньшей (диффузия, пассивный транспорт).<br>
-                                — <strong>Против градиента</strong>: из области с меньшей концентрацией в область с большей (активный транспорт, с затратой энергии).
-                            </div>
-                        </div>
 
-                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Клеточная стенка (оболочка)</h4>
-                        <p style="margin-bottom: 20px; line-height: 1.6; color: var(--text-color);">
-                            Образуется поверх плазматической мембраны:
-                        </p>
-                        <ul style="padding-left: 20px; margin-bottom: 25px; line-height: 1.7; color: var(--text-color);">
-                            <li>у <strong>растений</strong> — из <strong>целлюлозы</strong></li>
-                            <li>у <strong>грибов</strong> — из <strong>хитина</strong></li>
-                            <li>у <strong>бактерий</strong> — из <strong>муреина</strong></li>
-                        </ul>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Компартменты</strong> — это отделённые участки внутри клетки (например, лизосомы, митохондрии, ядро), где создаются особые условия для определённых реакций. Они позволяют не смешивать процессы (например, расщепление и синтез).
+                            </div>
 
-                        <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                            На поверхности стенки есть <strong>поры</strong>, через которые нити цитоплазмы одной клетки проходят в другую. Образуется единая сеть — <strong>симпласт</strong>.
-                        </div>
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Эндоплазматическая сеть (ЭПС)</strong> — это система трубочек и полостей, образованных биологическими мембранами и пронизывающих всю цитоплазму клетки. Трубочки ЭПС переходят одна в другую, нигде не прерываясь и не открываясь в цитоплазму, занимая по объёму почти половину клетки.<br>
+                                Трубочки ЭПС делятся на:<br>
+                                1) <strong>Гранулярные (шероховатые)</strong> — покрыты огромным количеством рибосом. Они хорошо развиты в клетках желёз внутренней секреции, которые синтезируют белковые гормоны.<br>
+                                2) <strong>Гладкие</strong> — выглядят как гладкие трубочки. Они участвуют в синтезе фосфолипидов, жирных кислот, стероидов и углеводов.
+                            </div>
+
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
+                                <strong>Комплекс Гольджи</strong> — это органоид, который состоит из плоских полых мембранных мешочков, называемых цистернами. Эти цистерны собраны в стопки по 4–6 штук. Обычно расположен рядом с ядром клетки. Комплекс Гольджи обрабатывает, дорабатывает и упаковывает белки, синтезированные на рибосомах гранулярной ЭПС.
+                            </div>
                         `;
                     } else if (tabId === 'geography') {
                         title = 'География';
@@ -2089,12 +2048,10 @@
                         <i class="fas fa-calendar" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Пятница</h4>
                     </div>
-                    <div class="homework-day feature-disabled" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
+                    <div class="homework-day" onclick="switchHomeworkDay('saturday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-minus" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Суббота</h4>
-                        <div class="disabled-overlay">
-                            <span>Недоступно</span>
-                        </div>
+                        
                     </div>
                 </div>
             `;
@@ -2178,14 +2135,28 @@
                         title: 'Пятница',
                         subjects: [
                             {name: 'Геометрия', links: [
-                                {text: '№66', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=new/66&predmet=atan10_11'},
-                                {text: '№68', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=new/68&predmet=atan10_11'},
-                                {text: '№70', url: 'https://reshak.ru/otvet/reshebniki.php?otvet=new/70&predmet=atan10_11'}
+                                {text: '№121', url: 'https://pomogalka.me/10-klass/geometriya/atanasyan/nomer-121/'},
+                                {text: '№122', url: 'https://pomogalka.me/10-klass/geometriya/atanasyan/nomer-122/'},
+                                {text: '№130', url: 'https://pomogalka.me/10-klass/geometriya/atanasyan/nomer-130/'},
                             ]},
                             {name: 'Алгебра', links: [
-                                {text: '№86', url: 'https://reshak.ru/otvet/otvet8.php?otvet1=p86'},
-                                {text: '№87', url: 'https://reshak.ru/otvet/otvet8.php?otvet1=p87'}
-                            ]},
+                                {text: '35.14', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-14/'},
+                                {text: '35.15', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-15/'},
+                                {text: '35.16', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-16/'},
+                                {text: '35.17', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-17/'},
+                                {text: '35.18', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-18/'},
+                                {text: '35.19', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-19/'},
+                                {text: '35.20', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-20/'},
+                                {text: '35.21', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-21/'},
+                                {text: '35.22', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-22/'},
+                                {text: '35.23', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-23/'},
+                                {text: '35.24', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-24/'},
+                                {text: '36.1', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-1/'},
+                                {text: '36.2', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-2/'},
+                                {text: '36.3', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-3/'},
+                                {text: '36.4', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-4/'},
+                            ]}
+                            /*,
                             {name: 'Информатика', links: [
                                 {text: '11) №110', url: 'https://storage.yandexcloud.net/fotora.ru/uploads/b105cc94b3582983.png'},
                                 {text: 'Разбор (YT)', url: 'https://youtu.be/tO6WE74V54U'}
@@ -2195,6 +2166,7 @@
                                 {text: 'СР-11 / 1 Вариант', url: 'https://www.euroki.org/gdz/ru/fizika/9_klass/maron-111/samostoyatelnye-raboty-sr-11-impuls-tela-zakon-sohraneniya-impulsa-zakon-sohraneniya-energii-zadanie-variant-1'},
                                 {text: 'СР-11 / 2 Вариант', url: 'https://www.euroki.org/gdz/ru/fizika/9_klass/maron-111/samostoyatelnye-raboty-sr-11-impuls-tela-zakon-sohraneniya-impulsa-zakon-sohraneniya-energii-zadanie-variant-2'}
                             ]}
+                            */
                             
                             /*,
                             {name: 'Биология', text: 'Ну конспект там в другом разделе...'}
@@ -2204,19 +2176,7 @@
                     'saturday': {
                         title: 'Суббота',
                         subjects: [
-                            {name: 'Алгебра', links: [
-                                {text: '37.1', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-1/'},
-                                {text: '37.2', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-2/'},
-                                {text: '37.3', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-3/'},
-                                {text: '37.4', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-4/'},
-                                {text: '37.5', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-5/'},
-                                {text: '37.6', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-6/'},
-                                {text: '37.15', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-15/'},
-                                {text: '37.16', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-16/'},
-                                {text: '37.17', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-17/'},
-                                {text: '37.18', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-18/'},
-                                {text: '37.19', url: 'https://pomogalka.me/10-klass/algebra/mordkovich/zadacha-37-19/'},
-                            ]}
+                            {name: 'ВиС (СПО)', text: '1) 2/3\n2) 0,028\n3) нет\n4) 0,1\n5) 0,856\n6) 0,02\n7) 0,092\n8) p1 = 0,6 | p2 = 0,8\n9) (B1) = 2/3 | (B2) = 1/3\n10) самый длинный ответ'}
                         ]
                     }
                 };
@@ -2905,7 +2865,7 @@
                 updateIcons();
                 updateTagsAppearance();
                 updateBorderAnimation();
-
+                updateAppInfoTags();
             } catch (error) {
                 console.error('Ошибка загрузки настроек:', error);
                 document.getElementById('border-animation-toggle').checked = false;
