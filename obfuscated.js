@@ -374,8 +374,14 @@
                 showCustomAlert('Ошибка сохранения изменений', 'error');
             }
         }
-        function initSupabase() {
-            return supabase.createClient(supabaseUrl, supabaseKey);
+        async function initSupabase() {
+            try {
+                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+                return createClient(supabaseUrl, supabaseKey);
+            } catch (error) {
+                console.error('Ошибка инициализации Supabase:', error);
+                throw error;
+            }
         }
         
         async function switchAdminTab(tabId) {
@@ -1480,196 +1486,196 @@
         }
         
         async function initializeApp() {
+            console.log("STEP0");
             const loadingScreen = document.getElementById('zenith-loader');
             const container = document.querySelector('.container');
-            const statusEl = document.getElementById('zenith-status');
-            let currentStep = 0;
-
-            const steps = [
-                'Загрузка интерфейса...',
-                'Проверка авторизации...',
-                'Подключение к серверу...',
-                'Загрузка профиля...',
-                'Готово!'
-            ];
-
-            function updateStatus(text) {
-                statusEl.textContent = text;
-            }
-
-            function nextStep() {
-                currentStep++;
-                if (currentStep < steps.length) updateStatus(steps[currentStep]);
-            }
-
-            updateStatus(steps[0]);
-
-            // 1. Применяем сохранённую тему немедленно
-            const savedTheme = localStorage.getItem('zenith_theme') || 'light';
-            applyTheme(savedTheme, false);
-            nextStep();
-
-            // 2. Показываем интерфейс сразу
             if (container) container.style.display = 'none';
-            if (loadingScreen) loadingScreen.style.opacity = '1';
-
-            // 3. Авторизация (Telegram / ключ)
-            let tgUser = tg.initDataUnsafe?.user;
-            let authMethod = null;
-            if (tgUser) {
-                currentUserId = tgUser.id.toString();
-                authMethod = 'telegram';
-            } else {
-                const savedKey = localStorage.getItem('zenith_activation_key') || localStorage.getItem('accessKey');
-                if (savedKey && /^[a-zA-Z0-9]{20}$/.test(savedKey)) {
-                    activationCode = savedKey;
-                    authMethod = 'saved_key';
-                }
+            if (loadingScreen) {
+                loadingScreen.style.display = 'flex';
+                loadingScreen.style.opacity = '1';
             }
-
-            if (!currentUserId && !activationCode) {
-                setTimeout(() => showActivationForm(), 300);
-                return;
-            }
-            nextStep();
-
-            // 4. Инициализируем Supabase с таймаутом
-            const initSupabaseWithTimeout = async () => {
-                const supabasePromise = initSupabase();
-                const timeout = new Promise((_, reject) => 
-                    setTimeout(() => reject(new Error('Supabase timeout')), 8000)
-                );
-                return await Promise.race([supabasePromise, timeout]);
-            };
-
+            console.log("STEP0,5");
             try {
-                supabase = await initSupabaseWithTimeout();
-                nextStep();
-            } catch (err) {
-                console.error('Supabase init failed:', err);
-                showErrorToUser();
-                showCustomAlert('Не удалось подключиться к серверу', 'error');
-                return;
+                applyLoadingTheme('light');
+            } catch (e) {
+                document.documentElement.style.setProperty('--border-color', '#333');
+                document.documentElement.style.setProperty('--background-color', '#f8f8f8');
+                document.documentElement.style.setProperty('--text-color', '#333');
             }
+            console.log("STEP1");
+            let tgUser = null;
+            let authMethod = null;
+            try {
+                supabase = await initSupabase();
+                console.log("STEP2");
+                if (tg.initDataUnsafe?.user) {
+                    tgUser = tg.initDataUnsafe.user;
+                    currentUserId = tgUser.id.toString();
+                    authMethod = 'telegram';
+                    console.log('✅ Telegram (initDataUnsafe)', currentUserId);
+                }
+                if (!currentUserId) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const urlKey = urlParams.get('key') || urlParams.get('code');
+                    if (urlKey && /^[a-zA-Z0-9]{20}$/.test(urlKey)) {
+                        const { data: scbotRecord, error: scbotError } = await supabase
+                            .from('scbot')
+                            .select('user_id, act')
+                            .eq('key', urlKey)
+                            .single();
+                        if (!scbotError && scbotRecord && scbotRecord.act) {
+                            currentUserId = scbotRecord.user_id.toString();
+                            localStorage.setItem('zenith_activation_key', urlKey);
+                            authMethod = 'url_key';
+                            console.log('✅ Авторизация через URL-ключ', currentUserId);
+                        }
+                    }
+                }
+                if (!currentUserId) {
+                    let savedKey = localStorage.getItem('zenith_activation_key');
+                    if (!savedKey) {
+                        savedKey = localStorage.getItem('accessKey');
+                    }
 
-            // 5. Авторизация через ключ, если нужно
-            if (activationCode && !currentUserId) {
+                    if (savedKey && /^[a-zA-Z0-9]{20}$/.test(savedKey)) {
+                        const { data: scbotRecord, error: scbotError } = await supabase
+                            .from('scbot')
+                            .select('user_id, act')
+                            .eq('key', savedKey)
+                            .single();
+                        if (!scbotError && scbotRecord && scbotRecord.act) {
+                            currentUserId = scbotRecord.user_id.toString();
+                            localStorage.setItem('zenith_activation_key', savedKey);
+                            if (localStorage.getItem('accessKey') === savedKey) {
+                                localStorage.removeItem('accessKey');
+                            }
+                            authMethod = 'saved_key';
+                            console.log('✅ Авторизация через сохранённый ключ (из APK или сайта)', currentUserId);
+                        } else {
+                            localStorage.removeItem('zenith_activation_key');
+                            localStorage.removeItem('accessKey');
+                        }
+                    }
+                }
+                if (!currentUserId) {
+                    throw new Error('NO_AUTH');
+                }
+                console.log("STEP3");
                 try {
-                    const { data: scbotRecord } = await supabase
-                        .from('scbot')
-                        .select('user_id, act')
-                        .eq('key', activationCode)
+                    const { data, error } = await supabase
+                        .from('admin_settings')
+                        .select('maintenance_mode, maintenance_since')
                         .single();
-                    if (scbotRecord?.act) {
-                        currentUserId = scbotRecord.user_id.toString();
-                        localStorage.setItem('zenith_activation_key', activationCode);
-                    } else {
-                        throw new Error('Ключ недействителен');
+                    if (!error && data?.maintenance_mode) {
+                        const { data: devCheck, error: devError } = await supabase
+                            .from('users')
+                            .select('status')
+                            .eq('id', currentUserId)
+                            .single();
+                        const isDeveloper = devCheck?.status === 'developer';
+                        if (!isDeveloper) {
+                            const blocker = document.getElementById('maintenance-blocker');
+                            const sinceEl = document.getElementById('maintenance-since-display');
+                            if (data.maintenance_since) {
+                                const since = new Date(data.maintenance_since).toLocaleString();
+                                sinceEl.textContent = `Тех.работы начаты: ${since}`;
+                            }
+                            blocker.classList.remove('hidden');
+                            document.querySelector('.container').style.display = 'none';
+                            return;
+                        }
                     }
                 } catch (e) {
-                    showActivationForm();
-                    return;
+                    console.warn('Не удалось проверить режим тех.работ');
                 }
-            }
-
-            // 6. Параллельно: обновление last_seen + проверка maintenance
-            const maintenanceCheck = supabase
-                .from('admin_settings')
-                .select('maintenance_mode, maintenance_since')
-                .single();
-
-            const userUpsert = (async () => {
+                console.log("STEP4");
                 const now = new Date().toISOString();
-                const baseData = { last_seen: now, updated_at: now };
-                if (tgUser) {
-                    Object.assign(baseData, {
-                        username: tgUser.username || null,
-                        first_name: tgUser.first_name || null,
-                        last_name: tgUser.last_name || null,
-                        photo_url: tgUser.photo_url || null
-                    });
-                }
-                const { data: existing } = await supabase
+                const { data: existingUser, error: fetchError } = await supabase
                     .from('users')
                     .select('id')
                     .eq('id', currentUserId)
                     .maybeSingle();
-
-                if (existing) {
-                    await supabase.from('users').update(baseData).eq('id', currentUserId);
+                if (fetchError) throw fetchError;
+                if (existingUser) {
+                    const updateData = {
+                        last_seen: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    };
+                    if (tgUser) {
+                        updateData.username = tgUser.username || null;
+                        updateData.first_name = tgUser.first_name || null;
+                        updateData.last_name = tgUser.last_name || null;
+                        updateData.photo_url = tgUser.photo_url || null;
+                    }
+                    const { error: updateError } = await supabase
+                        .from('users')
+                        .update(updateData)
+                        .eq('id', currentUserId);
+                    if (updateError) throw updateError;
                 } else {
-                    await supabase.from('users').insert({
-                        ...baseData,
-                        id: currentUserId,
-                        created_at: now,
-                        theme: 'light',
-                        status: 'user',
-                        tags_enabled: true
-                    });
+                    const { error: insertError } = await supabase
+                        .from('users')
+                        .insert({
+                            id: currentUserId,
+                            username: tgUser?.username || null,
+                            first_name: tgUser?.first_name || null,
+                            last_name: tgUser?.last_name || null,
+                            photo_url: tgUser?.photo_url || null,
+                            last_seen: new Date().toISOString(),
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString(),
+                            theme: 'light',
+                            animation_enabled: false,
+                            gradient_enabled: false,
+                            tags_enabled: true,
+                            status: 'user'
+                        });
+                    if (insertError) throw insertError;
                 }
-            })();
-
-            // Ждём оба
-            await Promise.all([maintenanceCheck, userUpsert]);
-
-            // 7. Maintenance mode
-            const maintenanceData = await maintenanceCheck;
-            if (maintenanceData.data?.maintenance_mode) {
-                const { data: devCheck } = await supabase
+                console.log("STEP5");
+                const { data: fullUserData, error: userDataError } = await supabase
                     .from('users')
-                    .select('status')
+                    .select('*')
                     .eq('id', currentUserId)
                     .single();
-                if (devCheck?.status !== 'developer') {
-                    document.getElementById('maintenance-blocker').classList.remove('hidden');
-                    document.querySelector('.container').style.display = 'none';
-                    return;
+                if (userDataError || !fullUserData) {
+                    console.warn('⚠️ Не удалось загрузить данные пользователя из sb');
+                } else {
+                    window.currentUserData = fullUserData;
+                    console.log('✅ Полные данные пользователя загружены:', fullUserData);
                 }
-            }
-
-            // 8. Загружаем данные пользователя и настройки
-            try {
-                const [userData, settings] = await Promise.all([
-                    supabase.from('users').select('*').eq('id', currentUserId).single(),
-                    supabase.from('users').select('theme,gradient_enabled,tags_enabled,icons_enabled').eq('id', currentUserId).single()
-                ]);
-
-                if (userData.data) {
-                    window.currentUserData = userData.data;
-                    userStatus = userData.data.status;
-                    isAdmin = ['admin', 'developer'].includes(userStatus);
-                    if (isAdmin) document.getElementById('admin-tab').classList.remove('hidden');
-                }
-
-                if (settings.data) {
-                    const s = settings.data;
-                    // Применяем настройки без лишних запросов
-                    applyTheme(s.theme || 'light', false);
-                    document.getElementById('gradient-toggle').checked = s.gradient_enabled === true;
-                    document.getElementById('tags-toggle').checked = s.tags_enabled !== false;
-                    document.getElementById('icons-toggle').checked = s.icons_enabled !== false;
-                    document.body.classList.toggle('hide-tags', !s.tags_enabled);
-                    if (s.icons_enabled) document.body.classList.add('show-icons');
-                }
-
-                loadUserData();
+                userStatus = await checkUserStatus(currentUserId);
+                isAdmin = ['admin', 'developer'].includes(userStatus);
+                console.log("STEP6");
+                try {await loadUserSettings();} catch (err) {console.warn('Не удалось загрузить настройки:', err);}
+                await logAction('app_enter', {
+                    user_status: userStatus,
+                    is_admin: isAdmin,
+                    auth_method: authMethod
+                });
+                console.log("STEP7");
+                await loadUserData();
                 updateAppInfoTags();
-
-                nextStep();
-            } catch (e) {
-                console.warn('Частичная ошибка загрузки данных:', e);
-            }
-
-            // 9. Лог и финальный переход
-            await logAction('app_enter', { auth_method: authMethod, user_status: userStatus });
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
+                initEventHandlers();
+                if (userStatus === 'developer') {
+                    document.getElementById('error-btn').classList.remove('hidden');
+                }
                 setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    container.style.display = 'block';
-                    showWelcomeScreen();
-                }, 500);
-            }, 800);
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        showWelcomeScreen();
+                    }, 500);
+                }, 1200);
+
+            } catch (error) {
+                console.error('❌ Ошибка инициализации:', error);
+                if (error.message === 'NO_AUTH') {
+                    showActivationForm();
+                } else {
+                    showErrorToUser();
+                }
+            }
         }
         async function verifyActivationKey() {
             const input = document.getElementById('activation-key-input');
@@ -2907,5 +2913,3 @@
         });
         document.getElementById('auth-submit-btn').addEventListener('click', verifyActivationKey);
         document.addEventListener('DOMContentLoaded', initializeApp);
-        console.log(typeof supabase);
-        console.log(typeof supabase.createClient);
