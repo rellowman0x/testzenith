@@ -1,171 +1,171 @@
 :root {
-            --border-color: #333;
-            --border-animation: borderPulse 4s linear infinite;
-            --border-animation-color: var(--border-color);
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --logo-background-color: #000;
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #555;
-            --button-hover-text-color: white;
-        }
+    --border-color: #333;
+    --border-animation: borderPulse 4s linear infinite;
+    --border-animation-color: var(--border-color);
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --logo-background-color: #000;
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #555;
+    --button-hover-text-color: white;
+}
 
-        body.dark-purple-theme .disabled-overlay span,
-        body.dark-purple-theme .tab-buttons button,
-        body.dark-purple-theme .info-json,
-        body.dark-purple-theme .info-section,
-        body.dark-purple-theme .modal-header,
-        body.dark-purple-theme #console-output,
-        body.dark-purple-theme .modal-content,
-        body.dark-purple-theme .modal button,
-        body.dark-purple-theme .admin-loading-text,
-        body.dark-purple-theme .admin-item,
-        body.dark-purple-theme .admin-item:hover,
-        body.dark-purple-theme .modal small,
-        body.dark-purple-theme .content,
-        body.dark-purple-theme .filter-btn,
-        body.dark-purple-theme .filter-btn:hover,
-        body.dark-purple-theme .action-btn.delete-btn,
-        body.dark-purple-theme .admin-icon {
-            color: white !important;
-        }
-        body.dark-orange-theme .modal-content,
-        body.dark-orange-theme .modal button,
-        body.dark-orange-theme .admin-icon,
-        body.dark-orange-theme .collapsible-header,
-        body.dark-orange-theme .switch-container,
-        body.dark-orange-theme .admin-item,
-        body.dark-orange-theme select,
-        body.dark-orange-theme .modal button i,
-        body.dark-orange-theme .action-btn,
-        body.dark-orange-theme .confirm-delete-btn,
-        body.dark-orange-theme .cancel-btn,
-        body.dark-orange-theme .confirm-btn {
-            color: white !important;
-        }
-        body.dark-theme .modal button,
-        body.dark-theme .modal button i,
-        body.dark-theme .admin-item button,
-        body.dark-theme .admin-item button span,
-        body.dark-theme .modal-content,
-        body.dark-theme .info-section,
-        body.dark-theme .modal-header,
-        body.dark-theme #console-output,
-        body.dark-theme .tab-buttons button,
-        body.dark-theme .info-json {
-            color: white !important;
-        }
-        body.dark-theme .modal button,
-        body.dark-theme .modal button i,
-        body.dark-theme .admin-item button,
-        body.dark-theme .admin-item button span {
-            color: black !important;
-        }
-        body.light-orange-theme .action-btn {
-            color: black !important;
-        }
-        body.dark-orange-theme .modal-content {
-            background-color: #333 !important;
-            color: white !important;
-        }
-        body.dark-purple-theme .modal-content {
-            background-color: #1a1a1a !important;
-            color: #fff !important;
-        }
-        body.dark-theme .modal-content {
-            background-color: #1a1a1a !important;
-            color: #fff !important;
-        }
-        body.dark-green-theme .modal-content {
-            background-color: #1a1a1a !important;
-            color: #fff !important;
-        }
-        body.dark-red-theme .modal-content {
-            background-color: #1a1a1a !important;
-            color: #fff !important;
-        }
-        body.dark-blue-theme .modal-content {
-            background-color: #1a1a1a !important;
-            color: #fff !important;
-        }
-        body.dark-pink-theme .modal-content {
-            background-color: #1a1a1a !important;
-            color: #fff !important;
-        }
-        body.dark-orange-theme .modal-content {
-            background-color: #1a1a1a !important;
-            color: #fff !important;
-        }
-        body.dark-theme .tab.active,
-        body.dark-purple-theme .tab.active,
-        body.dark-green-theme .tab.active,
-        body.dark-red-theme .tab.active,
-        body.dark-blue-theme .tab.active,
-        body.dark-pink-theme .tab.active,
-        body.dark-orange-theme .tab.active {
-            background: linear-gradient(135deg,
-                var(--border-color),
-                color-mix(in srgb, var(--border-color) 60%, black)
-            );
-        }
-        body.dark-theme .theme-badge.gradient {
-            background: linear-gradient(135deg, 
-                var(--border-color),
-                color-mix(in srgb, var(--border-color) 70%, black),
-                var(--border-color),
-                color-mix(in srgb, var(--border-color) 80%, white),
-                var(--border-color)
-            ) !important;
-            color: black !important;
-        }
-        body.dark-theme .theme-badge,
-        body.dark-theme .modal-actions button,
-        body.dark-theme .grade-btn,
-        body.dark-theme .clear-btn,
-        body.dark-theme .back-btn,
-        body.dark-theme .stats-filter-btn {
-            color: black !important;
-        }
-        body.dark-theme .clear-btn {
-            color: white !important;
-        }
-        body.dark-theme .switch input:checked + .slider {
-            background-color: var(--border-color) !important;
-        }
-        body.dark-theme .switch input:checked + .slider::before {
-            background-color: black !important;
-        }
-        body.dark-theme .tab.active,
-        body.dark-purple-theme .tab.active,
-        body.dark-green-theme .tab.active,
-        body.dark-red-theme .tab.active,
-        body.dark-blue-theme .tab.active,
-        body.dark-pink-theme .tab.active,
-        body.dark-orange-theme .tab.active {
-            background: linear-gradient(135deg,
-                var(--border-color),
-                color-mix(in srgb, var(--border-color) 60%, black)
-            );
-        }
-        body.dark-theme .info-json,
-        body.dark-purple-theme .info-json {
-            background-color: #222;
-            color: #eee;
-        }
-        body.dark-theme .info-section,
-        body.dark-purple-theme .info-section {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-        body.dark-theme .modal-header,
-        body.dark-purple-theme .modal-header {
-            background: rgba(255, 255, 255, 0.02);
-            border-bottom-color: rgba(255, 255, 255, 0.1);
-        }
-        #user-info-content {
-            margin-bottom: 10px;
-            padding: 0 10px;
-        }
+body.dark-purple-theme .disabled-overlay span,
+body.dark-purple-theme .tab-buttons button,
+body.dark-purple-theme .info-json,
+body.dark-purple-theme .info-section,
+body.dark-purple-theme .modal-header,
+body.dark-purple-theme #console-output,
+body.dark-purple-theme .modal-content,
+body.dark-purple-theme .modal button,
+body.dark-purple-theme .admin-loading-text,
+body.dark-purple-theme .admin-item,
+body.dark-purple-theme .admin-item:hover,
+body.dark-purple-theme .modal small,
+body.dark-purple-theme .content,
+body.dark-purple-theme .filter-btn,
+body.dark-purple-theme .filter-btn:hover,
+body.dark-purple-theme .action-btn.delete-btn,
+body.dark-purple-theme .admin-icon {
+    color: white !important;
+}
+body.dark-orange-theme .modal-content,
+body.dark-orange-theme .modal button,
+body.dark-orange-theme .admin-icon,
+body.dark-orange-theme .collapsible-header,
+body.dark-orange-theme .switch-container,
+body.dark-orange-theme .admin-item,
+body.dark-orange-theme select,
+body.dark-orange-theme .modal button i,
+body.dark-orange-theme .action-btn,
+body.dark-orange-theme .confirm-delete-btn,
+body.dark-orange-theme .cancel-btn,
+body.dark-orange-theme .confirm-btn {
+    color: white !important;
+}
+body.dark-theme .modal button,
+body.dark-theme .modal button i,
+body.dark-theme .admin-item button,
+body.dark-theme .admin-item button span,
+body.dark-theme .modal-content,
+body.dark-theme .info-section,
+body.dark-theme .modal-header,
+body.dark-theme #console-output,
+body.dark-theme .tab-buttons button,
+body.dark-theme .info-json {
+    color: white !important;
+}
+body.dark-theme .modal button,
+body.dark-theme .modal button i,
+body.dark-theme .admin-item button,
+body.dark-theme .admin-item button span {
+    color: black !important;
+}
+body.light-orange-theme .action-btn {
+    color: black !important;
+}
+body.dark-orange-theme .modal-content {
+    background-color: #333 !important;
+    color: white !important;
+}
+body.dark-purple-theme .modal-content {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+body.dark-theme .modal-content {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+body.dark-green-theme .modal-content {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+body.dark-red-theme .modal-content {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+body.dark-blue-theme .modal-content {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+body.dark-pink-theme .modal-content {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+body.dark-orange-theme .modal-content {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+}
+body.dark-theme .tab.active,
+body.dark-purple-theme .tab.active,
+body.dark-green-theme .tab.active,
+body.dark-red-theme .tab.active,
+body.dark-blue-theme .tab.active,
+body.dark-pink-theme .tab.active,
+body.dark-orange-theme .tab.active {
+    background: linear-gradient(135deg,
+var(--border-color),
+color-mix(in srgb, var(--border-color) 60%, black)
+    );
+}
+body.dark-theme .theme-badge.gradient {
+    background: linear-gradient(135deg, 
+var(--border-color),
+color-mix(in srgb, var(--border-color) 70%, black),
+var(--border-color),
+color-mix(in srgb, var(--border-color) 80%, white),
+var(--border-color)
+    ) !important;
+    color: black !important;
+}
+body.dark-theme .theme-badge,
+body.dark-theme .modal-actions button,
+body.dark-theme .grade-btn,
+body.dark-theme .clear-btn,
+body.dark-theme .back-btn,
+body.dark-theme .stats-filter-btn {
+    color: black !important;
+}
+body.dark-theme .clear-btn {
+    color: white !important;
+}
+body.dark-theme .switch input:checked + .slider {
+    background-color: var(--border-color) !important;
+}
+body.dark-theme .switch input:checked + .slider::before {
+    background-color: black !important;
+}
+body.dark-theme .tab.active,
+body.dark-purple-theme .tab.active,
+body.dark-green-theme .tab.active,
+body.dark-red-theme .tab.active,
+body.dark-blue-theme .tab.active,
+body.dark-pink-theme .tab.active,
+body.dark-orange-theme .tab.active {
+    background: linear-gradient(135deg,
+var(--border-color),
+color-mix(in srgb, var(--border-color) 60%, black)
+    );
+}
+body.dark-theme .info-json,
+body.dark-purple-theme .info-json {
+    background-color: #222;
+    color: #eee;
+}
+body.dark-theme .info-section,
+body.dark-purple-theme .info-section {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+body.dark-theme .modal-header,
+body.dark-purple-theme .modal-header {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+#user-info-content {
+    margin-bottom: 10px;
+    padding: 0 10px;
+}

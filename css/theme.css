@@ -1,251 +1,251 @@
 :root {
-            --border-color-rgb: 51, 51, 51;
-            --loading-indicator-color: var(--border-color);
-        }
+    --border-color-rgb: 51, 51, 51;
+    --loading-indicator-color: var(--border-color);
+}
 
-        body.light-theme {
-            --border-color-rgb: 51, 51, 51;
-        }
+body.light-theme {
+    --border-color-rgb: 51, 51, 51;
+}
 
-        body.dark-theme {
-            --border-color-rgb: 255, 255, 255;
-        }
+body.dark-theme {
+    --border-color-rgb: 255, 255, 255;
+}
 
-        body.light-purple-theme {
-            --border-color-rgb: 138, 43, 226;
-        }
+body.light-purple-theme {
+    --border-color-rgb: 138, 43, 226;
+}
 
-        body.dark-purple-theme {
-            --border-color-rgb: 138, 43, 226;
-        }
-        body.light-theme {
-            --border-color: #333;
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --logo-background-color: #000; 
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: #fff;
-            --button-hover-color: #a8a8a8;
-            --button-hover-text-color: #fff;
-            --border-animation-color: var(--border-color);
-        }
-        body.dark-theme {
-            --border-color: #fff;
-            --background-color: #121212;
-            --text-color: #fff;
-            --shadow-color: rgba(0, 0, 0, 0.3);
-            --logo-background-color: #fff;
-            --logo-icon-color: #000;
-            --button-color: var(--border-color);
-            --button-text-color: #000;
-            --button-hover-color: #4b4b4b;
-            --button-hover-text-color: #fff;
-            --border-animation-color: var(--border-color);
-        }
-        body.light-purple-theme {
-            --border-color: #8a2be2;
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(138, 43, 226, 0.2);
-            --logo-background-color: #8a2be2;
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #9932cc;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.dark-purple-theme {
-            --border-color: #8a2be2;
-            --background-color: #121212;
-            --text-color: #fff;
-            --shadow-color: rgba(138, 43, 226, 0.3);
-            --logo-background-color: #8a2be2;
-            --logo-icon-color: #000;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #9932cc;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.light-green-theme {
-            --border-color: #28a745;
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(40, 167, 69, 0.2);
-            --logo-background-color: #28a745;
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #218838;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.dark-green-theme {
-            --border-color: #28a745;
-            --background-color: #121212;
-            --text-color: #fff;
-            --shadow-color: rgba(40, 167, 69, 0.3);
-            --logo-background-color: #28a745;
-            --logo-icon-color: #000;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #218838;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.light-red-theme {
-            --border-color: #dc3545;
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(220, 53, 69, 0.2);
-            --logo-background-color: #dc3545;
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #c82333;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.dark-red-theme {
-            --border-color: #dc3545;
-            --background-color: #121212;
-            --text-color: #fff;
-            --shadow-color: rgba(220, 53, 69, 0.3);
-            --logo-background-color: #dc3545;
-            --logo-icon-color: #000;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #c82333;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.light-blue-theme {
-            --border-color: #007bff;
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(0, 123, 255, 0.2);
-            --logo-background-color: #007bff;
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #0069d9;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.dark-blue-theme {
-            --border-color: #007bff;
-            --background-color: #121212;
-            --text-color: #fff;
-            --shadow-color: rgba(0, 123, 255, 0.3);
-            --logo-background-color: #007bff;
-            --logo-icon-color: #000;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #0069d9;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.light-pink-theme {
-            --border-color: #e100ff;
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(247, 32, 182, 0.3);
-            --logo-background-color: #e100ff;
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #bd1ad3;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.dark-pink-theme {
-            --border-color: #e100ff;
-            --background-color: #121212;
-            --text-color: #fff;
-            --shadow-color: rgba(247, 32, 182, 0.3);
-            --logo-background-color: #e100ff;
-            --logo-icon-color: #000;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #bd1ad3;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.light-orange-theme {
-            --border-color: #fd7e14;
-            --background-color: #f8f8f8;
-            --text-color: #333;
-            --shadow-color: rgba(253, 126, 20, 0.2);
-            --logo-background-color: #fd7e14;
-            --logo-icon-color: #fff;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #e07107;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        body.dark-orange-theme {
-            --border-color: #fd7e14;
-            --background-color: #121212;
-            --text-color: #fff;
-            --shadow-color: rgba(253, 126, 20, 0.3);
-            --logo-background-color: #fd7e14;
-            --logo-icon-color: #000;
-            --button-color: var(--border-color);
-            --button-text-color: white;
-            --button-hover-color: #e07107;
-            --button-hover-text-color: white;
-            --border-animation-color: var(--border-color);
-        }
-        .theme-light-green {
-            background: linear-gradient(135deg, #ffffff 0%, #d4f4dd 100%);
-            color: black;
-        }
+body.dark-purple-theme {
+    --border-color-rgb: 138, 43, 226;
+}
+body.light-theme {
+    --border-color: #333;
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --logo-background-color: #000; 
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: #fff;
+    --button-hover-color: #a8a8a8;
+    --button-hover-text-color: #fff;
+    --border-animation-color: var(--border-color);
+}
+body.dark-theme {
+    --border-color: #fff;
+    --background-color: #121212;
+    --text-color: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --logo-background-color: #fff;
+    --logo-icon-color: #000;
+    --button-color: var(--border-color);
+    --button-text-color: #000;
+    --button-hover-color: #4b4b4b;
+    --button-hover-text-color: #fff;
+    --border-animation-color: var(--border-color);
+}
+body.light-purple-theme {
+    --border-color: #8a2be2;
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(138, 43, 226, 0.2);
+    --logo-background-color: #8a2be2;
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #9932cc;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.dark-purple-theme {
+    --border-color: #8a2be2;
+    --background-color: #121212;
+    --text-color: #fff;
+    --shadow-color: rgba(138, 43, 226, 0.3);
+    --logo-background-color: #8a2be2;
+    --logo-icon-color: #000;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #9932cc;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.light-green-theme {
+    --border-color: #28a745;
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(40, 167, 69, 0.2);
+    --logo-background-color: #28a745;
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #218838;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.dark-green-theme {
+    --border-color: #28a745;
+    --background-color: #121212;
+    --text-color: #fff;
+    --shadow-color: rgba(40, 167, 69, 0.3);
+    --logo-background-color: #28a745;
+    --logo-icon-color: #000;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #218838;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.light-red-theme {
+    --border-color: #dc3545;
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(220, 53, 69, 0.2);
+    --logo-background-color: #dc3545;
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #c82333;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.dark-red-theme {
+    --border-color: #dc3545;
+    --background-color: #121212;
+    --text-color: #fff;
+    --shadow-color: rgba(220, 53, 69, 0.3);
+    --logo-background-color: #dc3545;
+    --logo-icon-color: #000;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #c82333;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.light-blue-theme {
+    --border-color: #007bff;
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(0, 123, 255, 0.2);
+    --logo-background-color: #007bff;
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #0069d9;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.dark-blue-theme {
+    --border-color: #007bff;
+    --background-color: #121212;
+    --text-color: #fff;
+    --shadow-color: rgba(0, 123, 255, 0.3);
+    --logo-background-color: #007bff;
+    --logo-icon-color: #000;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #0069d9;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.light-pink-theme {
+    --border-color: #e100ff;
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(247, 32, 182, 0.3);
+    --logo-background-color: #e100ff;
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #bd1ad3;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.dark-pink-theme {
+    --border-color: #e100ff;
+    --background-color: #121212;
+    --text-color: #fff;
+    --shadow-color: rgba(247, 32, 182, 0.3);
+    --logo-background-color: #e100ff;
+    --logo-icon-color: #000;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #bd1ad3;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.light-orange-theme {
+    --border-color: #fd7e14;
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --shadow-color: rgba(253, 126, 20, 0.2);
+    --logo-background-color: #fd7e14;
+    --logo-icon-color: #fff;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #e07107;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+body.dark-orange-theme {
+    --border-color: #fd7e14;
+    --background-color: #121212;
+    --text-color: #fff;
+    --shadow-color: rgba(253, 126, 20, 0.3);
+    --logo-background-color: #fd7e14;
+    --logo-icon-color: #000;
+    --button-color: var(--border-color);
+    --button-text-color: white;
+    --button-hover-color: #e07107;
+    --button-hover-text-color: white;
+    --border-animation-color: var(--border-color);
+}
+.theme-light-green {
+    background: linear-gradient(135deg, #ffffff 0%, #d4f4dd 100%);
+    color: black;
+}
 
-        .theme-dark-green {
-            background: linear-gradient(135deg, #222222 0%, #153a20 100%);
-            color: white;
-        }
+.theme-dark-green {
+    background: linear-gradient(135deg, #222222 0%, #153a20 100%);
+    color: white;
+}
 
-        .theme-light-red {
-            background: linear-gradient(135deg, #ffffff 0%, #f8d7da 100%);
-            color: black;
-        }
+.theme-light-red {
+    background: linear-gradient(135deg, #ffffff 0%, #f8d7da 100%);
+    color: black;
+}
 
-        .theme-dark-red {
-            background: linear-gradient(135deg, #222222 0%, #3a1515 100%);
-            color: white;
-        }
+.theme-dark-red {
+    background: linear-gradient(135deg, #222222 0%, #3a1515 100%);
+    color: white;
+}
 
-        .theme-light-blue {
-            background: linear-gradient(135deg, #ffffff 0%, #d0e7ff 100%);
-            color: black;
-        }
+.theme-light-blue {
+    background: linear-gradient(135deg, #ffffff 0%, #d0e7ff 100%);
+    color: black;
+}
 
-        .theme-dark-blue {
-            background: linear-gradient(135deg, #222222 0%, #151f3a 100%);
-            color: white;
-        }
+.theme-dark-blue {
+    background: linear-gradient(135deg, #222222 0%, #151f3a 100%);
+    color: white;
+}
 
-        .theme-light-pink {
-            background: linear-gradient(135deg, #ffffff 0%, #f8d0e8 100%);
-            color: black;
-        }
+.theme-light-pink {
+    background: linear-gradient(135deg, #ffffff 0%, #f8d0e8 100%);
+    color: black;
+}
 
-        .theme-dark-pink {
-            background: linear-gradient(135deg, #222222 0%, #3a152e 100%);
-            color: white;
-        }
+.theme-dark-pink {
+    background: linear-gradient(135deg, #222222 0%, #3a152e 100%);
+    color: white;
+}
 
-        .theme-light-orange {
-            background: linear-gradient(135deg, #ffffff 0%, #ffe0c2 100%);
-            color: black;
-        }
+.theme-light-orange {
+    background: linear-gradient(135deg, #ffffff 0%, #ffe0c2 100%);
+    color: black;
+}
 
-        .theme-dark-orange {
-            background: linear-gradient(135deg, #222222 0%, #3a2415 100%);
-            color: white;
-        }
+.theme-dark-orange {
+    background: linear-gradient(135deg, #222222 0%, #3a2415 100%);
+    color: white;
+}
