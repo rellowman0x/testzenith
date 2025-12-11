@@ -374,14 +374,8 @@
                 showCustomAlert('Ошибка сохранения изменений', 'error');
             }
         }
-        async function initSupabase() {
-            try {
-                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
-                return createClient(supabaseUrl, supabaseKey);
-            } catch (error) {
-                console.error('Ошибка инициализации Supabase:', error);
-                throw error;
-            }
+        function initSupabase() {
+            return supabase.createClient(supabaseUrl, supabaseKey);
         }
         
         async function switchAdminTab(tabId) {
@@ -2913,3 +2907,5 @@
         });
         document.getElementById('auth-submit-btn').addEventListener('click', verifyActivationKey);
         document.addEventListener('DOMContentLoaded', initializeApp);
+        console.log(typeof supabase);
+        console.log(typeof supabase.createClient);
