@@ -1,0 +1,800 @@
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.modal-dialog {
+    border: 2px solid var(--border-color);
+    animation: var(--border-animation);
+    background: var(--background-color);
+    color: var(--text-color);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.modal-dialog.show {
+    transform: scale(1);
+}
+
+#add-admin-modal .modal-dialog {
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--background-color) !important;
+    color: var(--text-color) !important;
+    border-radius: 24px !important;
+    padding: 20px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+    max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.95);
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    border: 2px solid transparent;
+    animation: var(--border-animation);
+    z-index: -1;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-content {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-header {
+    padding: 24px 24px 16px 24px;
+    border-bottom: 2px solid rgba(var(--border-color-rgb), 0.1);
+    background: rgba(var(--border-color-rgb), 0.03);
+    position: relative;
+}
+
+.modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+}
+
+.modal-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-color);
+    margin: 0;
+    background: linear-gradient(to right, var(--text-color), var(--border-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+}
+
+.modal-body {
+    max-height: calc(65vh - 120px);
+    overflow-y: auto;
+    padding: 16px;
+    margin-bottom: 0;
+}
+
+.modal-actions {
+    padding: 16px 24px !important;
+    border-top: 2px solid rgba(var(--border-color-rgb), 0.1) !important;
+    margin-top: 0 !important;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--background-color) !important;
+    border-radius: 0 0 24px 24px;
+}
+
+.modal-actions {
+    background: var(--background-color) !important;
+    border-top: 2px solid rgba(var(--border-color-rgb), 0.1) !important;
+}
+
+.modal-actions button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.modal-actions button {
+    flex: 1;
+    min-width: 100px;
+    padding: 10px 16px !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.modal-actions button:hover::before {
+    left: 100%;
+}
+
+.modal-actions button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modal-actions button:active {
+    transform: translateY(0) scale(0.97) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modal button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--button-color) !important;
+    color: var(--button-text-color) !important;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.modal button:hover {
+    background-color: var(--button-hover-color);
+    color: var(--button-hover-text-color);
+}
+
+.modal button:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.modal small {
+    color: #666;
+}
+
+body.dark-theme .modal small,
+body.dark-purple-theme .modal small {
+    color: #aaa;
+}
+
+/* Custom Alert Styles */
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--background-color);
+    color: var(--text-color);
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 2px solid var(--border-color);
+    animation: var(--border-animation);
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.custom-alert.show {
+    opacity: 1;
+}
+
+.custom-alert i {
+    font-size: 20px;
+}
+
+/* Confirm Delete Styles */
+.confirm-delete-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+body.dark-theme .confirm-delete-btn,
+body.dark-purple-theme .confirm-delete-btn,
+body.dark-green-theme .confirm-delete-btn,
+body.dark-red-theme .confirm-delete-btn,
+body.dark-blue-theme .confirm-delete-btn,
+body.dark-pink-theme .confirm-delete-btn,
+body.dark-orange-theme .confirm-delete-btn {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .cancel-btn,
+body.dark-purple-theme .cancel-btn,
+body.dark-green-theme .cancel-btn,
+body.dark-red-theme .cancel-btn,
+body.dark-blue-theme .cancel-btn,
+body.dark-pink-theme .cancel-btn,
+body.dark-orange-theme .cancel-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-theme .confirm-btn,
+body.dark-purple-theme .confirm-btn,
+body.dark-green-theme .confirm-btn,
+body.dark-red-theme .confirm-btn,
+body.dark-blue-theme .confirm-btn,
+body.dark-pink-theme .confirm-btn,
+body.dark-orange-theme .confirm-btn {
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5);
+}
+
+.confirm-delete-icon {
+    animation: shakeIcon 2s ease-in-out infinite, pulseGlow 2s ease-in-out infinite;
+}
+
+/* Input and Select Styles */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    animation: fadeInContent 0.5s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeInContent {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tabs and Admin Tabs */
+.tab, .admin-tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.tab.active, .admin-tab.active {
+    background: rgba(var(--border-color-rgb), 0.2);
+    color: var(--border-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Theme Options */
+.theme-option {
+    flex: 1;
+    aspect-ratio: 1;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.theme-option:hover {
+    transform: scale(1.03);
+}
+
+.theme-option.active {
+    border: 2px solid var(--border-color);
+    animation: var(--border-animation);
+}
+
+/* Button Styles */
+button {
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: 2px solid var(--border-color);
+    background: var(--button-color);
+    color: var(--button-text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-size: 16px;
+    min-width: 120px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    background-color: var(--button-hover-color);
+    color: var(--button-hover-text-color);
+}
+
+button:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Tab buttons */
+.tab-buttons button {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    flex: 1;
+    min-width: 120px;
+}
+
+body.dark-theme .tab-buttons button,
+body.dark-purple-theme .tab-buttons button {
+    background: #333;
+    color: white;
+}
+
+.tab-buttons button.active {
+    background: var(--border-color);
+    color: white;
+}
+
+/* Collapsible Elements */
+.collapsible {
+    margin-top: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+}
+
+.collapsible-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: rgba(var(--border-color-rgb), 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.collapsible-header:hover {
+    background: rgba(var(--border-color-rgb), 0.2);
+}
+
+.collapsible-header i {
+    transition: transform 0.3s ease;
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.collapsible-content.active {
+    max-height: 500px;
+}
+
+.collapsible-icon-rotate {
+    transform: rotate(180deg);
+}
+
+/* Filter and Action Buttons */
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+.filter-btn:hover {
+    background: rgba(var(--border-color-rgb), 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+body.dark-theme .filter-btn,
+body.dark-purple-theme .filter-btn {
+    background-color: #000;
+    color: #fff;
+}
+
+body.dark-theme .filter-btn:hover,
+body.dark-purple-theme .filter-btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.clear-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    background: var(--border-color);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.clear-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.clear-btn:active {
+    transform: translateY(0);
+}
+
+/* Action Buttons */
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    margin: 0 2px;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn.delete-btn {
+    background: rgba(220, 53, 69, 0.1) !important;
+    color: #dc3545 !important;
+    border: 1px solid rgba(220, 53, 69, 0.2) !important;
+}
+
+.action-btn.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.15) !important;
+    color: #dc3545 !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+}
+
+body.dark-theme .action-btn.delete-btn,
+body.dark-purple-theme .action-btn.delete-btn {
+    background: rgba(220, 53, 69, 0.25) !important;
+    color: #ff6b81 !important;
+    border: 1px solid rgba(220, 53, 69, 0.5) !important;
+}
+
+/* Grade Buttons */
+.grade-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 2px;
+    font-weight: bold;
+}
+
+/* Back Button */
+.back-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Stats Filter Buttons */
+.stats-filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 2px;
+    font-weight: bold;
+}
+
+/* Tab buttons */
+.tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Info JSON display */
+.info-json {
+    background: rgba(0, 0, 0, 0.03);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+}
+
+body.dark-theme .info-json,
+body.dark-purple-theme .info-json {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Console Output */
+#console-output {
+    height: 300px;
+    overflow-y: auto;
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+body.dark-theme #console-output,
+body.dark-purple-theme #console-output {
+    background-color: #222;
+    color: #eee;
+}
+
+/* Admin items */
+.admin-item {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    background: rgba(var(--border-color-rgb), 0.03);
+    border: 1px solid rgba(var(--border-color-rgb), 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body.dark-theme .admin-item,
+body.dark-purple-theme .admin-item {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.1);
+}
+
+.admin-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+body.dark-theme .admin-item:hover,
+body.dark-purple-theme .admin-item:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Modal Actions Buttons */
+.modal-actions button.primary {
+    background: var(--border-color);
+    color: white;
+}
+
+/* Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--border-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+body.dark-theme .switch input:checked + .slider {
+    background-color: var(--border-color) !important;
+}
+
+body.dark-theme .switch input:checked + .slider::before {
+    background-color: black !important;
+}
+
+/* Disabled overlay */
+.disabled-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    background: repeating-linear-gradient(
+        -45deg,
+        rgba(var(--border-color-rgb), 0.1),
+        rgba(var(--border-color-rgb), 0.1) 10px,
+        rgba(var(--border-color-rgb), 0.05) 10px,
+        rgba(var(--border-color-rgb), 0.05) 20px
+    );
+    animation: stripesFlow 2s linear infinite;
+    box-shadow: inset 0 0 15px rgba(var(--border-color-rgb), 0.2);
+    overflow: hidden;
+}
+
+.disabled-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        -45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    animation: shine 3s infinite;
+}
+
+.disabled-overlay span {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 2;
+    animation: pulseText 3s ease-in-out infinite;
+}
+
+body.dark-theme .disabled-overlay span,
+body.dark-purple-theme .disabled-overlay span {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Theme Groups */
+.theme-group {
+    margin-bottom: 10px;
+    border: 1px solid rgba(var(--border-color-rgb), 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.theme-group-header {
+    padding: 12px 15px;
+    background: rgba(var(--border-color-rgb), 0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.theme-group-header:hover {
+    background: rgba(var(--border-color-rgb), 0.2);
+}
+
+.theme-group-header i {
+    transition: transform 0.3s ease;
+}
+
+.theme-group-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    padding: 0 15px;
+}
+
+.theme-group-content.active {
+    max-height: 200px;
+    padding: 15px;
+}
+
+.theme-group-header .collapsible-icon-rotate {
+    transform: rotate(180deg);
+}
