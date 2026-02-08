@@ -1913,71 +1913,33 @@
                     loadHomeworkContent();
                     return;
                 } else if (tabId === 'biology') {
-                    title = 'Биология';
-                        contentHTML = `
-                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Фотосинтез и хемосинтез</h4>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Фотосинтез</strong> — способ автотрофного питания, свойственный растениям, цианобактериям и фотосинтезирующим бактериям. При этом для синтеза органических веществ (в первую очередь углеводов) из неорганических — углекислого газа и воды — используется энергия солнечного света.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Хемосинтез</strong> — тип автотрофного питания, характерный для некоторых бактерий. Они усваивают CO₂ как единственный источник углерода, используя энергию, выделяющуюся при окислении неорганических соединений (например, сероводорода, аммиака, железа). Эта энергия запасается в виде АТФ, а восстановительные эквиваленты формируются за счёт переноса электронов по цепи дыхательных ферментов в клеточной мембране. Биосинтез органических веществ при хемосинтезе происходит по тем же путям, что и при фотосинтезе — через автотрофную ассимиляцию CO₂.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Световая фаза фотосинтеза</strong> протекает исключительно на свету. В ней энергия фотонов преобразуется в химическую энергию — АТФ и восстановительные эквиваленты (НАДФ·Н). Побочным продуктом этого процесса является молекулярный кислород, который выделяется в атмосферу.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Темновая фаза фотосинтеза</strong> (цикл Кальвина) может идти как при свете, так и в темноте. В ней из CO₂ синтезируется глюкоза за счёт энергии АТФ и восстановительной силы НАДФ·Н, накопленных в световой фазе.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Фотосинтетики</strong> — организмы, способные преобразовывать солнечную энергию в химическую с помощью пигментов (преимущественно хлорофилла). К ним относятся:
-                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
-                                    <li><strong>Растения</strong> — зелёные высшие (дуб, сосна, пшеница, рис) и водоросли (морские и пресноводные).</li>
-                                    <li><strong>Цианобактерии</strong> — прокариоты, сыгравшие ключевую роль в насыщении атмосферы кислородом.</li>
-                                    <li><strong>Фотосинтезирующие протисты</strong> — например, <em>Chlamydomonas</em>, диатомовые водоросли.</li>
-                                </ul>
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Хемосинтетики</strong> не зависят от солнечного света и обитают в экстремальных условиях: глубоководные гидротермальные источники, сероводородные родники, почвы и др. Основные группы:
-                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
-                                    <li><strong>Серобактерии</strong> — например, <em>Thiobacillus</em>, <em>Beggiatoa</em> (окисляют H₂S до S или SO₄²⁻).</li>
-                                    <li><strong>Нитрифицирующие бактерии</strong> — <em>Nitrosomonas</em> (NH₃ → NO₂⁻), <em>Nitrobacter</em> (NO₂⁻ → NO₃⁻).</li>
-                                    <li><strong>Железобактерии</strong> — например, <em>Gallionella</em> (окисляют Fe²⁺ → Fe³⁺).</li>
-                                    <li><strong>Метанотрофы и водородные бактерии</strong> — используют CH₄ или H₂ как энергетический субстрат.</li>
-                                    <li><strong>Археи-хемосинтетики</strong> — обитатели «чёрных курильщиков», окисляющие H₂S, H₂ или Fe²⁺.</li>
-                                </ul>
-                            </div>
-                        `;
-                    } else if (tabId === 'geography') {
-                        title = 'География';
-                        contentHTML = `<p>Здесь пока пусто...</p>`;
-                    } else if (tabId === 'algeb') {
-                        title = 'Алгебра';
-                        contentHTML = `
-                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Формула 1</h4>
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
-                                <div class="katex-formula" style="font-size: 20px;">a^{\\frac{p}{q}} = \\sqrt[q]{a^p}</div>
-                                <div class="katex-formula" style="font-size: 15px;">27^{\\frac{4}{3}} = \\left(27^{\\frac{1}{3}}\\right)^4 = \\left(\\sqrt[3]{27}\\right)^4 = 3^4 = 81</div>
-                            </div>
-                        `;
-                        setTimeout(() => {
-                            initKatex();
-                        }, 100);
-                    } else if (tabId === 'geometry') {
-                        title = 'Геометрия';
-                        contentHTML = `<p>Здесь пока пусто...</p>`;
-                    } else if (tabId === 'fipi') {
-                        title = 'ФИПИ / Геометрия';
-                        contentHTML = `
-                            <div style="display: flex; justify-content: center; gap: 8px;">
-                                <button onclick="showFipiPage(1)" style="width: 32px; height: 32px; border-radius: 8px; background: var(--border-color); color: white; border: none; font-weight: bold;">6</button>
-                                <button onclick="showFipiPage(2)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">7</button>
-                                <button onclick="showFipiPage(3)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">8</button>
+                    loadBiologyContent();
+                    return;
+                } else if (tabId === 'geography') {
+                    title = 'География';
+                    contentHTML = `<p>Здесь пока пусто...</p>`;
+                } else if (tabId === 'algeb') {
+                    title = 'Алгебра';
+                    contentHTML = `
+                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Формула 1</h4>
+                        <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
+                            <div class="katex-formula" style="font-size: 20px;">a^{\\frac{p}{q}} = \\sqrt[q]{a^p}</div>
+                            <div class="katex-formula" style="font-size: 15px;">27^{\\frac{4}{3}} = \\left(27^{\\frac{1}{3}}\\right)^4 = \\left(\\sqrt[3]{27}\\right)^4 = 3^4 = 81</div>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        initKatex();
+                    }, 100);
+                } else if (tabId === 'geometry') {
+                    title = 'Геометрия';
+                    contentHTML = `<p>Здесь пока пусто...</p>`;
+                } else if (tabId === 'fipi') {
+                    title = 'ФИПИ / Геометрия';
+                    contentHTML = `
+                        <div style="display: flex; justify-content: center; gap: 8px;">
+                            <button onclick="showFipiPage(1)" style="width: 32px; height: 32px; border-radius: 8px; background: var(--border-color); color: white; border: none; font-weight: bold;">6</button>
+                            <button onclick="showFipiPage(2)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">7</button>
+                            <button onclick="showFipiPage(3)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">8</button>
                                 <button onclick="showFipiPage(4)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">9</button>
                                 <button onclick="showFipiPage(5)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">10</button>
                             </div>
@@ -2964,6 +2926,36 @@
             }
             showErrorButton();
         }
+        async function loadBiologyContent() {
+            const educationContent = document.getElementById('education-content');
+            
+            try {
+                const response = await fetch('content.html');
+                const content = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(content, 'text/html');
+                const biologyContent = doc.getElementById('biology-content');
+                
+                if (biologyContent) {
+                    educationContent.innerHTML = `
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <button onclick="backToEducationMain()" class="back-btn" style="padding: 14px 28px; background: linear-gradient(135deg, var(--border-color), color-mix(in srgb, var(--border-color) 70%, black)); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(var(--border-color-rgb), 0.3); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: block; margin: 0 auto;">
+                                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Назад
+                            </button>
+                        </div>
+                        ${biologyContent.outerHTML}
+                    `;
+                    // Show the content after inserting it
+                    biologyContent.style.display = 'block';
+                } else {
+                    educationContent.innerHTML = '<p>Контент для биологии не найден.</p>';
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки контента биологии:', error);
+                educationContent.innerHTML = '<p>Ошибка загрузки контента.</p>';
+            }
+        }
+
         document.querySelectorAll('.feature-disabled, .education-feature').forEach(el => {
             el.addEventListener('click', function(e) {
                 if (e.target.closest('.disabled-overlay') || this.classList.contains('feature-disabled')) {
