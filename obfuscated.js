@@ -1887,13 +1887,13 @@
             applyLoadingTheme(theme);
             updateTagsAppearance();
         }
-        function switchEducationTab(tabId) {
+        async function switchEducationTab(tabId) {
             const educationContent = document.getElementById('education-content');
             const educationMain = document.getElementById('education-main');
             educationMain.style.opacity = '0';
             educationMain.style.transform = 'translateX(-20px)';
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 educationMain.style.display = 'none';
                 educationContent.style.display = 'block';
 
@@ -1912,139 +1912,77 @@
                 } else if (tabId === 'homework') {
                     loadHomeworkContent();
                     return;
-                } else if (tabId === 'biology') {
-                    title = 'Биология';
-                        contentHTML = `
-                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Фотосинтез и хемосинтез</h4>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Фотосинтез</strong> — способ автотрофного питания, свойственный растениям, цианобактериям и фотосинтезирующим бактериям. При этом для синтеза органических веществ (в первую очередь углеводов) из неорганических — углекислого газа и воды — используется энергия солнечного света.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Хемосинтез</strong> — тип автотрофного питания, характерный для некоторых бактерий. Они усваивают CO₂ как единственный источник углерода, используя энергию, выделяющуюся при окислении неорганических соединений (например, сероводорода, аммиака, железа). Эта энергия запасается в виде АТФ, а восстановительные эквиваленты формируются за счёт переноса электронов по цепи дыхательных ферментов в клеточной мембране. Биосинтез органических веществ при хемосинтезе происходит по тем же путям, что и при фотосинтезе — через автотрофную ассимиляцию CO₂.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Световая фаза фотосинтеза</strong> протекает исключительно на свету. В ней энергия фотонов преобразуется в химическую энергию — АТФ и восстановительные эквиваленты (НАДФ·Н). Побочным продуктом этого процесса является молекулярный кислород, который выделяется в атмосферу.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Темновая фаза фотосинтеза</strong> (цикл Кальвина) может идти как при свете, так и в темноте. В ней из CO₂ синтезируется глюкоза за счёт энергии АТФ и восстановительной силы НАДФ·Н, накопленных в световой фазе.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Фотосинтетики</strong> — организмы, способные преобразовывать солнечную энергию в химическую с помощью пигментов (преимущественно хлорофилла). К ним относятся:
-                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
-                                    <li><strong>Растения</strong> — зелёные высшие (дуб, сосна, пшеница, рис) и водоросли (морские и пресноводные).</li>
-                                    <li><strong>Цианобактерии</strong> — прокариоты, сыгравшие ключевую роль в насыщении атмосферы кислородом.</li>
-                                    <li><strong>Фотосинтезирующие протисты</strong> — например, <em>Chlamydomonas</em>, диатомовые водоросли.</li>
-                                </ul>
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Хемосинтетики</strong> не зависят от солнечного света и обитают в экстремальных условиях: глубоководные гидротермальные источники, сероводородные родники, почвы и др. Основные группы:
-                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
-                                    <li><strong>Серобактерии</strong> — например, <em>Thiobacillus</em>, <em>Beggiatoa</em> (окисляют H₂S до S или SO₄²⁻).</li>
-                                    <li><strong>Нитрифицирующие бактерии</strong> — <em>Nitrosomonas</em> (NH₃ → NO₂⁻), <em>Nitrobacter</em> (NO₂⁻ → NO₃⁻).</li>
-                                    <li><strong>Железобактерии</strong> — например, <em>Gallionella</em> (окисляют Fe²⁺ → Fe³⁺).</li>
-                                    <li><strong>Метанотрофы и водородные бактерии</strong> — используют CH₄ или H₂ как энергетический субстрат.</li>
-                                    <li><strong>Археи-хемосинтетики</strong> — обитатели «чёрных курильщиков», окисляющие H₂S, H₂ или Fe²⁺.</li>
-                                </ul>
-                            </div>
-                        `;
-                    } else if (tabId === 'geography') {
-                        title = 'География';
-                        contentHTML = `<p>Здесь пока пусто...</p>`;
-                    } else if (tabId === 'algeb') {
-                        title = 'Алгебра';
-                        contentHTML = `
-                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Формула 1</h4>
-                            <div style="background: rgba(var(--border-color-rgb), 0.1); padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
-                                <div class="katex-formula" style="font-size: 20px;">a^{\\frac{p}{q}} = \\sqrt[q]{a^p}</div>
-                                <div class="katex-formula" style="font-size: 15px;">27^{\\frac{4}{3}} = \\left(27^{\\frac{1}{3}}\\right)^4 = \\left(\\sqrt[3]{27}\\right)^4 = 3^4 = 81</div>
-                            </div>
-                        `;
-                        setTimeout(() => {
-                            initKatex();
-                        }, 100);
-                    } else if (tabId === 'geometry') {
-                        title = 'Геометрия';
-                        contentHTML = `<p>Здесь пока пусто...</p>`;
-                    } else if (tabId === 'fipi') {
-                        title = 'ФИПИ / Геометрия';
-                        contentHTML = `
-                            <div style="display: flex; justify-content: center; gap: 8px;">
-                                <button onclick="showFipiPage(1)" style="width: 32px; height: 32px; border-radius: 8px; background: var(--border-color); color: white; border: none; font-weight: bold;">6</button>
-                                <button onclick="showFipiPage(2)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">7</button>
-                                <button onclick="showFipiPage(3)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">8</button>
-                                <button onclick="showFipiPage(4)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">9</button>
-                                <button onclick="showFipiPage(5)" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(var(--border-color-rgb), 0.1); color: var(--text-color); border: 1px solid var(--border-color); font-weight: bold;">10</button>
-                            </div>
-                            <div id="fipi-page-1" class="fipi-page" style="display: block;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://ege.sdamgia.ru/problem?id=665285" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">2 Задание [18]</a>
-                                    <a href="https://math-ege.sdamgia.ru/problem?id=641148" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">5 Задание [24]</a>
-                                    <a href="https://ege314.ru/prototip-2/reshenie-246/" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">10 Задание [56]</a>
-                                </div>
-                            </div>
-                            <div id="fipi-page-2" class="fipi-page" style="display: none;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://www.euroki.org/koza/dve-storony-treugolnika-ravny--i--vysota-opuschennaya-na-bolshuyu-iz-etih-storon-ravna--naydite-dlinu" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">1 Задание [12]</a>
-                                    <a href="https://www.euroki.org/koza/ostryy-ugol-b-pryamougolnogo-treugolnika-abc-raven-°-naydite-velichinu-ugla-mezhdu-vysotoy-ch-i-bisse" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">3 Задание [20]</a>
-                                    <a href="https://www.euroki.org/koza/-dve-storony-treugolnika-ravny--i--vysota-opuschennaya-na-bolshuyu-iz-etih-storon-ravna--naydite-vyso" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">5 Задание [20]</a>
-                                    <a href="https://self-edu.ru/ege2016_36.php?id=33_6" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">7 Задание [116]</a>
-                                    <a href="https://www.bolshoyvopros.ru/questions/4633231-kak-reshit-dva-ugla-vpisannogo-v-okruzhnost-chetyrehugolnika-99-i-117.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">10 Задание [81]</a>
-                                </div>
-                            </div>
-                            <div id="fipi-page-3" class="fipi-page" style="display: none;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://www.euroki.org/koza/storony-parallelogramma-ravny--i--vysota-opuschennaya-na-menshuyu-iz-etih-storon-ravna--naydite-dlinu" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">1 Задание [9]</a>
-                                    <a href="https://ege.sdamgia.ru/problem?id=549312" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">3 Задание [6]</a>
-                                    <a href="https://storage.yandexcloud.net/fotora.ru/uploads/72209af680551b48.png" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">6 Задание [58]</a>
-                                    <a href="https://www.euroki.org/koza/ugol-aco-raven-°-ego-storona-ca-kasaetsya-okruzhnosti-s-tsentrom-v-tochke-o-otrezok-co-peresekaet-okr" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">7 Задание [33]</a>
-                                </div>
-                            </div>
-                            <div id="fipi-page-4" class="fipi-page" style="display: none;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://self-edu.ru/ege2019_36.php?id=3_6" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">2 Задание [73]</a>
-                                    <a href="https://www.bolshoyvopros.ru/questions/4155705-storony-paral-mma-24-i-27-vysota-opusch-na-storonu-18-kak-najti-drvysotu.html" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">6 Задание [16]</a>
-                                    <a href="https://www.euroki.org/koza/131-tsentralnyy-ugol-na-32°-bolshe-ostrogo-vpisannogo-ugla-opirayuschegosya-na-tu-zhe-dugu-okruzhnost" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">9 Задание [32]</a>
-                                    <a href="https://www.euroki.org/koza/naydite-velichinu-tsentralnogo-ugla-esli-on-na-°-bolshe-ostrogo-vpisannogo-ugla-opirayuschegosya-na-t" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">10 Задание [138]</a>
-                                </div>
-                            </div>
-                            <div id="fipi-page-5" class="fipi-page" style="display: none;">
-                                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                    <a href="https://mathb-ege.sdamgia.ru/problem?id=525444" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">2 Задание [34]</a>
-                                    <a href="https://ege.sdamgia.ru/problem?id=685341" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">4 Задание [40]</a>
-                                    <a href="https://oge.sdamgia.ru/problem?id=348783" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">5 Задание [33]</a>
-                                    <a href="https://storage.yandexcloud.net/fotora.ru/uploads/0bb143ed74670700.png" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">8 Задание [77]</a>
-                                    <a href="https://mathb-ege.sdamgia.ru/problem?id=506788" target="_blank" style="display: block; padding: 12px; background: rgba(var(--border-color-rgb), 0.08); border-radius: 12px; text-decoration: none; color: var(--text-color); border-left: 3px solid var(--border-color);">9 Задание [25]</a>
-                            </div>
-
-                        `;
-                    } else if (tabId === 'physics') {
-                        title = 'Физика';
-                        contentHTML = `
-                        `;
-                    } else {
-                        title = 'Неизвестный раздел';
-                        contentHTML = `<p>Раздел временно недоступен.</p>`;
+                } else {
+                    // Load content from external JSON file
+                    try {
+                        const response = await fetch('educational_content.json');
+                        const contentData = await response.json();
+                        
+                        if (contentData[tabId]) {
+                            title = contentData[tabId].title;
+                            
+                            if (tabId === 'biology') {
+                                // Format biology content
+                                contentHTML = '';
+                                contentData[tabId].content.forEach(item => {
+                                    contentHTML += `
+                                        <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">${item.topic}</h4>
+                                        <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                            <strong>${item.topic}</strong> — ${item.description}
+                                        </div>
+                                    `;
+                                    
+                                    if (item.details && item.details.length > 0) {
+                                        contentHTML += `
+                                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                                <strong>Детали:</strong>
+                                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
+                                        `;
+                                        item.details.forEach(detail => {
+                                            contentHTML += `<li>${detail}</li>`;
+                                        });
+                                        contentHTML += `
+                                                </ul>
+                                            </div>
+                                        `;
+                                    }
+                                });
+                            } else if (tabId === 'homework') {
+                                // Format homework content
+                                contentHTML = '<div style="display: grid; gap: 15px;">';
+                                contentData[tabId].content.forEach(hw => {
+                                    const completedClass = hw.completed ? 'homework-completed' : 'homework-pending';
+                                    const completedText = hw.completed ? '✓ Выполнено' : '○ Не выполнено';
+                                    contentHTML += `
+                                        <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid var(--border-color);">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                                <strong style="color: var(--border-color);">${hw.subject}</strong>
+                                                <span class="${completedClass}" style="font-size: 14px; padding: 4px 8px; border-radius: 12px; background: ${hw.completed ? 'rgba(40, 167, 69, 0.2)' : 'rgba(220, 53, 69, 0.2)'}; border: 1px solid ${hw.completed ? 'rgba(40, 167, 69, 0.5)' : 'rgba(220, 53, 69, 0.5)'};">${completedText}</span>
+                                            </div>
+                                            <div style="margin: 8px 0; font-style: italic;">${hw.assignment}</div>
+                                            <div style="font-size: 13px; color: var(--text-color); opacity: 0.7;">Дата: ${hw.date}</div>
+                                        </div>
+                                    `;
+                                });
+                                contentHTML += '</div>';
+                            } else {
+                                // For other sections, just display the raw content
+                                contentHTML = `<p>Данные загружены из внешнего файла для раздела: ${tabId}</p>`;
+                                if (contentData[tabId].content) {
+                                    contentHTML += `<pre>${JSON.stringify(contentData[tabId].content, null, 2)}</pre>`;
+                                }
+                            }
+                        } else {
+                            title = 'Неизвестный раздел';
+                            contentHTML = `<p>Раздел "${tabId}" временно недоступен.</p>`;
+                        }
+                    } catch (error) {
+                        console.error('Error loading educational content:', error);
+                        title = 'Ошибка загрузки';
+                        contentHTML = `<p>Не удалось загрузить содержимое. Пожалуйста, попробуйте позже.</p>`;
                     }
-                educationContent.innerHTML = '';
-                if (title) {
-                    const titleElement = document.createElement('h3');
-                    titleElement.textContent = title;
-                    titleElement.style.textAlign = 'center';
-                    titleElement.style.marginBottom = '20px';
-                    titleElement.style.color = 'var(--border-color)';
-                    titleElement.style.fontSize = '22px';
-                    educationContent.appendChild(titleElement);
                 }
-
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = contentHTML;
-                educationContent.appendChild(tempDiv);
+                
                 educationContent.innerHTML = '';
                 educationContent.innerHTML = `
                                 <div style="text-align: center; margin-bottom: 30px;">
