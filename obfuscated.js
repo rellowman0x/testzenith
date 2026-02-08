@@ -1,5 +1,5 @@
         const supabaseUrl = 'https://mnplvefoyrmehfojqvln.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ucGx2ZWZveXJtZWhmb2pxdmxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0OTk1NjUsImV4cCI6MjA4MDA3NTU2NX0.Rq-2wNtqhadqg9VCZWFyQuet2kx3j2AxggJQTWP9WJo';
+        const supabaseKey = 'sb_publishable_4UXXG3J_sYX84qHftY9LGA_CARLHuqT';
         const tg = window.Telegram.WebApp;
         tg.expand();
         let supabase;
@@ -376,11 +376,31 @@
         }
         async function initSupabase() {
             try {
+                if (window.supabase && window.supabase.createClient) {
+                    return window.supabase.createClient(supabaseUrl, supabaseKey);
+                }
                 const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
                 return createClient(supabaseUrl, supabaseKey);
             } catch (error) {
                 console.error('Ошибка инициализации Supabase:', error);
-                throw error;
+                try {
+                    return new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+                        script.onload = () => {
+                            if (window.supabase && window.supabase.createClient) {
+                                resolve(window.supabase.createClient(supabaseUrl, supabaseKey));
+                            } else {
+                                reject(new Error('Supabase не загрузился'));
+                            }
+                        };
+                        script.onerror = () => reject(new Error('Не удалось загрузить Supabase'));
+                        document.head.appendChild(script);
+                    });
+                } catch (fallbackError) {
+                    console.error('Ошибка альтернативной загрузки Supabase:', fallbackError);
+                    throw error;
+                }
             }
         }
         
@@ -1486,197 +1506,251 @@
         }
         
         async function initializeApp() {
-            console.log("STEP0");
-            const loadingScreen = document.getElementById('zenith-loader');
-            const container = document.querySelector('.container');
-            if (container) container.style.display = 'none';
-            if (loadingScreen) {
-                loadingScreen.style.display = 'flex';
-                loadingScreen.style.opacity = '1';
-            }
-            console.log("STEP0,5");
-            try {
-                applyLoadingTheme('light');
-            } catch (e) {
-                document.documentElement.style.setProperty('--border-color', '#333');
-                document.documentElement.style.setProperty('--background-color', '#f8f8f8');
-                document.documentElement.style.setProperty('--text-color', '#333');
-            }
-            console.log("STEP1");
-            let tgUser = null;
-            let authMethod = null;
-            try {
-                supabase = await initSupabase();
-                console.log("STEP2");
-                if (tg.initDataUnsafe?.user) {
-                    tgUser = tg.initDataUnsafe.user;
-                    currentUserId = tgUser.id.toString();
-                    authMethod = 'telegram';
-                    console.log('✅ Telegram (initDataUnsafe)', currentUserId);
-                }
-                if (!currentUserId) {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const urlKey = urlParams.get('key') || urlParams.get('code');
-                    if (urlKey && /^[a-zA-Z0-9]{20}$/.test(urlKey)) {
-                        const { data: scbotRecord, error: scbotError } = await supabase
-                            .from('scbot')
-                            .select('user_id, act')
-                            .eq('key', urlKey)
-                            .single();
-                        if (!scbotError && scbotRecord && scbotRecord.act) {
-                            currentUserId = scbotRecord.user_id.toString();
-                            localStorage.setItem('zenith_activation_key', urlKey);
-                            authMethod = 'url_key';
-                            console.log('✅ Авторизация через URL-ключ', currentUserId);
-                        }
-                    }
-                }
-                if (!currentUserId) {
-                    let savedKey = localStorage.getItem('zenith_activation_key');
-                    if (!savedKey) {
-                        savedKey = localStorage.getItem('accessKey');
-                    }
+    const setStatus = (text) => {
+        const statusEl = document.getElementById('zenith-status');
+        if (statusEl) statusEl.textContent = text;
+    };
 
-                    if (savedKey && /^[a-zA-Z0-9]{20}$/.test(savedKey)) {
-                        const { data: scbotRecord, error: scbotError } = await supabase
-                            .from('scbot')
-                            .select('user_id, act')
-                            .eq('key', savedKey)
-                            .single();
-                        if (!scbotError && scbotRecord && scbotRecord.act) {
-                            currentUserId = scbotRecord.user_id.toString();
-                            localStorage.setItem('zenith_activation_key', savedKey);
-                            if (localStorage.getItem('accessKey') === savedKey) {
-                                localStorage.removeItem('accessKey');
-                            }
-                            authMethod = 'saved_key';
-                            console.log('✅ Авторизация через сохранённый ключ (из APK или сайта)', currentUserId);
-                        } else {
-                            localStorage.removeItem('zenith_activation_key');
-                            localStorage.removeItem('accessKey');
-                        }
-                    }
-                }
-                if (!currentUserId) {
-                    throw new Error('NO_AUTH');
-                }
-                console.log("STEP3");
-                try {
-                    const { data, error } = await supabase
-                        .from('admin_settings')
-                        .select('maintenance_mode, maintenance_since')
-                        .single();
-                    if (!error && data?.maintenance_mode) {
-                        const { data: devCheck, error: devError } = await supabase
-                            .from('users')
-                            .select('status')
-                            .eq('id', currentUserId)
-                            .single();
-                        const isDeveloper = devCheck?.status === 'developer';
-                        if (!isDeveloper) {
-                            const blocker = document.getElementById('maintenance-blocker');
-                            const sinceEl = document.getElementById('maintenance-since-display');
-                            if (data.maintenance_since) {
-                                const since = new Date(data.maintenance_since).toLocaleString();
-                                sinceEl.textContent = `Тех.работы начаты: ${since}`;
-                            }
-                            blocker.classList.remove('hidden');
-                            document.querySelector('.container').style.display = 'none';
-                            return;
-                        }
-                    }
-                } catch (e) {
-                    console.warn('Не удалось проверить режим тех.работ');
-                }
-                console.log("STEP4");
-                const now = new Date().toISOString();
-                const { data: existingUser, error: fetchError } = await supabase
-                    .from('users')
-                    .select('id')
-                    .eq('id', currentUserId)
-                    .maybeSingle();
-                if (fetchError) throw fetchError;
-                if (existingUser) {
-                    const updateData = {
-                        last_seen: new Date().toISOString(),
-                        updated_at: new Date().toISOString()
-                    };
-                    if (tgUser) {
-                        updateData.username = tgUser.username || null;
-                        updateData.first_name = tgUser.first_name || null;
-                        updateData.last_name = tgUser.last_name || null;
-                        updateData.photo_url = tgUser.photo_url || null;
-                    }
-                    const { error: updateError } = await supabase
-                        .from('users')
-                        .update(updateData)
-                        .eq('id', currentUserId);
-                    if (updateError) throw updateError;
-                } else {
-                    const { error: insertError } = await supabase
-                        .from('users')
-                        .insert({
-                            id: currentUserId,
-                            username: tgUser?.username || null,
-                            first_name: tgUser?.first_name || null,
-                            last_name: tgUser?.last_name || null,
-                            photo_url: tgUser?.photo_url || null,
-                            last_seen: new Date().toISOString(),
-                            created_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString(),
-                            theme: 'light',
-                            animation_enabled: false,
-                            gradient_enabled: false,
-                            tags_enabled: true,
-                            status: 'user'
-                        });
-                    if (insertError) throw insertError;
-                }
-                console.log("STEP5");
-                const { data: fullUserData, error: userDataError } = await supabase
-                    .from('users')
-                    .select('*')
-                    .eq('id', currentUserId)
-                    .single();
-                if (userDataError || !fullUserData) {
-                    console.warn('⚠️ Не удалось загрузить данные пользователя из sb');
-                } else {
-                    window.currentUserData = fullUserData;
-                    console.log('✅ Полные данные пользователя загружены:', fullUserData);
-                }
-                userStatus = await checkUserStatus(currentUserId);
-                isAdmin = ['admin', 'developer'].includes(userStatus);
-                console.log("STEP6");
-                try {await loadUserSettings();} catch (err) {console.warn('Не удалось загрузить настройки:', err);}
-                await logAction('app_enter', {
-                    user_status: userStatus,
-                    is_admin: isAdmin,
-                    auth_method: authMethod
-                });
-                console.log("STEP7");
-                await loadUserData();
-                updateAppInfoTags();
-                initEventHandlers();
-                if (userStatus === 'developer') {
-                    document.getElementById('error-btn').classList.remove('hidden');
-                }
-                setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        showWelcomeScreen();
-                    }, 500);
-                }, 1200);
+    setStatus('Этап 0...');
+    console.log("STEP0/start");
 
-            } catch (error) {
-                console.error('❌ Ошибка инициализации:', error);
-                if (error.message === 'NO_AUTH') {
-                    showActivationForm();
-                } else {
-                    showErrorToUser();
+    const loadingScreen = document.getElementById('zenith-loader');
+    const container = document.querySelector('.container');
+    if (container) container.style.display = 'none';
+    if (loadingScreen) {
+        loadingScreen.style.display = 'flex';
+        loadingScreen.style.opacity = '1';
+    }
+
+    setStatus('Этап 1...');
+    console.log("STEP1/loader");
+    try {
+        applyLoadingTheme('light');
+    } catch (e) {
+        document.documentElement.style.setProperty('--border-color', '#333');
+        document.documentElement.style.setProperty('--background-color', '#f8f8f8');
+        document.documentElement.style.setProperty('--text-color', '#333');
+    }
+
+    setStatus('Этап 2...');
+    console.log("STEP2/default_theme");
+
+    let tgUser = null;
+    let authMethod = null;
+    let userIdFromUrl = null;
+    let passwordFromUrl = null;
+
+    try {
+        // === ШАГ 1: Инициализация Supabase ===
+        setStatus('Этап 3...');
+        console.log("STEP3/supabase");
+        supabase = await initSupabase();
+
+        // === ШАГ 2: Попытка авторизации через Telegram WebApp ===
+        if (tg.initDataUnsafe?.user) {
+            tgUser = tg.initDataUnsafe.user;
+            currentUserId = tgUser.id.toString();
+            authMethod = 'telegram';
+            console.log('✅ Авторизация через Telegram WebApp:', currentUserId);
+        }
+
+        // === ШАГ 3: Если нет Telegram — пробуем URL-параметры ===
+        if (!currentUserId) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const rawUserId = urlParams.get('user_id');
+            const rawPassword = urlParams.get('password');
+
+            if (rawUserId && rawPassword) {
+                const parsedUserId = BigInt(rawUserId); // проверка на BIGINT
+                if (parsedUserId > 0) {
+                    userIdFromUrl = parsedUserId.toString();
+                    passwordFromUrl = rawPassword.trim();
+                    authMethod = 'url_params';
+                    console.log('✅ Авторизация через URL-параметры:', userIdFromUrl);
                 }
             }
         }
+
+        // === ШАГ 4: Проверка валидности учётных данных ===
+        if (!currentUserId && !userIdFromUrl) {
+            throw new Error('NO_AUTH_METHOD_AVAILABLE');
+        }
+
+        let finalUserId = currentUserId || userIdFromUrl;
+        let isValid = false;
+
+        if (authMethod === 'telegram') {
+            // Для Telegram пароль не требуется — доверяем initData
+            isValid = true;
+        } else if (authMethod === 'url_params') {
+            // Проверяем пароль из scbot
+            const { data: record, error } = await supabase
+                .from('scbot')
+                .select('user_id, password, blocked')
+                .eq('user_id', finalUserId)
+                .single();
+
+            if (error || !record || record.blocked) {
+                console.error('❌ Пользователь не найден или заблокирован');
+                throw new Error('INVALID_CREDENTIALS');
+            }
+
+            if (record.password !== passwordFromUrl) {
+                console.error('❌ Неверный пароль');
+                throw new Error('INVALID_CREDENTIALS');
+            }
+
+            isValid = true;
+        }
+
+        if (!isValid) {
+            throw new Error('AUTH_FAILED');
+        }
+
+        currentUserId = finalUserId;
+
+        // === ШАГ 5: Проверка режима тех.работ ===
+        setStatus('Этап 4...');
+        console.log("STEP4/auth");
+        try {
+            const { data, error } = await supabase
+                .from('admin_settings')
+                .select('maintenance_mode, maintenance_since')
+                .single();
+
+            if (!error && data?.maintenance_mode) {
+                const { data: devCheck } = await supabase
+                    .from('users')
+                    .select('status')
+                    .eq('id', currentUserId)
+                    .single();
+
+                const isDeveloper = devCheck?.status === 'developer';
+                if (!isDeveloper) {
+                    const blocker = document.getElementById('maintenance-blocker');
+                    const sinceEl = document.getElementById('maintenance-since-display');
+                    if (data.maintenance_since) {
+                        const since = new Date(data.maintenance_since).toLocaleString();
+                        sinceEl.textContent = `Тех.работы начаты: ${since}`;
+                    }
+                    blocker.classList.remove('hidden');
+                    document.querySelector('.container').style.display = 'none';
+                    return;
+                }
+            }
+        } catch (e) {
+            console.warn('Не удалось проверить режим тех.работ');
+        }
+
+        // === ШАГ 6: Создание/обновление пользователя в таблице `users` ===
+        setStatus('Этап 5...');
+        console.log("STEP5/maintenance_mode");
+
+        const now = new Date().toISOString();
+        const { data: existingUser } = await supabase
+            .from('users')
+            .select('id')
+            .eq('id', currentUserId)
+            .maybeSingle();
+
+        if (existingUser) {
+            const updateData = {
+                last_seen: now,
+                updated_at: now
+            };
+            if (tgUser) {
+                updateData.username = tgUser.username || null;
+                updateData.first_name = tgUser.first_name || null;
+                updateData.last_name = tgUser.last_name || null;
+                updateData.photo_url = tgUser.photo_url || null;
+            }
+            await supabase.from('users').update(updateData).eq('id', currentUserId);
+        } else {
+            // Новый пользователь — создаём запись
+            const insertData = {
+                id: currentUserId,
+                username: tgUser?.username || null,
+                first_name: tgUser?.first_name || null,
+                last_name: tgUser?.last_name || null,
+                photo_url: tgUser?.photo_url || null,
+                last_seen: now,
+                created_at: now,
+                updated_at: now,
+                theme: 'light',
+                animation_enabled: false,
+                gradient_enabled: false,
+                tags_enabled: true,
+                status: 'user'
+            };
+            await supabase.from('users').insert(insertData);
+        }
+
+        // === ШАГ 7: Загрузка полных данных пользователя ===
+        setStatus('Этап 6...');
+        console.log("STEP6/data_profile");
+        const { data: fullUserData } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', currentUserId)
+            .single();
+
+        if (fullUserData) {
+            window.currentUserData = fullUserData;
+            console.log('✅ Полные данные пользователя загружены:', fullUserData);
+        }
+
+        // === ШАГ 8: Проверка статуса (admin/developer) ===
+        userStatus = await checkUserStatus(currentUserId);
+        isAdmin = ['admin', 'developer'].includes(userStatus);
+
+        setStatus('Этап 7...');
+        console.log("STEP7/data_full");
+
+        // === ШАГ 9: Применение настроек и логирование входа ===
+        try {
+            await loadUserSettings();
+        } catch (err) {
+            console.warn('Не удалось загрузить настройки:', err);
+        }
+
+        await logAction('app_enter', {
+            user_status: userStatus,
+            is_admin: isAdmin,
+            auth_method: authMethod
+        });
+
+        setStatus('Этап 8...');
+        console.log("STEP8/settings");
+
+        await loadUserData();
+        updateAppInfoTags();
+        initEventHandlers();
+
+        if (userStatus === 'developer') {
+            document.getElementById('error-btn').classList.remove('hidden');
+        }
+
+        // === ШАГ 10: Завершение загрузки ===
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                showWelcomeScreen();
+            }, 500);
+        }, 1200);
+
+        setStatus('Этап 9...');
+        console.log("STEP9/full");
+
+    } catch (error) {
+        console.error('❌ Ошибка инициализации:', error);
+        if (error.message === 'NO_AUTH_METHOD_AVAILABLE' || error.message === 'INVALID_CREDENTIALS') {
+            showErrorToUser();
+        } else {
+            showErrorToUser();
+        }
+    }
+}
         async function verifyActivationKey() {
             const input = document.getElementById('activation-key-input');
             const btn = document.getElementById('auth-submit-btn');
@@ -1841,37 +1915,42 @@
                 } else if (tabId === 'biology') {
                     title = 'Биология';
                         contentHTML = `
-                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Цитоплазма и клеточные структуры</h4>
+                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Фотосинтез и хемосинтез</h4>
 
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                                <strong>Цитоплазма</strong> — это всё внутреннее содержимое клетки (кроме ядра и некоторых других структур). В ней происходят биохимические реакции, перемещаются вещества и органоиды, а также поддерживается внутриклеточное давление (тургор). Цитоплазма может менять свою густоту — становиться жидкой или более плотной.
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                <strong>Фотосинтез</strong> — способ автотрофного питания, свойственный растениям, цианобактериям и фотосинтезирующим бактериям. При этом для синтеза органических веществ (в первую очередь углеводов) из неорганических — углекислого газа и воды — используется энергия солнечного света.
                             </div>
 
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                                <strong>Цитозоль</strong> — это жидкая часть цитоплазмы (без органоидов и включений), где происходят многие биохимические реакции, например гликолиз. Это «внутриклеточная вода» со смесями ионов, белков, сахаров и т.п.
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                <strong>Хемосинтез</strong> — тип автотрофного питания, характерный для некоторых бактерий. Они усваивают CO₂ как единственный источник углерода, используя энергию, выделяющуюся при окислении неорганических соединений (например, сероводорода, аммиака, железа). Эта энергия запасается в виде АТФ, а восстановительные эквиваленты формируются за счёт переноса электронов по цепи дыхательных ферментов в клеточной мембране. Биосинтез органических веществ при хемосинтезе происходит по тем же путям, что и при фотосинтезе — через автотрофную ассимиляцию CO₂.
                             </div>
 
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                                <strong>Цитоскелет</strong> — это сеть тонких белковых нитей внутри цитоплазмы. Он не имеет мембран, но придаёт клетке форму, удерживает органоиды на месте и участвует в движении веществ (эндоцитоз и экзоцитоз). Состоит из трёх частей: 1) микрофиламенты, 2) микротрубочки, 3) промежуточные филаменты.
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                <strong>Световая фаза фотосинтеза</strong> протекает исключительно на свету. В ней энергия фотонов преобразуется в химическую энергию — АТФ и восстановительные эквиваленты (НАДФ·Н). Побочным продуктом этого процесса является молекулярный кислород, который выделяется в атмосферу.
                             </div>
 
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                                <strong>Циклоз (цитоплазматический ток)</strong> — это движение цитоплазмы внутри клетки (часто наблюдается в растительных клетках). Благодаря ему вещества и органоиды перемещаются по клетке.
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                <strong>Темновая фаза фотосинтеза</strong> (цикл Кальвина) может идти как при свете, так и в темноте. В ней из CO₂ синтезируется глюкоза за счёт энергии АТФ и восстановительной силы НАДФ·Н, накопленных в световой фазе.
                             </div>
 
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                                <strong>Компартменты</strong> — это отделённые участки внутри клетки (например, лизосомы, митохондрии, ядро), где создаются особые условия для определённых реакций. Они позволяют не смешивать процессы (например, расщепление и синтез).
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                <strong>Фотосинтетики</strong> — организмы, способные преобразовывать солнечную энергию в химическую с помощью пигментов (преимущественно хлорофилла). К ним относятся:
+                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
+                                    <li><strong>Растения</strong> — зелёные высшие (дуб, сосна, пшеница, рис) и водоросли (морские и пресноводные).</li>
+                                    <li><strong>Цианобактерии</strong> — прокариоты, сыгравшие ключевую роль в насыщении атмосферы кислородом.</li>
+                                    <li><strong>Фотосинтезирующие протисты</strong> — например, <em>Chlamydomonas</em>, диатомовые водоросли.</li>
+                                </ul>
                             </div>
 
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                                <strong>Эндоплазматическая сеть (ЭПС)</strong> — это система трубочек и полостей, образованных биологическими мембранами и пронизывающих всю цитоплазму клетки. Трубочки ЭПС переходят одна в другую, нигде не прерываясь и не открываясь в цитоплазму, занимая по объёму почти половину клетки.<br>
-                                Трубочки ЭПС делятся на:<br>
-                                1) <strong>Гранулярные (шероховатые)</strong> — покрыты огромным количеством рибосом. Они хорошо развиты в клетках желёз внутренней секреции, которые синтезируют белковые гормоны.<br>
-                                2) <strong>Гладкие</strong> — выглядят как гладкие трубочки. Они участвуют в синтезе фосфолипидов, жирных кислот, стероидов и углеводов.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 14px; border-radius: 12px; margin-bottom: 20px; border-left: 3px solid var(--border-color);">
-                                <strong>Комплекс Гольджи</strong> — это органоид, который состоит из плоских полых мембранных мешочков, называемых цистернами. Эти цистерны собраны в стопки по 4–6 штук. Обычно расположен рядом с ядром клетки. Комплекс Гольджи обрабатывает, дорабатывает и упаковывает белки, синтезированные на рибосомах гранулярной ЭПС.
+                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
+                                <strong>Хемосинтетики</strong> не зависят от солнечного света и обитают в экстремальных условиях: глубоководные гидротермальные источники, сероводородные родники, почвы и др. Основные группы:
+                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
+                                    <li><strong>Серобактерии</strong> — например, <em>Thiobacillus</em>, <em>Beggiatoa</em> (окисляют H₂S до S или SO₄²⁻).</li>
+                                    <li><strong>Нитрифицирующие бактерии</strong> — <em>Nitrosomonas</em> (NH₃ → NO₂⁻), <em>Nitrobacter</em> (NO₂⁻ → NO₃⁻).</li>
+                                    <li><strong>Железобактерии</strong> — например, <em>Gallionella</em> (окисляют Fe²⁺ → Fe³⁺).</li>
+                                    <li><strong>Метанотрофы и водородные бактерии</strong> — используют CH₄ или H₂ как энергетический субстрат.</li>
+                                    <li><strong>Археи-хемосинтетики</strong> — обитатели «чёрных курильщиков», окисляющие H₂S, H₂ или Fe²⁺.</li>
+                                </ul>
                             </div>
                         `;
                     } else if (tabId === 'geography') {
@@ -2051,7 +2130,6 @@
                     <div class="homework-day" onclick="switchHomeworkDay('saturday')" style="background: rgba(var(--border-color-rgb), 0.05); border-radius: 15px; padding: 20px; border: 2px solid var(--border-color); cursor: pointer; text-align: center; transition: all 0.3s ease; min-height: 120px; display: flex; flex-direction: column; justify-content: center; position: relative;">
                         <i class="fas fa-calendar-minus" style="font-size: 32px; margin-bottom: 10px; color: var(--border-color);"></i>
                         <h4 style="margin-bottom: 10px; color: var(--border-color);">Суббота</h4>
-                        
                     </div>
                 </div>
             `;
@@ -2134,49 +2212,33 @@
                     'friday': {
                         title: 'Пятница',
                         subjects: [
-                            {name: 'Геометрия', links: [
-                                {text: '№121', url: 'https://pomogalka.me/10-klass/geometriya/atanasyan/nomer-121/'},
-                                {text: '№122', url: 'https://pomogalka.me/10-klass/geometriya/atanasyan/nomer-122/'},
-                                {text: '№130', url: 'https://pomogalka.me/10-klass/geometriya/atanasyan/nomer-130/'},
+                            {name: 'Геометрия | 934-936 | 2 РЕШЕНИЕ 2023 ГОДА', links: [
+                                {text: '№934', url: 'https://reshak.ru/otvet/otvet11.php?otvet1=934'},
+                                {text: '№935', url: 'https://reshak.ru/otvet/otvet11.php?otvet1=935'},
+                                {text: '№936', url: 'https://reshak.ru/otvet/otvet11.php?otvet1=936'}
                             ]},
-                            {name: 'Алгебра', links: [
-                                {text: '35.14', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-14/'},
-                                {text: '35.15', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-15/'},
-                                {text: '35.16', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-16/'},
-                                {text: '35.17', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-17/'},
-                                {text: '35.18', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-18/'},
-                                {text: '35.19', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-19/'},
-                                {text: '35.20', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-20/'},
-                                {text: '35.21', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-21/'},
-                                {text: '35.22', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-22/'},
-                                {text: '35.23', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-23/'},
-                                {text: '35.24', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/35-item-24/'},
-                                {text: '36.1', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-1/'},
-                                {text: '36.2', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-2/'},
-                                {text: '36.3', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-3/'},
-                                {text: '36.4', url: 'https://gdz.ru/class-10/algebra/reshebnik-mordkovich-a-g/36-item-4/'},
-                            ]}
-                            /*,
                             {name: 'Информатика', links: [
-                                {text: '11) №110', url: 'https://storage.yandexcloud.net/fotora.ru/uploads/b105cc94b3582983.png'},
-                                {text: 'Разбор (YT)', url: 'https://youtu.be/tO6WE74V54U'}
-                            ]},
-                            {name: 'Физика', links: [
-                                {text: 'СР-15 / 3 Вариант', url: 'https://www.euroki.org/gdz/ru/fizika/9_klass/maron-111/samostoyatelnye-raboty-sr-15-stroenie-atoma-i-atomnogo-yadra-zadanie-variant-3'},
-                                {text: 'СР-11 / 1 Вариант', url: 'https://www.euroki.org/gdz/ru/fizika/9_klass/maron-111/samostoyatelnye-raboty-sr-11-impuls-tela-zakon-sohraneniya-impulsa-zakon-sohraneniya-energii-zadanie-variant-1'},
-                                {text: 'СР-11 / 2 Вариант', url: 'https://www.euroki.org/gdz/ru/fizika/9_klass/maron-111/samostoyatelnye-raboty-sr-11-impuls-tela-zakon-sohraneniya-impulsa-zakon-sohraneniya-energii-zadanie-variant-2'}
+                                {text: '1) 27', url: 'https://inf-ege.sdamgia.ru/problem?id=15632'},
+                                {text: '2) 2715', url: 'https://inf-ege.sdamgia.ru/problem?id=48384'},
+                                {text: '3) 43100', url: 'https://inf-ege.sdamgia.ru/problem?id=48378'},
+                                {text: '4) 124', url: 'https://inf-ege.sdamgia.ru/problem?id=48401'},
+                                {text: '5) 10', url: 'https://inf-ege.sdamgia.ru/problem?id=29662'},
+                                {text: '6) 41428', url: 'https://inf-ege.sdamgia.ru/problem?id=48388'},
+                                {text: '7) 469034148', url: 'https://inf-ege.sdamgia.ru/problem?id=60256'},
+                                {text: '8) 234', url: 'https://inf-ege.sdamgia.ru/problem?id=48394'},
+                                {text: '9) 3319197720', url: 'https://inf-ege.sdamgia.ru/problem?id=81816'},
+                                {text: '10) 1763', url: 'https://inf-ege.sdamgia.ru/problem?id=64944'},
                             ]}
-                            */
-                            
-                            /*,
-                            {name: 'Биология', text: 'Ну конспект там в другом разделе...'}
-                            */
                         ]
                     },
                     'saturday': {
                         title: 'Суббота',
                         subjects: [
-                            {name: 'ВиС (СПО)', text: '1) 2/3\n2) 0,028\n3) нет\n4) 0,1\n5) 0,856\n6) 0,02\n7) 0,092\n8) p1 = 0,6 | p2 = 0,8\n9) (B1) = 2/3 | (B2) = 1/3\n10) самый длинный ответ'}
+                            {name: 'Русский язык', links: [
+                                {text: '436', url: 'https://i.postimg.cc/V6kbDpGF/image.png'},
+                                {text: '874', url: 'https://i.postimg.cc/yNYFbDWt/image.png'},
+                                {text: '2329', url: 'https://i.postimg.cc/KzT4qb7t/image.png'}
+                            ]}
                         ]
                     }
                 };
