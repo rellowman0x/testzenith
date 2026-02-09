@@ -1917,47 +1917,34 @@
                     loadHomeworkContent();
                     return;
                 } else if (tabId === 'biology') {
+                    loadHomeworkData();
+                    if (!homeworkData || !homeworkData.biology) {
+                        contentHTML = '<p>Материал временно недоступен.</p>';
+                    } else {
+                        const bio = homeworkData.biology;
+                        let html = '';
+                        bio.content.forEach(block => {
+                            html += `<h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">${block.heading}</h4>`;
+                            html += `<div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">`;
+
+                            if (block.paragraphs) {
+                                block.paragraphs.forEach(p => {
+                                    html += `<p>${p}</p>`;
+                                });
+                            }
+                            if (block.list) {
+                                html += `<ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">`;
+                                block.list.forEach(item => {
+                                    html += `<li>${item}</li>`;
+                                });
+                                html += `</ul>`;
+                            }
+                            html += `</div>`;
+                        });
+                        contentHTML = html;
+                    }
                     title = 'Биология';
-                        contentHTML = `
-                            <h4 style="color: var(--border-color); margin: 25px 0 15px; font-size: 19px;">Фотосинтез и хемосинтез</h4>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Фотосинтез</strong> — способ автотрофного питания, свойственный растениям, цианобактериям и фотосинтезирующим бактериям. При этом для синтеза органических веществ (в первую очередь углеводов) из неорганических — углекислого газа и воды — используется энергия солнечного света.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Хемосинтез</strong> — тип автотрофного питания, характерный для некоторых бактерий. Они усваивают CO₂ как единственный источник углерода, используя энергию, выделяющуюся при окислении неорганических соединений (например, сероводорода, аммиака, железа). Эта энергия запасается в виде АТФ, а восстановительные эквиваленты формируются за счёт переноса электронов по цепи дыхательных ферментов в клеточной мембране. Биосинтез органических веществ при хемосинтезе происходит по тем же путям, что и при фотосинтезе — через автотрофную ассимиляцию CO₂.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Световая фаза фотосинтеза</strong> протекает исключительно на свету. В ней энергия фотонов преобразуется в химическую энергию — АТФ и восстановительные эквиваленты (НАДФ·Н). Побочным продуктом этого процесса является молекулярный кислород, который выделяется в атмосферу.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Темновая фаза фотосинтеза</strong> (цикл Кальвина) может идти как при свете, так и в темноте. В ней из CO₂ синтезируется глюкоза за счёт энергии АТФ и восстановительной силы НАДФ·Н, накопленных в световой фазе.
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Фотосинтетики</strong> — организмы, способные преобразовывать солнечную энергию в химическую с помощью пигментов (преимущественно хлорофилла). К ним относятся:
-                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
-                                    <li><strong>Растения</strong> — зелёные высшие (дуб, сосна, пшеница, рис) и водоросли (морские и пресноводные).</li>
-                                    <li><strong>Цианобактерии</strong> — прокариоты, сыгравшие ключевую роль в насыщении атмосферы кислородом.</li>
-                                    <li><strong>Фотосинтезирующие протисты</strong> — например, <em>Chlamydomonas</em>, диатомовые водоросли.</li>
-                                </ul>
-                            </div>
-
-                            <div style="background: rgba(var(--border-color-rgb), 0.08); padding: 16px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--border-color);">
-                                <strong>Хемосинтетики</strong> не зависят от солнечного света и обитают в экстремальных условиях: глубоководные гидротермальные источники, сероводородные родники, почвы и др. Основные группы:
-                                <ul style="padding-left: 20px; margin-top: 8px; margin-bottom: 0;">
-                                    <li><strong>Серобактерии</strong> — например, <em>Thiobacillus</em>, <em>Beggiatoa</em> (окисляют H₂S до S или SO₄²⁻).</li>
-                                    <li><strong>Нитрифицирующие бактерии</strong> — <em>Nitrosomonas</em> (NH₃ → NO₂⁻), <em>Nitrobacter</em> (NO₂⁻ → NO₃⁻).</li>
-                                    <li><strong>Железобактерии</strong> — например, <em>Gallionella</em> (окисляют Fe²⁺ → Fe³⁺).</li>
-                                    <li><strong>Метанотрофы и водородные бактерии</strong> — используют CH₄ или H₂ как энергетический субстрат.</li>
-                                    <li><strong>Археи-хемосинтетики</strong> — обитатели «чёрных курильщиков», окисляющие H₂S, H₂ или Fe²⁺.</li>
-                                </ul>
-                            </div>
-                        `;
-                    } else if (tabId === 'geography') {
+                } else if (tabId === 'geography') {
                         title = 'География';
                         contentHTML = `<p>Здесь пока пусто...</p>`;
                     } else if (tabId === 'algeb') {
