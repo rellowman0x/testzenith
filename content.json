@@ -1,0 +1,140 @@
+{
+  "monday": {
+    "title": "Понедельник",
+    "subjects": [
+      {
+        "name": "Английский язык",
+        "links": [
+          {"text": "текст", "url": "текст"}
+        ]
+      },
+      {
+        "name": "Русский язык",
+        "links": [
+          {"text": "текст", "url": "текст"}
+        ]
+      },
+      {
+        "name": "Физика",
+        "links": [
+          {"text": "текст", "url": "текст"}
+        ]
+      }
+    ]
+  },
+  "tuesday": {
+    "title": "Вторник",
+    "subjects": [
+      {
+        "name": "Алгебра | Номер 10",
+        "links": [
+          {"text": "Пример 1-4", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/248fb54d9fbecb28.png"},
+          {"text": "Пример 5-11", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/0179fb9a546b3e11.png"},
+          {"text": "Пример 12-14", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/bd54969fd20e7287.png"}
+        ]
+      },
+      {
+        "name": "Алгебра | Номер 12",
+        "links": [
+          {"text": "Пример 4-9", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/8345d76e47bad434.png"},
+          {"text": "Пример 10-16", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/49aef994e2e5f226.png"},
+          {"text": "Пример 17-23", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/1616bce4a41d26fa.png"}
+        ]
+      },
+      {
+        "name": "Физика",
+        "links": [
+          {"text": "47§", "url": "https://izi-otvet.ru/load/10_klass/fizika/kasjanov10kl47/98-1-0-19036"},
+          {"text": "48§", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/49aef994e2e5f226.png"},
+          {"text": "49§", "url": "https://storage.yandexcloud.net/fotora.ru/uploads/1616bce4a41d26fa.png"}
+        ]
+      }
+    ]
+  },
+  "wednesday": {
+    "title": "Среда",
+    "subjects": [
+      {
+        "name": "text",
+        "links": [
+          {"text": "text", "url": "text"}
+        ]
+      }
+    ]
+  },
+  "thursday": {
+    "title": "Четверг",
+    "subjects": [
+      {
+        "name": "Английский язык",
+        "links": [
+          {"text": "упр 8стр29 (пример)", "url": "https://reshak.ru/otvet/otvet_txt.php?otvet1=/spotlight10/images/module2/a/8"}
+        ]
+      },
+      {
+        "name": "География / Практическая [H]",
+        "links": [
+          {"text": "2 задание / 1пример", "url": "https://i.postimg.cc/02qW9yFP/image.png"},
+          {"text": "2 задание / 2пример", "url": "https://i.postimg.cc/V6vyBk10/image.png"},
+          {"text": "3/4 задание / 1пример", "url": "https://i.postimg.cc/D0fScs0d/image.png"},
+          {"text": "3/4 задание / 2пример", "url": "https://i.postimg.cc/FsV44qPY/image.png"},
+          {"text": "5/6/вывод", "url": "https://i.postimg.cc/PqzZzdKt/image.png"}
+        ]
+      },
+      {
+        "name": "Геометрия",
+        "links": [
+          {"text": "текст", "url": "текст"}
+        ]
+      },
+      {
+        "name": "Физика",
+        "links": [
+          {"text": "Решу ЕГЭ 10611121", "url": "https://phys-ege.sdamgia.ru/test?id=10611121"}
+        ],
+        "text": "1) 20\n2) -0,5\n3) 0,7\n4) -2\n5) 5\n6) 100\n7) 4\n8) 1\n9) 150\n10) 2\n11) 5\n12) 8\n13) 24\n14) 0,4\n15) 50\n16) 14\n17) 234\n18) 14\n19) 14\n20) 34\n21) 34\n22) 13\n23) 22\n24) 24\n25) 22"
+      }
+    ]
+  },
+  "friday": {
+    "title": "Пятница",
+    "subjects": [
+      {
+        "name": "Геометрия | 934-936 | 2 РЕШЕНИЕ 2023 ГОДА",
+        "links": [
+          {"text": "№934", "url": "https://reshak.ru/otvet/otvet11.php?otvet1=934"},
+          {"text": "№935", "url": "https://reshak.ru/otvet/otvet11.php?otvet1=935"},
+          {"text": "№936", "url": "https://reshak.ru/otvet/otvet11.php?otvet1=936"}
+        ]
+      },
+      {
+        "name": "Информатика",
+        "links": [
+          {"text": "1) 27", "url": "https://inf-ege.sdamgia.ru/problem?id=15632"},
+          {"text": "2) 2715", "url": "https://inf-ege.sdamgia.ru/problem?id=48384"},
+          {"text": "3) 43100", "url": "https://inf-ege.sdamgia.ru/problem?id=48378"},
+          {"text": "4) 124", "url": "https://inf-ege.sdamgia.ru/problem?id=48401"},
+          {"text": "5) 10", "url": "https://inf-ege.sdamgia.ru/problem?id=29662"},
+          {"text": "6) 41428", "url": "https://inf-ege.sdamgia.ru/problem?id=48388"},
+          {"text": "7) 469034148", "url": "https://inf-ege.sdamgia.ru/problem?id=60256"},
+          {"text": "8) 234", "url": "https://inf-ege.sdamgia.ru/problem?id=48394"},
+          {"text": "9) 33 19197720", "url": "https://inf-ege.sdamgia.ru/problem?id=81816"},
+          {"text": "10) 1763", "url": "https://inf-ege.sdamgia.ru/problem?id=64944"}
+        ]
+      }
+    ]
+  },
+  "saturday": {
+    "title": "Суббота",
+    "subjects": [
+      {
+        "name": "Русский язык",
+        "links": [
+          {"text": "436", "url": "https://i.postimg.cc/V6kbDpGF/image.png"},
+          {"text": "874", "url": "https://i.postimg.cc/yNYFbDWt/image.png"},
+          {"text": "2329", "url": "https://i.postimg.cc/KzT4qb7t/image.png"}
+        ]
+      }
+    ]
+  }
+}
