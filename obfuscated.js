@@ -1891,16 +1891,16 @@
             applyLoadingTheme(theme);
             updateTagsAppearance();
         }
-        function switchEducationTab(tabId) {
+        async function switchEducationTab(tabId) {
             const educationContent = document.getElementById('education-content');
             const educationMain = document.getElementById('education-main');
+            
             educationMain.style.opacity = '0';
             educationMain.style.transform = 'translateX(-20px)';
-
-            setTimeout(() => {
+            
+            setTimeout(async () => {  // Добавляем async здесь
                 educationMain.style.display = 'none';
                 educationContent.style.display = 'block';
-
                 educationContent.style.opacity = '1';
                 educationContent.style.transform = 'translateX(0)';
 
@@ -1917,9 +1917,11 @@
                     loadHomeworkContent();
                     return;
                 } else if (tabId === 'biology') {
-                    loadHomeworkData();
+                    // Ждём загрузки данных
+                    await loadHomeworkData();
+                    
                     if (!homeworkData || !homeworkData.biology) {
-                        contentHTML = '<p>Материал временно недоступен.</p>';
+                        contentHTML = '<p style="text-align: center; padding: 40px; color: var(--text-color); opacity: 0.7;">Материал временно недоступен.</p>';
                     } else {
                         const bio = homeworkData.biology;
                         let html = '';
