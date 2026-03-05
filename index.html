@@ -1,91 +1,1591 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith Project</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>#ZENITH</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(40, 40, 40, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(40, 40, 40, 0.1) 0%, transparent 50%);
+            z-index: -2;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotate(45deg) translateX(-100%);
+            }
+
+            100% {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+
+        .logo-icon svg {
+            width: 36px;
+            height: 36px;
+            fill: #fff;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-subtext {
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .loading-screen {
+            display: block;
+        }
+
+        .error-screen {
+            display: none;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .loader-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            border-top: 2px solid #ccc;
+            animation: spin 2s linear infinite reverse;
+        }
+
+        .loader-ring:nth-child(3) {
+            width: 50%;
+            height: 50%;
+            top: 25%;
+            left: 25%;
+            border-top: 2px solid #888;
+            animation: spin 2.5s linear infinite;
+        }
+
+        .loader-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .status {
+            margin: 30px 0;
+            font-size: 14px;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+
+        .status-dots {
             display: flex;
             justify-content: center;
-            align-items: center;
-            background-color: #1a1a1a;
-            color: #ffffff;
+            gap: 6px;
+            margin-top: 10px;
         }
-        .container {
-            text-align: center;
-            max-width: 90%;
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0.3;
+            animation: dotPulse 1.4s ease-in-out infinite both;
         }
-        .message {
-            font-size: 1.2rem;
-            line-height: 1.6;
+
+        .status-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .status-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .error-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .error-icon-circle {
+            width: 100%;
+            height: 100%;
+            border: 3px solid #ff4444;
+            border-radius: 50%;
+            position: relative;
+            animation: pulseError 2s infinite;
+        }
+
+        .error-icon-cross {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+        }
+
+        .error-icon-cross::before,
+        .error-icon-cross::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 4px;
+            background: #ff4444;
+            border-radius: 2px;
+        }
+
+        .error-icon-cross::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .error-icon-cross::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        @keyframes pulseError {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.4);
+                border-color: #ff4444;
+            }
+
+            50% {
+                box-shadow: 0 0 0 20px rgba(255, 68, 68, 0);
+                border-color: #ff6666;
+            }
+        }
+
+        .error-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ff4444;
+            letter-spacing: 1px;
+        }
+
+        .error-subtitle {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .error-details {
+            background: rgba(40, 0, 0, 0.3);
+            border: 1px solid #660000;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .error-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .error-detail:last-child {
+            margin-bottom: 0;
+        }
+
+        .error-detail-label {
+            color: #888;
+        }
+
+        .error-detail-value {
+            color: #ff4444;
+            font-weight: 600;
+        }
+
+        .retry-btn {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #ff4444, #cc3333);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+            background: linear-gradient(135deg, #ff5555, #dd4444);
+        }
+
+        .retry-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-form {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-title {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #ddd;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            position: relative;
             margin-bottom: 20px;
         }
-        @media (min-width: 768px) {
-            .message {
-                font-size: 1.5rem;
+
+        .input-field input {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 16px;
+            border-radius: 12px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #333;
+            color: #fff;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #555;
+            background: rgba(30, 30, 30, 0.9);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .input-field label {
+            display: block;
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 16px;
+            border: 1px solid #333;
+            background: rgba(20, 20, 20, 0.9);
+            color: #fff;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: #f0f0f0;
+            border-color: #f0f0f0;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .notification {
+            margin-top: 20px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            display: none;
+            animation: slideIn 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
             }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .notification.error {
+            background: rgba(40, 0, 0, 0.8);
+            color: #ff4444;
+            border: 1px solid #660000;
+        }
+
+        .notification.success {
+            background: rgba(0, 40, 0, 0.8);
+            color: #44ff44;
+            border: 1px solid #006600;
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #333;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .floating-btn:hover {
+            background: rgba(40, 40, 40, 0.9);
+            border-color: #555;
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .floating-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            animation: modalAppear 0.4s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-title {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #333;
+            background: rgba(25, 25, 25, 0.8);
+            color: #fff;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal-input:focus {
+            border-color: #555;
+            background: rgba(35, 35, 35, 0.9);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-btn-cancel {
+            background: rgba(40, 40, 40, 0.9);
+            color: #fff;
+            border: 1px solid #333;
+        }
+
+        .modal-btn-cancel:hover {
+            background: rgba(60, 60, 60, 0.9);
+            border-color: #555;
+        }
+
+        .modal-btn-reset {
+            background: rgba(60, 0, 0, 0.8);
+            color: #fff;
+            border: 1px solid #660000;
+        }
+
+        .modal-btn-reset:hover {
+            background: rgba(80, 0, 0, 0.9);
+            border-color: #880000;
+        }
+
+        .modal-btn-save {
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .modal-btn-save:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            color: #aaa;
+            text-transform: uppercase;
+            z-index: 1;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        }
+
+        .footer span {
+            background: linear-gradient(90deg, #e0e0e0, #ffffff, #b0b0b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+            font-weight: 600;
+        }
+
+        .webview-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            background: #000;
+        }
+
+        .app-webview {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .version-modal {
+            background: rgba(10, 10, 10, 0.98);
+            border: 2px solid #fff;
+            border-radius: 16px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .version-modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff4444, #ff9900, #44ff44);
+        }
+
+        .version-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            position: relative;
+        }
+
+        .version-icon-circle {
+            width: 100%;
+            height: 100%;
+            border: 4px solid #ff9900;
+            border-radius: 50%;
+            position: relative;
+            animation: versionPulse 2.5s infinite ease-in-out;
+        }
+
+        .version-icon-arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+        }
+
+        .version-icon-arrow svg {
+            width: 100%;
+            height: 100%;
+            fill: #ff9900;
+            animation: arrowBounce 1.5s infinite ease-in-out;
+        }
+
+        @keyframes versionPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 153, 0, 0.3);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(255, 153, 0, 0);
+            }
+        }
+
+        @keyframes arrowBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .version-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff9900, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .version-subtitle {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .version-details {
+            background: rgba(30, 20, 0, 0.5);
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .version-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .version-detail:last-child {
+            margin-bottom: 0;
+        }
+
+        .version-detail-label {
+            color: #aaa;
+        }
+
+        .version-detail-value {
+            color: #ff9900;
+            font-weight: 700;
+        }
+
+        .version-btn {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #ff9900, #cc7700);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 20px rgba(255, 153, 0, 0.3);
+            width: 100%;
+        }
+
+        .version-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 153, 0, 0.4);
+            background: linear-gradient(135deg, #ffaa00, #dd8800);
+        }
+
+        .site-loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .site-loader {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .site-loader-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spinFast 0.8s linear infinite;
+        }
+
+        .site-loader-ring:nth-child(2) {
+            border-top: 3px solid #ccc;
+            animation: spinFast 1.2s linear infinite reverse;
+        }
+
+        .site-loader-ring:nth-child(3) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-top: 3px solid #888;
+            animation: spinFast 1.6s linear infinite;
+        }
+
+        @keyframes spinFast {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .site-loading-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .site-loading-subtext {
+            font-size: 14px;
+            color: #aaa;
+            letter-spacing: 0.5px;
+            text-align: center;
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
+        .loading-progress {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 25px;
+            overflow: hidden;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #333, #fff, #333);
+            width: 0%;
+            border-radius: 3px;
+            animation: progressAnim 2s infinite ease-in-out;
+        }
+
+        @keyframes progressAnim {
+            0% {
+                width: 0%;
+                margin-left: 0%;
+            }
+
+            50% {
+                width: 60%;
+                margin-left: 40%;
+            }
+
+            100% {
+                width: 0%;
+                margin-left: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 28px;
+            }
+
+            .logo-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .modal-content {
+                padding: 25px 20px;
+            }
+
+            .error-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .error-title {
+                font-size: 20px;
+            }
+
+            .version-modal {
+                padding: 30px 20px;
+            }
+
+            .version-title {
+                font-size: 24px;
+            }
+        }
+
+        #refreshBtn {
+            z-index: 101;
+            background: rgba(30, 30, 30, 0.95) !important;
+            border: 1px solid #ffffff !important;
+            display: none !important;
+        }
+
+        #refreshBtn:hover {
+            background: rgba(50, 50, 50, 0.95) !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(226, 226, 226, 0.4) !important;
+        }
+
+        #refreshBtn[style*="display: flex"] {
+            display: flex !important;
         }
     </style>
 </head>
+
 <body>
+    <div class="matrix-bg"></div>
+    <div class="grid-overlay"></div>
     <div class="container">
-        <div class="message" id="mainMessage">Проверка данных...</div>
+        <div class="logo">
+            <div class="logo-glow"></div>
+            <div class="logo-icon">
+                <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z" />
+                </svg>
+            </div>
+            <div class="logo-text">ZENITH</div>
+            <div class="logo-subtext">PROJECT</div>
+        </div>
+        <div class="screen loading-screen" id="loadingScreen">
+            <div class="loader">
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+                <div class="loader-core"></div>
+            </div>
+            <div class="status" id="status">
+                ПРОВЕРКА ПОДКЛЮЧЕНИЯ
+                <div class="status-dots">
+                    <div class="status-dot"></div>
+                    <div class="status-dot"></div>
+                    <div class="status-dot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="screen error-screen" id="errorScreen">
+            <div class="error-icon">
+                <div class="error-icon-circle">
+                    <div class="error-icon-cross"></div>
+                </div>
+            </div>
+            <div class="error-title">ОШИБКА ПОДКЛЮЧЕНИЯ</div>
+            <div class="error-subtitle">Отсутствует подключение к интернету</div>
+            <div class="error-details">
+                <div class="error-detail">
+                    <span class="error-detail-label">Статус сети:</span>
+                    <span class="error-detail-value" id="networkStatus">Недоступно</span>
+                </div>
+                <div class="error-detail">
+                    <span class="error-detail-label">База данных:</span>
+                    <span class="error-detail-value" id="dbStatus">Недоступно</span>
+                </div>
+                <div class="error-detail">
+                    <span class="error-detail-label">Время проверки:</span>
+                    <span class="error-detail-value" id="checkTime">--:--:--</span>
+                </div>
+            </div>
+            <button class="retry-btn" id="retryBtn">ПОВТОРИТЬ ПОДКЛЮЧЕНИЕ</button>
+        </div>
+        <div class="screen auth-form" id="authForm">
+            <div class="form-title">АВТОРИЗАЦИЯ</div>
+            <div class="input-field">
+                <label>TELEGRAM ID</label>
+                <input type="number" id="userIdInput" placeholder="Введите ваш ID">
+            </div>
+            <div class="input-field">
+                <label>ПАРОЛЬ</label>
+                <input type="password" id="passwordInput" placeholder="6-15 символов" minlength="6" maxlength="15">
+            </div>
+            <div class="buttons">
+                <button class="btn" id="saveAuthBtn">СОХРАНИТЬ</button>
+                <button class="btn btn-primary" id="loginBtn">ВОЙТИ</button>
+            </div>
+            <div class="notification" id="notification"></div>
+        </div>
+    </div>
+    <div class="site-loading-screen" id="siteLoadingScreen">
+        <div class="site-loader">
+            <div class="site-loader-ring"></div>
+            <div class="site-loader-ring"></div>
+            <div class="site-loader-ring"></div>
+        </div>
+        <div class="site-loading-text">ЗАГРУЗКА САЙТА...</div>
+        <div class="site-loading-subtext">Пожалуйста, подождите. Инициализация приложения</div>
+        <div class="loading-progress">
+            <div class="loading-progress-bar"></div>
+        </div>
+    </div>
+    <button class="floating-btn" id="settingsBtn">
+        <svg viewBox="0 0 24 24">
+            <path
+                d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+        </svg>
+    </button>
+    <button class="floating-btn" id="refreshBtn" style="left: 25px; right: auto; display: none;">
+        <svg viewBox="0 0 24 24">
+            <path
+                d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.37,20 18.21,18.04 19.45,15H17.5C16.45,17.27 14.4,19 12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5C13.9,5 15.61,5.9 16.73,7.35L14,10H20V4L17.65,6.35Z" />
+        </svg>
+    </button>
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-title">КОНФИГУРАЦИЯ</div>
+            <div class="input-group">
+                <label class="input-label">ПОЛЬЗОВАТЕЛЬСКИЙ URL</label>
+                <input type="text" class="modal-input" id="newUrlInput" placeholder="example.com/app">
+            </div>
+            <div class="input-group" style="margin-top: 15px;">
+                <label class="input-label" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="showRefreshToggle"
+                        style="width: 18px; height: 18px; accent-color: #44ff44;">
+                    ПОКАЗЫВАТЬ КНОПКУ ОБНОВЛЕНИЯ
+                </label>
+            </div>
+            <div class="notification" id="settingsNotification"></div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" id="cancelSettings">ОТМЕНА</button>
+                <button class="modal-btn modal-btn-reset" id="resetUrlBtn">СБРОС</button>
+                <button class="modal-btn modal-btn-save" id="saveSettings">СОХРАНИТЬ</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="versionModal">
+        <div class="version-modal">
+            <div class="version-icon">
+                <div class="version-icon-circle">
+                    <div class="version-icon-arrow">
+                        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="version-title">ТРЕБУЕТСЯ ОБНОВЛЕНИЕ</div>
+            <div class="version-subtitle">Ваша версия проекта устарела!</div>
+            <div class="version-details">
+                <div class="version-detail">
+                    <span class="version-detail-label">Текущая версия:</span>
+                    <span class="version-detail-value" id="currentVersion">v0.0.0</span>
+                </div>
+                <div class="version-detail">
+                    <span class="version-detail-label">Требуемая версия:</span>
+                    <span class="version-detail-value" id="requiredVersion">v0.0.0</span>
+                </div>
+                <div class="version-detail">
+                    <span class="version-detail-label">Статус:</span>
+                    <span class="version-detail-value" style="color: #ff4444;">УСТАРЕВШАЯ</span>
+                </div>
+            </div>
+            <button class="version-btn" id="versionOkBtn">Понятно</button>
+        </div>
+    </div>
+    <div class="webview-container" id="webviewContainer">
+        <iframe id="appWebView" class="app-webview"></iframe>
+    </div>
+    <div class="footer">
+        <span>PROJECT ZENITH V7</span>
     </div>
     <script>
-        const tg = window.Telegram?.WebApp;
-        function getDeviceType() {
-            const ua = navigator.userAgent;
-            if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-                return 'tablet';
-            }
-            if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
-                return 'mobile';
-            }
-            return 'desktop';
-        }
-        function hasAuthData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const userId = urlParams.get('user_id');
-            const password = urlParams.get('password');
-            if (userId && password) {
-                return { method: 'url', data: { user_id: userId, password: password } };
-            }
-            if (tg?.initDataUnsafe?.user) {
-                return { method: 'telegram', data: tg.initDataUnsafe.user };
-            }
+        const BASE_URL = 'https://zenithprj.vercel.app/';
+        const SUPABASE_URL = 'https://mnplvefoyrmehfojqvln.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_4UXXG3J_sYX84qHftY9LGA_CARLHuqT';
+        const CURRENT_APP_VERSION = 7;
+        const loadingScreen = document.getElementById('loadingScreen');
+        const errorScreen = document.getElementById('errorScreen');
+        const authForm = document.getElementById('authForm');
+        const userIdInput = document.getElementById('userIdInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const statusEl = document.getElementById('status');
+        const networkStatusEl = document.getElementById('networkStatus');
+        const dbStatusEl = document.getElementById('dbStatus');
+        const checkTimeEl = document.getElementById('checkTime');
+        const retryBtn = document.getElementById('retryBtn');
+        const saveAuthBtn = document.getElementById('saveAuthBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const notification = document.getElementById('notification');
+        const webviewContainer = document.getElementById('webviewContainer');
+        const appWebView = document.getElementById('appWebView');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const cancelSettings = document.getElementById('cancelSettings');
+        const saveSettings = document.getElementById('saveSettings');
+        const resetUrlBtn = document.getElementById('resetUrlBtn');
+        const newUrlInput = document.getElementById('newUrlInput');
+        const settingsNotification = document.getElementById('settingsNotification');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const showRefreshToggle = document.getElementById('showRefreshToggle');
+        const siteLoadingScreen = document.getElementById('siteLoadingScreen');
+        const versionModal = document.getElementById('versionModal');
+        const currentVersionEl = document.getElementById('currentVersion');
+        const requiredVersionEl = document.getElementById('requiredVersion');
+        const versionOkBtn = document.getElementById('versionOkBtn');
+        let supabaseClient = null;
 
-            return null;
-        }
-        function redirectToMain(authData) {
-            if (authData.method === 'telegram') {
-                sessionStorage.setItem('zenith_tg_user', JSON.stringify(authData.data));
-                window.location.href = './mini.html';
-            } else if (authData.method === 'url') {
-                const { user_id, password } = authData.data;
-                window.location.href = `./mini.html?user_id=${encodeURIComponent(user_id)}&password=${encodeURIComponent(password)}`;
+        function loadRefreshSetting() {
+            const enabled = localStorage.getItem('showRefreshBtn') === 'true';
+            if (showRefreshToggle) showRefreshToggle.checked = enabled;
+            if (refreshBtn) {
+                if (webviewContainer.style.display === 'block') {
+                    refreshBtn.style.display = 'flex';
+                } else {
+                    refreshBtn.style.display = 'none';
+                }
             }
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            const authData = hasAuthData();
-            const deviceType = getDeviceType();
-            const msgEl = document.getElementById('mainMessage');
-            if (authData) {
-                msgEl.textContent = 'Авторизация...';
-                redirectToMain(authData);
-                return;
+        if (showRefreshToggle) {
+            showRefreshToggle.addEventListener('change', () => {
+                const enabled = showRefreshToggle.checked;
+                localStorage.setItem('showRefreshBtn', String(enabled));
+            });
+        }
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                if (webviewContainer.style.display === 'block' && appWebView.src) {
+                    const currentSrc = appWebView.src;
+                    appWebView.src = '';
+                    setTimeout(() => {
+                        appWebView.src = currentSrc;
+                    }, 100);
+                } else {
+                    location.reload();
+                }
+            });
+        }
+        if (versionOkBtn) {
+            versionOkBtn.addEventListener('click', () => {
+                versionModal.style.display = 'none';
+                showMainScreen();
+            });
+        }
+        async function checkAppVersion() {
+            try {
+                const supabase = await initSupabaseClient();
+                if (!supabase) return true;
+                const {
+                    data: versionData,
+                    error
+                } = await supabase
+                    .from('admin_settings')
+                    .select('version')
+                    .limit(1)
+                    .single();
+                if (error) {
+                    console.warn('Не удалось проверить версию:', error);
+                    return true;
+                }
+                if (versionData && versionData.version) {
+                    const requiredVersion = parseInt(versionData.version);
+                    if (CURRENT_APP_VERSION < requiredVersion) {
+                        currentVersionEl.textContent = `v${CURRENT_APP_VERSION}.0.0`;
+                        requiredVersionEl.textContent = `v${requiredVersion}.0.0`;
+                        versionModal.style.display = 'flex';
+                        return false;
+                    }
+                }
+                return true;
+            } catch (error) {
+                console.error('Ошибка проверки версии:', error);
+                return true;
             }
-            if (deviceType === 'desktop') {
-                msgEl.textContent = 'Версия для ПК скоро';
-            } else {
-                msgEl.textContent = 'Данный способ входа невозможен. Используйте Telegram или официальное приложение.';
+        }
+
+        function showSiteLoadingScreen() {
+            siteLoadingScreen.style.display = 'flex';
+        }
+
+        function hideSiteLoadingScreen() {
+            siteLoadingScreen.style.display = 'none';
+        }
+        async function checkInternetConnection() {
+            const timestamp = new Date().toLocaleTimeString();
+            checkTimeEl.textContent = timestamp;
+            if (!navigator.onLine) {
+                networkStatusEl.textContent = 'Недоступно (браузер)';
+                networkStatusEl.style.color = '#ff4444';
+                dbStatusEl.textContent = 'Недоступно (браузер)';
+                dbStatusEl.style.color = '#ff4444';
+                return false;
             }
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 800);
+            try {
+                const response = await fetch('https://httpbin.org/get', {
+                    method: 'GET',
+                    cache: 'no-cache',
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                if (response.ok) {
+                    networkStatusEl.textContent = 'Доступно';
+                    networkStatusEl.style.color = '#44ff44';
+                    try {
+                        const supabaseResponse = await fetch(SUPABASE_URL + '/rest/v1/', {
+                            method: 'HEAD',
+                            cache: 'no-cache'
+                        });
+                        if (supabaseResponse.ok || supabaseResponse.status === 401) {
+                            dbStatusEl.textContent = 'Доступно';
+                            dbStatusEl.style.color = '#44ff44';
+                        } else {
+                            dbStatusEl.textContent = 'Ограниченный доступ';
+                            dbStatusEl.style.color = '#ffaa44';
+                        }
+                    } catch (supabaseError) {
+                        dbStatusEl.textContent = 'Ограниченный доступ';
+                        dbStatusEl.style.color = '#ffaa44';
+                    }
+                    return true;
+                } else {
+                    networkStatusEl.textContent = 'Недоступно (сервер)';
+                    networkStatusEl.style.color = '#ff4444';
+                    dbStatusEl.textContent = 'Недоступно (сервер)';
+                    dbStatusEl.style.color = '#ff4444';
+                    return false;
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+                networkStatusEl.textContent = 'Недоступно (ошибка)';
+                networkStatusEl.style.color = '#ff4444';
+                dbStatusEl.textContent = 'Недоступно (ошибка)';
+                dbStatusEl.style.color = '#ff4444';
+                return false;
+            }
+        }
+
+        function showErrorScreen() {
+            loadingScreen.style.display = 'none';
+            errorScreen.style.display = 'block';
+            authForm.style.display = 'none';
+            webviewContainer.style.display = 'none';
+            siteLoadingScreen.style.display = 'none';
+            settingsBtn.style.display = 'flex';
+            if (refreshBtn) {
+                refreshBtn.style.display = 'none';
+            }
+        }
+
+        function showMainScreen() {
+            loadingScreen.style.display = 'none';
+            errorScreen.style.display = 'none';
+            authForm.style.display = 'block';
+            webviewContainer.style.display = 'none';
+            siteLoadingScreen.style.display = 'none';
+            settingsBtn.style.display = 'flex';
+            if (refreshBtn) {
+                refreshBtn.style.display = 'none';
+            }
+        }
+
+        function showWebView() {
+            loadingScreen.style.display = 'none';
+            errorScreen.style.display = 'none';
+            authForm.style.display = 'none';
+            webviewContainer.style.display = 'block';
+            siteLoadingScreen.style.display = 'none';
+            settingsBtn.style.display = 'none';
+            if (refreshBtn) {
+                refreshBtn.style.display = 'flex';
+            }
+        }
+        async function simulateLoading() {
+            if (!statusEl) return;
+            const messages = [
+                "ПРОВЕРКА ПОДКЛЮЧЕНИЯ",
+                "ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ",
+                "ПРОЕКТ ЗАГРУЖЕН УСПЕШНО"
+            ];
+            for (let i = 0; i < messages.length; i++) {
+                statusEl.innerHTML =
+                    `${messages[i]}<div class="status-dots"><div class="status-dot"></div><div class="status-dot"></div><div class="status-dot"></div></div>`;
+                if (i === 1) {
+                    const isOnline = await checkInternetConnection();
+                    if (!isOnline && !navigator.onLine) {
+                        showErrorScreen();
+                        return;
+                    }
+                }
+                const delay = Math.max(400, 800 - (i * 100));
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+            showMainScreen();
+            loadSavedCredentials();
+        }
+        async function initSupabaseClient() {
+            if (supabaseClient) return supabaseClient;
+            try {
+                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                return supabaseClient;
+            } catch (error) {
+                console.error('❌ Ошибка инициализации Supabase:', error);
+                showMessage('Ошибка подключения к базе данных', 'error');
+                return null;
+            }
+        }
+
+        function showMessage(text, type, global = true) {
+            const msgEl = global ? notification : settingsNotification;
+            if (!msgEl) return;
+            msgEl.textContent = text;
+            msgEl.className = `notification ${type}`;
+            msgEl.style.display = 'block';
+            setTimeout(() => msgEl.style.display = 'none', 3000);
+        }
+
+        function loadSavedCredentials() {
+            try {
+                const savedUserId = localStorage.getItem('userId');
+                const savedPassword = localStorage.getItem('password');
+                if (savedUserId && userIdInput) {
+                    userIdInput.value = savedUserId;
+                }
+                if (savedPassword && passwordInput) {
+                    passwordInput.value = savedPassword;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки данных авторизации:', error);
+            }
+        }
+
+        function loadSavedUrl() {
+            try {
+                const saved = localStorage.getItem('customAppUrl');
+                if (saved && newUrlInput) {
+                    newUrlInput.value = saved;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки URL:', error);
+            }
+        }
+
+        function initializeEventListeners() {
+            if (retryBtn) {
+                retryBtn.addEventListener('click', async () => {
+                    errorScreen.style.display = 'none';
+                    loadingScreen.style.display = 'block';
+                    statusEl.innerHTML =
+                        `ПОВТОРНАЯ ПРОВЕРКА<div class="status-dots"><div class="status-dot"></div><div class="status-dot"></div><div class="status-dot"></div></div>`;
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    await simulateLoading();
+                });
+            }
+            if (saveAuthBtn) {
+                saveAuthBtn.addEventListener('click', () => {
+                    const userId = userIdInput ? userIdInput.value.trim() : '';
+                    const password = passwordInput ? passwordInput.value.trim() : '';
+                    if (!userId || !password) {
+                        showMessage('ЗАПОЛНИТЕ ВСЕ ПОЛЯ', 'error');
+                        return;
+                    }
+                    if (password.length < 6 || password.length > 15) {
+                        showMessage('ПАРОЛЬ 6-15 СИМВОЛОВ', 'error');
+                        return;
+                    }
+                    localStorage.setItem('userId', userId);
+                    localStorage.setItem('password', password);
+                    showMessage('ДАННЫЕ СОХРАНЕНЫ', 'success');
+                });
+            }
+            if (loginBtn) {
+                loginBtn.addEventListener('click', async () => {
+                    const userId = userIdInput ? userIdInput.value.trim() : '';
+                    const password = passwordInput ? passwordInput.value.trim() : '';
+                    if (!userId || !password) {
+                        showMessage('ЗАПОЛНИТЕ ВСЕ ПОЛЯ', 'error');
+                        return;
+                    }
+                    if (password.length < 6 || password.length > 15) {
+                        showMessage('ПАРОЛЬ 6-15 СИМВОЛОВ', 'error');
+                        return;
+                    }
+                    showSiteLoadingScreen();
+                    const versionValid = await checkAppVersion();
+                    if (!versionValid) {
+                        hideSiteLoadingScreen();
+                        return;
+                    }
+                    const supabase = await initSupabaseClient();
+                    if (!supabase) {
+                        hideSiteLoadingScreen();
+                        return;
+                    }
+                    try {
+                        const {
+                            data: scbotRecord,
+                            error: scbotError
+                        } = await supabase
+                            .from('scbot')
+                            .select('user_id, blocked')
+                            .eq('user_id', userId)
+                            .eq('password', password)
+                            .single();
+                        if (scbotError || !scbotRecord) {
+                            hideSiteLoadingScreen();
+                            showMessage('НЕВЕРНЫЙ ID ИЛИ ПАРОЛЬ', 'error');
+                            return;
+                        }
+                        if (scbotRecord.blocked) {
+                            hideSiteLoadingScreen();
+                            showMessage('АККАУНТ ЗАБЛОКИРОВАН', 'error');
+                            return;
+                        }
+                        const storedUrl = localStorage.getItem('customAppUrl');
+                        let urlToLoad = storedUrl ? (storedUrl.startsWith('http://') || storedUrl
+                            .startsWith('https://') ? storedUrl : `https://${storedUrl}`) : BASE_URL;
+                        appWebView.addEventListener('load', () => {
+                            setTimeout(() => {
+                                hideSiteLoadingScreen();
+                                showWebView();
+                            }, 500);
+                        });
+                        if (appWebView) appWebView.src = urlToLoad + '?user_id=' + encodeURIComponent(
+                            userId) + '&password=' + encodeURIComponent(password);
+                    } catch (error) {
+                        console.error('Ошибка проверки учетных данных:', error);
+                        hideSiteLoadingScreen();
+                        showMessage('ОШИБКА ПРОВЕРКИ ДАННЫХ', 'error');
+                    }
+                });
+            }
+            if (settingsBtn && settingsModal) {
+                settingsBtn.addEventListener('click', () => {
+                    settingsModal.style.display = 'flex';
+                    loadSavedUrl();
+                });
+            }
+            if (cancelSettings && settingsModal) {
+                cancelSettings.addEventListener('click', () => {
+                    settingsModal.style.display = 'none';
+                    if (newUrlInput) newUrlInput.value = '';
+                });
+            }
+            if (saveSettings) {
+                saveSettings.addEventListener('click', () => {
+                    let url = newUrlInput ? newUrlInput.value.trim() : '';
+                    if (url) {
+                        url = url.replace(/^https?:\/\//, '');
+                        localStorage.setItem('customAppUrl', url);
+                        showMessage('URL СОХРАНЕН', 'success', false);
+                    } else {
+                        showMessage('ВВЕДИТЕ КОРРЕКТНЫЙ URL', 'error', false);
+                    }
+                });
+            }
+            if (resetUrlBtn) {
+                resetUrlBtn.addEventListener('click', () => {
+                    localStorage.removeItem('customAppUrl');
+                    if (newUrlInput) newUrlInput.value = '';
+                    showMessage('URL СБРОШЕН', 'success', false);
+                });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeEventListeners();
+            simulateLoading();
+            loadRefreshSetting();
         });
     </script>
 </body>
+
 </html>
