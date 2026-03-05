@@ -1,4 +1,4 @@
-<!--
+    <!--
 
 
 
@@ -8,29 +8,19 @@
 
 
 
-______                                                                    _____ 
-( ___ )                                                                  ( ___ )
- |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
- |   |  ▄███████▄     ▄████████ ███▄▄▄▄    ▄█      ███        ▄█    █▄    |   | 
- |   | ██▀     ▄██   ███    ███ ███▀▀▀██▄ ███  ▀█████████▄   ███    ███   |   | 
- |   |       ▄███▀   ███    █▀  ███   ███ ███▌    ▀███▀▀██   ███    ███   |   | 
- |   |  ▀█▀▄███▀▄▄  ▄███▄▄▄     ███   ███ ███▌     ███   ▀  ▄███▄▄▄▄███▄▄ |   | 
- |   |   ▄███▀   ▀ ▀▀███▀▀▀     ███   ███ ███▌     ███     ▀▀███▀▀▀▀███▀  |   | 
- |   | ▄███▀         ███    █▄  ███   ███ ███      ███       ███    ███   |   | 
- |   | ███▄     ▄█   ███    ███ ███   ███ ███      ███       ███    ███   |   | 
- |   |  ▀████████▀   ██████████  ▀█   █▀  █▀      ▄████▀     ███    █▀    |   | 
- |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
-(_____)                                                                  (_____)    
-
-
-
-
-
-
-
-
-
-
+    ______                                                                    _____ 
+    ( ___ )                                                                  ( ___ )
+    |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
+    |   |  ▄███████▄     ▄████████ ███▄▄▄▄    ▄█      ███        ▄█    █▄    |   | 
+    |   | ██▀     ▄██   ███    ███ ███▀▀▀██▄ ███  ▀█████████▄   ███    ███   |   | 
+    |   |       ▄███▀   ███    █▀  ███   ███ ███▌    ▀███▀▀██   ███    ███   |   | 
+    |   |  ▀█▀▄███▀▄▄  ▄███▄▄▄     ███   ███ ███▌     ███   ▀  ▄███▄▄▄▄███▄▄ |   | 
+    |   |   ▄███▀   ▀ ▀▀███▀▀▀     ███   ███ ███▌     ███     ▀▀███▀▀▀▀███▀  |   | 
+    |   | ▄███▀         ███    █▄  ███   ███ ███      ███       ███    ███   |   | 
+    |   | ███▄     ▄█   ███    ███ ███   ███ ███      ███       ███    ███   |   | 
+    |   |  ▀████████▀   ██████████  ▀█   █▀  █▀      ▄████▀     ███    █▀    |   | 
+    |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
+    (_____)                                                                  (_____)    
 
 
 
@@ -47,658 +37,667 @@ ______                                                                    _____
 
 
 
--->
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#zenith</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css.css">
-    <link rel="stylesheet" href="assets/loader.css">
-    <link rel="stylesheet" href="assets/theme.css">
-</head>
-<body>
-    <div id="zenith-loader" class="zenith-loading-screen">
-        <div class="zenith-logo">
-            <div class="zenith-logo-glow"></div>
-            <div class="zenith-logo-icon">
-                <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"/>
-                </svg>
-            </div>
-            <div class="zenith-logo-text">ZENITH</div>
-            <div class="zenith-logo-subtext">PROJECT</div>
-        </div>
-        <div class="zenith-loader">
-            <div class="zenith-loader-ring"></div>
-            <div class="zenith-loader-ring"></div>
-            <div class="zenith-loader-ring"></div>
-            <div class="zenith-loader-core"></div>
-        </div>
-        <div class="zenith-status" id="zenith-status">
-            ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ
-            <div class="zenith-status-dots">
-                <div class="zenith-status-dot"></div>
-                <div class="zenith-status-dot"></div>
-                <div class="zenith-status-dot"></div>
-            </div>
-        </div>
-        <div class="zenith-auth-form hidden" id="zenith-auth-form">
-            <div class="zenith-code-title">ВВЕДИТЕ КЛЮЧ ДОСТУПА</div>
-            <div class="zenith-code-input-field">
-                <input type="text" id="activation-code-input" maxlength="20" inputmode="text" placeholder="20 СИМВОЛОВ">
-            </div>
-            <div class="zenith-buttons">
-                <button class="zenith-btn" id="auth-submit-btn">АВТОРИЗАЦИЯ</button>
-            </div>
-            <div class="zenith-notification" id="auth-error"></div>
-        </div>
-        <div id="maintenance-blocker" class="zenith-loading-screen hidden" style="z-index: 10000; background: var(--background-color);">
+
+
+
+
+
+
+
+
+
+
+    -->
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#zenith</title>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="assets/css.css">
+        <link rel="stylesheet" href="assets/loader.css">
+        <link rel="stylesheet" href="assets/theme.css">
+    </head>
+    <body>
+        <div id="zenith-loader" class="zenith-loading-screen">
             <div class="zenith-logo">
                 <div class="zenith-logo-glow"></div>
-                <div class="zenith-logo-icon" style="background: linear-gradient(135deg, #dc3545 0%, #a72a35 100%);">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12,2L13.8,8.2L20,9L15.5,13.5L16.8,20L12,16.8L7.2,20L8.5,13.5L4,9L10.2,8.2L12,2Z"/>
+                <div class="zenith-logo-icon">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z"/>
                     </svg>
                 </div>
-                <div class="zenith-logo-text" style="color: #dc3545;">ТЕХ.РАБОТЫ</div>
-                <div class="zenith-logo-subtext">ZENITH ✦ PROJECT</div>
+                <div class="zenith-logo-text">ZENITH</div>
+                <div class="zenith-logo-subtext">PROJECT</div>
             </div>
-            <div class="zenith-status" id="maintenance-message" style="color: #dc3545; font-size: 20px; margin: 20px 0;">
-                Проект временно недоступен
+            <div class="zenith-loader">
+                <div class="zenith-loader-ring"></div>
+                <div class="zenith-loader-ring"></div>
+                <div class="zenith-loader-ring"></div>
+                <div class="zenith-loader-core"></div>
             </div>
-            <div class="zenith-status" id="maintenance-since-display" style="font-size: 14px; opacity: 0.8; margin-top: 10px;">
-                Тех.работы начаты: —
+            <div class="zenith-status" id="zenith-status">
+                ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ
+                <div class="zenith-status-dots">
+                    <div class="zenith-status-dot"></div>
+                    <div class="zenith-status-dot"></div>
+                    <div class="zenith-status-dot"></div>
+                </div>
+            </div>
+            <div class="zenith-auth-form hidden" id="zenith-auth-form">
+                <div class="zenith-code-title">ВВЕДИТЕ КЛЮЧ ДОСТУПА</div>
+                <div class="zenith-code-input-field">
+                    <input type="text" id="activation-code-input" maxlength="20" inputmode="text" placeholder="20 СИМВОЛОВ">
+                </div>
+                <div class="zenith-buttons">
+                    <button class="zenith-btn" id="auth-submit-btn">АВТОРИЗАЦИЯ</button>
+                </div>
+                <div class="zenith-notification" id="auth-error"></div>
+            </div>
+            <div id="maintenance-blocker" class="zenith-loading-screen hidden" style="z-index: 10000; background: var(--background-color);">
+                <div class="zenith-logo">
+                    <div class="zenith-logo-glow"></div>
+                    <div class="zenith-logo-icon" style="background: linear-gradient(135deg, #dc3545 0%, #a72a35 100%);">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12,2L13.8,8.2L20,9L15.5,13.5L16.8,20L12,16.8L7.2,20L8.5,13.5L4,9L10.2,8.2L12,2Z"/>
+                        </svg>
+                    </div>
+                    <div class="zenith-logo-text" style="color: #dc3545;">ТЕХ.РАБОТЫ</div>
+                    <div class="zenith-logo-subtext">ZENITH ✦ PROJECT</div>
+                </div>
+                <div class="zenith-status" id="maintenance-message" style="color: #dc3545; font-size: 20px; margin: 20px 0;">
+                    Проект временно недоступен
+                </div>
+                <div class="zenith-status" id="maintenance-since-display" style="font-size: 14px; opacity: 0.8; margin-top: 10px;">
+                    Тех.работы начаты: —
+                </div>
             </div>
         </div>
-    </div>
-    <div id="welcome-screen">
-        <span id="welcome-text"></span>
-    </div>
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab('home')">Главная</div>
-            <div class="tab" onclick="switchTab('education')">Учеба</div>
-            <div class="tab" onclick="switchTab('settings')">Настр-ки</div>
-            <div class="tab hidden" id="admin-tab" onclick="switchTab('admin')">Админ</div>
+        <div id="welcome-screen">
+            <span id="welcome-text"></span>
         </div>
-        <div id="home" class="content active">
-            <div class="app-info-card" style="
-                background: var(--background-color);
-                border-radius: 24px;
-                padding: 32px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-                border: 2px solid var(--border-color);
-                margin-bottom: 36px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                position: relative;
-                overflow: hidden;">
-                <div style="
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 4px;
-                    background: linear-gradient(90deg, transparent, var(--border-color), transparent);"></div>
-                <h2 style="
-                    font-size: 28px;
-                    font-weight: 800;
-                    margin-bottom: 24px;
-                    background: linear-gradient(to right, var(--text-color), var(--border-color));
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;">𝙕𝙀𝙉𝙄𝙏𝙃 ✦ 𝙋𝙍𝙊𝙅𝙀𝘾𝙏</h2>
-                <div id="app-info-content" style="width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 18px;"></div>
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('home')">Главная</div>
+                <div class="tab" onclick="switchTab('education')">Учеба</div>
+                <div class="tab" onclick="switchTab('settings')">Настр-ки</div>
+                <div class="tab hidden" id="admin-tab" onclick="switchTab('admin')">Админ</div>
             </div>
-            <div class="profile-card" style="
-                background: var(--background-color);
-                border-radius: 24px;
-                padding: 32px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-                border: 2px solid var(--border-color);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                position: relative;
-                overflow: hidden;">
-                <div style="
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 4px;
-                    background: linear-gradient(90deg, transparent, var(--border-color), transparent);"></div>
-                <h2 style="
-                    font-size: 28px;
-                    font-weight: 800;
-                    margin-bottom: 24px;
-                    background: linear-gradient(to right, var(--text-color), var(--border-color));
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;">Ваш профиль</h2>
-                <div id="profile-content" style="
-                    width: 100%;
-                    max-width: 420px;
+            <div id="home" class="content active">
+                <div class="app-info-card" style="
+                    background: var(--background-color);
+                    border-radius: 24px;
+                    padding: 32px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+                    border: 2px solid var(--border-color);
+                    margin-bottom: 36px;
                     display: flex;
                     flex-direction: column;
-                    gap: 16px;
-                    font-size: 16px;"></div>
-            </div>
-        </div>
-        <div id="education" class="content">
-            <h2>Учеба</h2>
-            <div id="education-main" style="display: block;">
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('schedule')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Расписание</strong>
-                            <small>Список уроков по дням</small>
-                        </div>
-                        <i class="fas fa-calendar-alt" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    position: relative;
+                    overflow: hidden;">
+                    <div style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 4px;
+                        background: linear-gradient(90deg, transparent, var(--border-color), transparent);"></div>
+                    <h2 style="
+                        font-size: 28px;
+                        font-weight: 800;
+                        margin-bottom: 24px;
+                        background: linear-gradient(to right, var(--text-color), var(--border-color));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;">𝙕𝙀𝙉𝙄𝙏𝙃 ✦ 𝙋𝙍𝙊𝙅𝙀𝘾𝙏</h2>
+                    <div id="app-info-content" style="width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 18px;"></div>
                 </div>
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('grades')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Средняя оценка</strong>
-                            <small>Отображение вашей успеваемости</small>
-                        </div>
-                        <i class="fas fa-chart-line" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
-                </div>
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('homework')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Домашнее задание <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">11.12.25</span></strong>
-                            <small>Просмотр домашнего задания</small>
-                        </div>
-                        <i class="fas fa-book" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
-                </div>
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('biology')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Биология <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">11.12.25</span></strong>
-                            <small>Фотосинтез. Хемосинтез.</small>
-                        </div>
-                        <i class="fas fa-seedling" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
-                </div>
-                <!--
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('fipi')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>ФИПИ <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">09.11.25</span></strong>
-                            <small>6-10 страницы по геометрии</small>
-                        </div>
-                        <i class="fas fa-graduation-cap" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
-                </div>
-                
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('geometry')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Геометрия</strong>
-                            <small>Записи из блокнота</small>
-                        </div>
-                        <i class="fas fa-shapes" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
-                </div>
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('algeb')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Алгебра</strong>
-                            <small>Записи из блокнота</small>
-                        </div>
-                        <i class="fas fa-square-root-alt" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
-                </div>
-                -->
-                <!--
-                <div class="education-feature">
-                    <div class="admin-item" onclick="switchEducationTab('physics')">
-                        <div style="display: flex; flex-direction: column; width: 100%;">
-                            <strong>Физика </strong>
-                            <small>Теория и задачи по физике</small>
-                        </div>
-                        <i class="fas fa-atom" style="color: var(--border-color); font-size: 18px;"></i>
-                    </div>
-                </div>
-                -->
-            </div>
-            <div id="education-content" style="display: none; opacity: 0; transition: opacity 0.3s ease;"></div>
-        </div>
-        <div id="settings" class="content">
-            <h2>Настройки <span class="beta-badge">BETA</span></h2>
-            <div class="collapsible">
-                <div class="collapsible-header" onclick="toggleCollapsible('theme-collapsible')">
-                    <span>Тематика оформления</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div id="theme-collapsible" class="collapsible-content">
-                    <div class="theme-group">
-                        <div class="theme-group-header" onclick="toggleCollapsible('purple-themes')">
-                            <span>Фиолетовые темы</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div id="purple-themes" class="theme-group-content">
-                            <div class="theme-row">
-                                <div class="theme-option theme-light-purple" onclick="applyTheme('light-purple')">
-                                    <div class="theme-content">
-                                        <div>Светло-фиолетовая</div>
-                                    </div>
-                                </div>
-                                <div class="theme-option theme-dark-purple" onclick="applyTheme('dark-purple')">
-                                    <div class="theme-content">
-                                        <div>Тёмно-фиолетовая</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="theme-group">
-                        <div class="theme-group-header" onclick="toggleCollapsible('green-themes')">
-                            <span>Зеленые темы</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div id="green-themes" class="theme-group-content">
-                            <div class="theme-row">
-                                <div class="theme-option theme-light-green" onclick="applyTheme('light-green')">
-                                    <div class="theme-content">
-                                        <div>Светло-зелёная</div>
-                                    </div>
-                                </div>
-                                <div class="theme-option theme-dark-green" onclick="applyTheme('dark-green')">
-                                    <div class="theme-content">
-                                        <div>Тёмно-зелёная</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="theme-group">
-                        <div class="theme-group-header" onclick="toggleCollapsible('red-themes')">
-                            <span>Красные темы</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div id="red-themes" class="theme-group-content">
-                            <div class="theme-row">
-                                <div class="theme-option theme-light-red" onclick="applyTheme('light-red')">
-                                    <div class="theme-content">
-                                        <div>Светло-красная</div>
-                                    </div>
-                                </div>
-                                <div class="theme-option theme-dark-red" onclick="applyTheme('dark-red')">
-                                    <div class="theme-content">
-                                        <div>Тёмно-красная</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="theme-group">
-                        <div class="theme-group-header" onclick="toggleCollapsible('blue-themes')">
-                            <span>Синие темы</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div id="blue-themes" class="theme-group-content">
-                            <div class="theme-row">
-                                <div class="theme-option theme-light-blue" onclick="applyTheme('light-blue')">
-                                    <div class="theme-content">
-                                        <div>Светло-синяя</div>
-                                    </div>
-                                </div>
-                                <div class="theme-option theme-dark-blue" onclick="applyTheme('dark-blue')">
-                                    <div class="theme-content">
-                                        <div>Тёмно-синяя</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="theme-group">
-                        <div class="theme-group-header" onclick="toggleCollapsible('pink-themes')">
-                            <span>Розовые темы</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div id="pink-themes" class="theme-group-content">
-                            <div class="theme-row">
-                                <div class="theme-option theme-light-pink" onclick="applyTheme('light-pink')">
-                                    <div class="theme-content">
-                                        <div>Светло-розовая</div>
-                                    </div>
-                                </div>
-                                <div class="theme-option theme-dark-pink" onclick="applyTheme('dark-pink')">
-                                    <div class="theme-content">
-                                        <div>Тёмно-розовая</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="theme-group">
-                        <div class="theme-group-header" onclick="toggleCollapsible('orange-themes')">
-                            <span>Оранжевые темы</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div id="orange-themes" class="theme-group-content">
-                            <div class="theme-row">
-                                <div class="theme-option theme-light-orange" onclick="applyTheme('light-orange')">
-                                    <div class="theme-content">
-                                        <div>Светло-оранжевая</div>
-                                    </div>
-                                </div>
-                                <div class="theme-option theme-dark-orange" onclick="applyTheme('dark-orange')">
-                                    <div class="theme-content">
-                                        <div>Тёмно-оранжевая</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="theme-group">
-                        <div class="theme-group-header" onclick="toggleCollapsible('basic-themes')">
-                            <span>Основные темы</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div id="basic-themes" class="theme-group-content">
-                            <div class="theme-row">
-                                <div class="theme-option theme-light" onclick="applyTheme('light')">
-                                    <div class="theme-content">
-                                        <div>Светлая</div>
-                                    </div>
-                                </div>
-                                <div class="theme-option theme-dark" onclick="applyTheme('dark')">
-                                    <div class="theme-content">
-                                        <div>Тёмная</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="profile-card" style="
+                    background: var(--background-color);
+                    border-radius: 24px;
+                    padding: 32px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+                    border: 2px solid var(--border-color);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    position: relative;
+                    overflow: hidden;">
+                    <div style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 4px;
+                        background: linear-gradient(90deg, transparent, var(--border-color), transparent);"></div>
+                    <h2 style="
+                        font-size: 28px;
+                        font-weight: 800;
+                        margin-bottom: 24px;
+                        background: linear-gradient(to right, var(--text-color), var(--border-color));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;">Ваш профиль</h2>
+                    <div id="profile-content" style="
+                        width: 100%;
+                        max-width: 420px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 16px;
+                        font-size: 16px;"></div>
                 </div>
             </div>
-            <div class="switch-container">
-                <span>Анимация тегов<span class="beta-badge">BETA</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="gradient-toggle" onchange="toggleGradient()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="switch-container">
-                <span>Отображение тегов</span>
-                <label class="switch">
-                    <input type="checkbox" id="tags-toggle" checked onchange="toggleTags()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="switch-container">
-                <span>Отображение иконок</span>
-                <label class="switch">
-                    <input type="checkbox" id="icons-toggle" checked onchange="toggleIcons()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="switch-container feature-disabled" id="logging-toggle-container">
-                <span>Логирование<span class="beta-badge">BETA</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="logging-toggle" checked onchange="toggleLogging()">
-                    <span class="slider"></span>
-                </label>
-                <div class="disabled-overlay">
-                    <span>Недоступно</span>
-                </div>
-            </div>
-            <div class="switch-container feature-disabled">
-                <span>Анимация обводки<span class="beta-badge">BETA</span></span>
-                <label class="switch">
-                    <input type="checkbox" id="border-animation-toggle" onchange="toggleBorderAnimation()">
-                    <span class="slider"></span>
-                </label>
-                <div class="disabled-overlay">
-                    <span>В разработке</span>
-                </div>
-            </div>
-        </div>
-        <div id="admin" class="content">
-            <h2>Админ панель</h2>
-            <div id="admin-pin-container" class="hidden">
-                <div class="pin-header">
-                    <h3>🔐 Введите пин-код</h3>
-                    <p>Для доступа к админ-панели</p>
-                </div>
-                <div class="pin-input-container">
-                    <div class="pin-display" id="pin-display"></div>
-                    <button class="toggle-visibility" id="toggle-visibility">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                </div>
-                <div class="pin-keyboard" id="pin-keyboard">
-                </div>
-                <div class="pin-error" id="pin-error"></div>
-            </div>
-            <div id="admin-content-container" class="hidden">
-                <div class="admin-tabs">
-                    <div class="admin-tab active" onclick="switchAdminTab('users')">
-                        <i class="admin-icon fas fa-users"></i>
-                        <span>Список</span>
+            <div id="education" class="content">
+                <h2>Учеба</h2>
+                <div id="education-main" style="display: block;">
+                    <!--
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('schedule')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>Расписание</strong>
+                                <small>Список уроков по дням</small>
+                            </div>
+                            <i class="fas fa-calendar-alt" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
+                    </div>-->
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('grades')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>Средняя оценка</strong>
+                                <small>Отображение вашей успеваемости</small>
+                            </div>
+                            <i class="fas fa-chart-line" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
                     </div>
-                    <div class="admin-tab" onclick="switchAdminTab('logs')">
-                        <i class="admin-icon fas fa-clipboard-list"></i>
-                        <span>Логи</span>
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('homework')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>Домашнее задание <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">xx.xx.26</span></strong>
+                                <small>Просмотр домашнего задания</small>
+                            </div>
+                            <i class="fas fa-book" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
                     </div>
-                    <div class="admin-tab" onclick="switchAdminTab('mode')">
-                        <i class="admin-icon fas fa-tools"></i>
-                        <span>Режим</span>
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('biology')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>Биология <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">05.03.26</span></strong>
+                                <small>Основные понятия генетики. Формы постэмбрионального развития.</small>
+                            </div>
+                            <i class="fas fa-seedling" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('fipi')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>ФИПИ <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">09.11.25</span></strong>
+                                <small>6-10 страницы по геометрии</small>
+                            </div>
+                            <i class="fas fa-graduation-cap" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('geometry')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>Геометрия</strong>
+                                <small>Записи из блокнота</small>
+                            </div>
+                            <i class="fas fa-shapes" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
+                    </div>
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('algeb')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>Алгебра</strong>
+                                <small>Записи из блокнота</small>
+                            </div>
+                            <i class="fas fa-square-root-alt" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
+                    </div>
+                    -->
+                    <div class="education-feature">
+                        <div class="admin-item" onclick="switchEducationTab('physics')">
+                            <div style="display: flex; flex-direction: column; width: 100%;">
+                                <strong>Физика <span class="beta-badge" style="font-size: 10px; padding: 2px 6px;">05.03.26</span></strong>
+                                <small>Электрическое поле.</small>
+                            </div>
+                            <i class="fas fa-atom" style="color: var(--border-color); font-size: 18px;"></i>
+                        </div>
                     </div>
                 </div>
-                <div id="users-content" class="admin-content active">
-                    <div class="logs-header">
-                        <div class="logs-stats-card">
-                            <div class="stats-content">
-                                <div class="stats-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <div class="stats-info">
-                                    <div class="stats-count" id="users-count">0</div>
-                                    <div class="stats-label">Пользователей</div>
+                <div id="education-content" style="display: none; opacity: 0; transition: opacity 0.3s ease;"></div>
+            </div>
+            <div id="settings" class="content">
+                <h2>Настройки <span class="beta-badge">BETA</span></h2>
+                <div class="collapsible">
+                    <div class="collapsible-header" onclick="toggleCollapsible('theme-collapsible')">
+                        <span>Тематика оформления</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="theme-collapsible" class="collapsible-content">
+                        <div class="theme-group">
+                            <div class="theme-group-header" onclick="toggleCollapsible('purple-themes')">
+                                <span>Фиолетовые темы</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="purple-themes" class="theme-group-content">
+                                <div class="theme-row">
+                                    <div class="theme-option theme-light-purple" onclick="applyTheme('light-purple')">
+                                        <div class="theme-content">
+                                            <div>Светло-фиолетовая</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-option theme-dark-purple" onclick="applyTheme('dark-purple')">
+                                        <div class="theme-content">
+                                            <div>Тёмно-фиолетовая</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="stats-filter-container">
-                                <button class="stats-filter-btn" onclick="showFiltersModal()">
-                                    <i class="fas fa-filter"></i> Фильтры
-                                </button>
+                        </div>
+                        <div class="theme-group">
+                            <div class="theme-group-header" onclick="toggleCollapsible('green-themes')">
+                                <span>Зеленые темы</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="green-themes" class="theme-group-content">
+                                <div class="theme-row">
+                                    <div class="theme-option theme-light-green" onclick="applyTheme('light-green')">
+                                        <div class="theme-content">
+                                            <div>Светло-зелёная</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-option theme-dark-green" onclick="applyTheme('dark-green')">
+                                        <div class="theme-content">
+                                            <div>Тёмно-зелёная</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-group">
+                            <div class="theme-group-header" onclick="toggleCollapsible('red-themes')">
+                                <span>Красные темы</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="red-themes" class="theme-group-content">
+                                <div class="theme-row">
+                                    <div class="theme-option theme-light-red" onclick="applyTheme('light-red')">
+                                        <div class="theme-content">
+                                            <div>Светло-красная</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-option theme-dark-red" onclick="applyTheme('dark-red')">
+                                        <div class="theme-content">
+                                            <div>Тёмно-красная</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-group">
+                            <div class="theme-group-header" onclick="toggleCollapsible('blue-themes')">
+                                <span>Синие темы</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="blue-themes" class="theme-group-content">
+                                <div class="theme-row">
+                                    <div class="theme-option theme-light-blue" onclick="applyTheme('light-blue')">
+                                        <div class="theme-content">
+                                            <div>Светло-синяя</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-option theme-dark-blue" onclick="applyTheme('dark-blue')">
+                                        <div class="theme-content">
+                                            <div>Тёмно-синяя</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-group">
+                            <div class="theme-group-header" onclick="toggleCollapsible('pink-themes')">
+                                <span>Розовые темы</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="pink-themes" class="theme-group-content">
+                                <div class="theme-row">
+                                    <div class="theme-option theme-light-pink" onclick="applyTheme('light-pink')">
+                                        <div class="theme-content">
+                                            <div>Светло-розовая</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-option theme-dark-pink" onclick="applyTheme('dark-pink')">
+                                        <div class="theme-content">
+                                            <div>Тёмно-розовая</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-group">
+                            <div class="theme-group-header" onclick="toggleCollapsible('orange-themes')">
+                                <span>Оранжевые темы</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="orange-themes" class="theme-group-content">
+                                <div class="theme-row">
+                                    <div class="theme-option theme-light-orange" onclick="applyTheme('light-orange')">
+                                        <div class="theme-content">
+                                            <div>Светло-оранжевая</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-option theme-dark-orange" onclick="applyTheme('dark-orange')">
+                                        <div class="theme-content">
+                                            <div>Тёмно-оранжевая</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme-group">
+                            <div class="theme-group-header" onclick="toggleCollapsible('basic-themes')">
+                                <span>Основные темы</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div id="basic-themes" class="theme-group-content">
+                                <div class="theme-row">
+                                    <div class="theme-option theme-light" onclick="applyTheme('light')">
+                                        <div class="theme-content">
+                                            <div>Светлая</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-option theme-dark" onclick="applyTheme('dark')">
+                                        <div class="theme-content">
+                                            <div>Тёмная</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="user-list" id="users-list"></div>
                 </div>
-                <div id="logs-content" class="admin-content">
-                    <div class="logs-header">
-                        <div class="logs-stats-card">
-                            <div class="stats-content">
-                                <div class="stats-icon">
-                                    <i class="fas fa-clipboard-list"></i>
-                                </div>
-                                <div class="stats-info">
-                                    <div class="stats-count" id="logs-count">0</div>
-                                    <div class="stats-label">Записей логов</div>
-                                </div>
-                            </div>
-                            <div class="stats-filter-container">
-                                <button class="stats-filter-btn" onclick="showLogsFiltersModal()">
-                                    <i class="fas fa-filter"></i> Фильтры
-                                </button>
-                            </div>
+                <div class="switch-container">
+                    <span>Анимация тегов<span class="beta-badge">BETA</span></span>
+                    <label class="switch">
+                        <input type="checkbox" id="gradient-toggle" onchange="toggleGradient()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="switch-container">
+                    <span>Отображение тегов</span>
+                    <label class="switch">
+                        <input type="checkbox" id="tags-toggle" checked onchange="toggleTags()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="switch-container">
+                    <span>Отображение иконок</span>
+                    <label class="switch">
+                        <input type="checkbox" id="icons-toggle" checked onchange="toggleIcons()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="switch-container feature-disabled" id="logging-toggle-container">
+                    <span>Логирование<span class="beta-badge">BETA</span></span>
+                    <label class="switch">
+                        <input type="checkbox" id="logging-toggle" checked onchange="toggleLogging()">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="disabled-overlay">
+                        <span>Недоступно</span>
+                    </div>
+                </div>
+                <div class="switch-container feature-disabled">
+                    <span>Анимация обводки<span class="beta-badge">BETA</span></span>
+                    <label class="switch">
+                        <input type="checkbox" id="border-animation-toggle" onchange="toggleBorderAnimation()">
+                        <span class="slider"></span>
+                    </label>
+                    <div class="disabled-overlay">
+                        <span>В разработке</span>
+                    </div>
+                </div>
+            </div>
+            <div id="admin" class="content">
+                <h2>Админ панель</h2>
+                <div id="admin-pin-container" class="hidden">
+                    <div class="pin-header">
+                        <h3>🔐 Введите пин-код</h3>
+                        <p>Для доступа к админ-панели</p>
+                    </div>
+                    <div class="pin-input-container">
+                        <div class="pin-display" id="pin-display"></div>
+                        <button class="toggle-visibility" id="toggle-visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="pin-keyboard" id="pin-keyboard">
+                    </div>
+                    <div class="pin-error" id="pin-error"></div>
+                </div>
+                <div id="admin-content-container" class="hidden">
+                    <div class="admin-tabs">
+                        <div class="admin-tab active" onclick="switchAdminTab('users')">
+                            <i class="admin-icon fas fa-users"></i>
+                            <span>Список</span>
+                        </div>
+                        <div class="admin-tab" onclick="switchAdminTab('logs')">
+                            <i class="admin-icon fas fa-clipboard-list"></i>
+                            <span>Логи</span>
+                        </div>
+                        <div class="admin-tab" onclick="switchAdminTab('mode')">
+                            <i class="admin-icon fas fa-tools"></i>
+                            <span>Режим</span>
                         </div>
                     </div>
-                    <div class="logs-list" id="logs-list"></div>
-                </div>
-                <div id="mode-content" class="admin-content">
-                    <h2>Режимы проекта</h2>
-                    <div class="admin-item" style="flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px;">
-                        <div style="display: flex; align-items: center; gap: 16px; width: 100%;">
-                            <label style="font-size: 18px; font-weight: 600; color: var(--text-color);">
-                                Статус проекта:
-                            </label>
-                            <div class="switch-container" style="margin: 0; padding: 0; background: transparent; border: none;">
-                                <span></span>
-                                <label class="switch" style="margin: 0;">
-                                    <input type="checkbox" id="maintenance-toggle" onchange="toggleMaintenanceMode()">
-                                    <span class="slider"></span>
+                    <div id="users-content" class="admin-content active">
+                        <div class="logs-header">
+                            <div class="logs-stats-card">
+                                <div class="stats-content">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stats-info">
+                                        <div class="stats-count" id="users-count">0</div>
+                                        <div class="stats-label">Пользователей</div>
+                                    </div>
+                                </div>
+                                <div class="stats-filter-container">
+                                    <button class="stats-filter-btn" onclick="showFiltersModal()">
+                                        <i class="fas fa-filter"></i> Фильтры
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-list" id="users-list"></div>
+                    </div>
+                    <div id="logs-content" class="admin-content">
+                        <div class="logs-header">
+                            <div class="logs-stats-card">
+                                <div class="stats-content">
+                                    <div class="stats-icon">
+                                        <i class="fas fa-clipboard-list"></i>
+                                    </div>
+                                    <div class="stats-info">
+                                        <div class="stats-count" id="logs-count">0</div>
+                                        <div class="stats-label">Записей логов</div>
+                                    </div>
+                                </div>
+                                <div class="stats-filter-container">
+                                    <button class="stats-filter-btn" onclick="showLogsFiltersModal()">
+                                        <i class="fas fa-filter"></i> Фильтры
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="logs-list" id="logs-list"></div>
+                    </div>
+                    <div id="mode-content" class="admin-content">
+                        <h2>Режимы проекта</h2>
+                        <div class="admin-item" style="flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px;">
+                            <div style="display: flex; align-items: center; gap: 16px; width: 100%;">
+                                <label style="font-size: 18px; font-weight: 600; color: var(--text-color);">
+                                    Статус проекта:
                                 </label>
+                                <div class="switch-container" style="margin: 0; padding: 0; background: transparent; border: none;">
+                                    <span></span>
+                                    <label class="switch" style="margin: 0;">
+                                        <input type="checkbox" id="maintenance-toggle" onchange="toggleMaintenanceMode()">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <span id="maintenance-status-text" style="font-weight: bold; font-size: 16px;">
+                                    Открыт
+                                </span>
                             </div>
-                            <span id="maintenance-status-text" style="font-weight: bold; font-size: 16px;">
-                                Открыт
-                            </span>
+                            <div id="maintenance-info" class="info-section" style="width: 100%; display: none;">
+                                <div class="info-label">
+                                    <i class="fas fa-tools"></i> Технические работы
+                                </div>
+                                <div class="info-value" id="maintenance-since-text">
+                                    —
+                                </div>
+                            </div>
                         </div>
-                        <div id="maintenance-info" class="info-section" style="width: 100%; display: none;">
-                            <div class="info-label">
-                                <i class="fas fa-tools"></i> Технические работы
-                            </div>
-                            <div class="info-value" id="maintenance-since-text">
-                                —
-                            </div>
+                        <h3 style="margin-top: 30px;">История переключений</h3>
+                        <div id="maintenance-log-list" style="display: flex; flex-direction: column; gap: 12px;">
                         </div>
                     </div>
-                    <h3 style="margin-top: 30px;">История переключений</h3>
-                    <div id="maintenance-log-list" style="display: flex; flex-direction: column; gap: 12px;">
+                </div>
+            </div>
+            <div id="error-btn" class="error-btn hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <div id="filters-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Фильтры пользователей</h3>
+                    <div class="filter-options" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Роль:</label>
+                            <select id="filter-role" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                                <option value="">Все</option>
+                                <option value="user">Пользователь</option>
+                                <option value="admin">Администратор</option>
+                                <option value="developer">Разработчик</option>
+                            </select>
+                        </div>
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>ID:</label>
+                            <input type="text" id="filter-id" placeholder="Поиск по ID" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                        </div>
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Имя:</label>
+                            <input type="text" id="filter-name" placeholder="Поиск по имени" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                        </div>
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Username:</label>
+                            <input type="text" id="filter-username" placeholder="Поиск по username" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                        </div>
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Последний вход:</label>
+                            <select id="filter-last-seen" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                                <option value="">Все</option>
+                                <option value="today">Сегодня</option>
+                                <option value="week">За неделю</option>
+                                <option value="month">За месяц</option>
+                                <option value="older">Давно</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-actions" style="background: var(--background-color) !important;">
+                        <button onclick="closeFiltersModal()">Отмена</button>
+                        <button onclick="applyFilters()" class="primary">Применить</button>
+                    </div>
+                </div>
+            </div>
+            <div id="logs-filters-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Фильтры логов</h3>
+                    <div class="filter-options" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Действие:</label>
+                            <input type="text" id="logs-filter-action" placeholder="Поиск по действию" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                        </div>
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Пользователь:</label>
+                            <input type="text" id="logs-filter-user" placeholder="Поиск по пользователю" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                        </div>
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Дата от:</label>
+                            <input type="date" id="logs-filter-date-from" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                        </div>
+                        <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
+                            <label>Дата до:</label>
+                            <input type="date" id="logs-filter-date-to" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
+                        </div>
+                    </div>
+                    <div class="modal-actions" style="background: var(--background-color) !important;">
+                        <button onclick="resetLogsFilters()">Сбросить</button>
+                        <button onclick="closeLogsFiltersModal()">Отмена</button>
+                        <button onclick="applyLogsFilters()" class="primary">Применить</button>
+                    </div>
+                </div>
+            </div>
+            <div id="confirm-delete-modal" class="modal hidden">
+                <div class="modal-content confirm-delete-content">
+                    <div class="confirm-delete-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="confirm-delete-title">Вы уверены?</h3>
+                    <p id="confirm-delete-message" class="confirm-delete-message">
+                        Это действие нельзя отменить.
+                    </p>
+                    <div class="modal-actions confirm-delete-actions" style="background: var(--background-color) !important;">
+                        <button id="confirm-delete-cancel" class="confirm-delete-btn cancel-btn">
+                            <i class="fas fa-times"></i> Нет
+                        </button>
+                        <button id="confirm-delete-confirm" class="confirm-delete-btn confirm-btn">
+                            <i class="fas fa-check"></i> Да
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="console-modal" class="modal hidden">
+                <div class="modal-content console-modal">
+                    <h3>Консоль приложения</h3>
+                    <div class="console-toolbar">
+                        <button onclick="clearConsole()">Очистить</button>
+                        <button onclick="copyConsole()">Копировать</button>
+                        <button onclick="closeConsole()">Закрыть</button>
+                    </div>
+                    <pre id="console-output"></pre>
+                </div>
+            </div>
+            <div id="user-info-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">👤 Информация о пользователе</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="user-info-content" style="margin-bottom: 20px;"></div>
+                    </div>
+                    <div class="modal-actions" style="background: var(--background-color) !important;">
+                        <button onclick="closeUserInfo()">Готово</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="error-btn" class="error-btn hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-        </div>
-        <div id="filters-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Фильтры пользователей</h3>
-                <div class="filter-options" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Роль:</label>
-                        <select id="filter-role" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                            <option value="">Все</option>
-                            <option value="user">Пользователь</option>
-                            <option value="admin">Администратор</option>
-                            <option value="developer">Разработчик</option>
-                        </select>
-                    </div>
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>ID:</label>
-                        <input type="text" id="filter-id" placeholder="Поиск по ID" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                    </div>
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Имя:</label>
-                        <input type="text" id="filter-name" placeholder="Поиск по имени" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                    </div>
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Username:</label>
-                        <input type="text" id="filter-username" placeholder="Поиск по username" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                    </div>
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Последний вход:</label>
-                        <select id="filter-last-seen" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                            <option value="">Все</option>
-                            <option value="today">Сегодня</option>
-                            <option value="week">За неделю</option>
-                            <option value="month">За месяц</option>
-                            <option value="older">Давно</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-actions" style="background: var(--background-color) !important;">
-                    <button onclick="closeFiltersModal()">Отмена</button>
-                    <button onclick="applyFilters()" class="primary">Применить</button>
-                </div>
-            </div>
-        </div>
-        <div id="logs-filters-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Фильтры логов</h3>
-                <div class="filter-options" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Действие:</label>
-                        <input type="text" id="logs-filter-action" placeholder="Поиск по действию" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                    </div>
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Пользователь:</label>
-                        <input type="text" id="logs-filter-user" placeholder="Поиск по пользователю" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                    </div>
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Дата от:</label>
-                        <input type="date" id="logs-filter-date-from" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                    </div>
-                    <div class="filter-option" style="display: flex; flex-direction: column; gap: 5px;">
-                        <label>Дата до:</label>
-                        <input type="date" id="logs-filter-date-to" style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--background-color); color: var(--text-color);">
-                    </div>
-                </div>
-                <div class="modal-actions" style="background: var(--background-color) !important;">
-                    <button onclick="resetLogsFilters()">Сбросить</button>
-                    <button onclick="closeLogsFiltersModal()">Отмена</button>
-                    <button onclick="applyLogsFilters()" class="primary">Применить</button>
-                </div>
-            </div>
-        </div>
-        <div id="confirm-delete-modal" class="modal hidden">
-            <div class="modal-content confirm-delete-content">
-                <div class="confirm-delete-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <h3 class="confirm-delete-title">Вы уверены?</h3>
-                <p id="confirm-delete-message" class="confirm-delete-message">
-                    Это действие нельзя отменить.
-                </p>
-                <div class="modal-actions confirm-delete-actions" style="background: var(--background-color) !important;">
-                    <button id="confirm-delete-cancel" class="confirm-delete-btn cancel-btn">
-                        <i class="fas fa-times"></i> Нет
-                    </button>
-                    <button id="confirm-delete-confirm" class="confirm-delete-btn confirm-btn">
-                        <i class="fas fa-check"></i> Да
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="console-modal" class="modal hidden">
-            <div class="modal-content console-modal">
-                <h3>Консоль приложения</h3>
-                <div class="console-toolbar">
-                    <button onclick="clearConsole()">Очистить</button>
-                    <button onclick="copyConsole()">Копировать</button>
-                    <button onclick="closeConsole()">Закрыть</button>
-                </div>
-                <pre id="console-output"></pre>
-            </div>
-        </div>
-        <div id="user-info-modal" class="modal hidden">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">👤 Информация о пользователе</h3>
-                </div>
-                <div class="modal-body">
-                    <div id="user-info-content" style="margin-bottom: 20px;"></div>
-                </div>
-                <div class="modal-actions" style="background: var(--background-color) !important;">
-                    <button onclick="closeUserInfo()">Готово</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="obfuscated.js"></script>
-</body>
-</html>
+        <script src="obfuscated.js"></script>
+    </body>
+    </html>
